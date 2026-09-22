@@ -1,4 +1,4 @@
-﻿// Speech and Web Audio Sound Effects Service with bundled local MP3 audio
+// Speech and Web Audio Sound Effects Service with bundled local MP3 audio
 import { VOCABULARY } from "../data/words.js";
 
 class SoundService {
@@ -20,27 +20,34 @@ class SoundService {
     this.initVoices();
   }
 
+  ensureAudioContext() {
+    if (!this.audioCtx) {
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      if (AudioContextClass) {
+        this.audioCtx = new AudioContextClass();
+      }
+    }
+    if (this.audioCtx && this.audioCtx.state === "suspended") {
+      this.audioCtx.resume().catch(() => {});
+    }
+    if (this.synth && this.synth.paused) {
+      this.synth.resume();
+    }
+  }
+
   initAudio() {
-    const startAudio = () => {
-      if (!this.audioCtx) {
-        const AudioContext = window.AudioContext || window.webkitAudioContext;
-        if (AudioContext) {
-          this.audioCtx = new AudioContext();
-        }
+    const unlockAudio = () => {
+      this.ensureAudioContext();
+      if (this.audioCtx && this.audioCtx.state === "running") {
+        window.removeEventListener("click", unlockAudio);
+        window.removeEventListener("touchend", unlockAudio);
+        window.removeEventListener("keydown", unlockAudio);
       }
-      if (this.audioCtx && this.audioCtx.state === "suspended") {
-        this.audioCtx.resume();
-      }
-      if (this.synth && this.synth.paused) {
-        this.synth.resume();
-      }
-      window.removeEventListener("click", startAudio);
-      window.removeEventListener("touchstart", startAudio);
-      window.removeEventListener("keydown", startAudio);
     };
-    window.addEventListener("click", startAudio);
-    window.addEventListener("touchstart", startAudio);
-    window.addEventListener("keydown", startAudio);
+    // Listen to true user gestures (not touchstart which fires on scrolls/swipes)
+    window.addEventListener("click", unlockAudio, { passive: true });
+    window.addEventListener("touchend", unlockAudio, { passive: true });
+    window.addEventListener("keydown", unlockAudio, { passive: true });
   }
 
   initVoices() {
@@ -159,17 +166,10 @@ class SoundService {
 
   // Web Audio Synthesized Sound Effects (100% Offline and responsive)
   playTone(freq, type = "sine", duration = 0.15, startTimeOffset = 0, gainLevel = 0.15) {
-    if (!this.audioCtx) {
-      const AudioContext = window.AudioContext || window.webkitAudioContext;
-      if (AudioContext) this.audioCtx = new AudioContext();
-    }
-    if (!this.audioCtx) return;
+    this.ensureAudioContext();
+    if (!this.audioCtx || this.audioCtx.state !== "running") return;
 
     try {
-      if (this.audioCtx.state === "suspended") {
-        this.audioCtx.resume();
-      }
-
       const osc = this.audioCtx.createOscillator();
       const gain = this.audioCtx.createGain();
 
@@ -184,9 +184,7 @@ class SoundService {
 
       osc.start(this.audioCtx.currentTime + startTimeOffset);
       osc.stop(this.audioCtx.currentTime + startTimeOffset + duration);
-    } catch (e) {
-      console.warn("Tone error:", e);
-    }
+    } catch (e) {}
   }
 
   playPop() {
@@ -201,7 +199,8 @@ class SoundService {
   }
 
   playError() {
-    if (!this.audioCtx) return;
+    this.ensureAudioContext();
+    if (!this.audioCtx || this.audioCtx.state !== "running") return;
     try {
       const osc = this.audioCtx.createOscillator();
       const gain = this.audioCtx.createGain();
