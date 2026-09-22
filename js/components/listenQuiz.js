@@ -1,4 +1,4 @@
-﻿// "Listen & Pick" Quiz Component (Ear Training & Reading Match)
+// "Listen & Pick" Quiz Component (Ear Training & Reading Match)
 import { VOCABULARY, LEVELS } from "../data/words.js";
 import { sound } from "../services/speech.js";
 import { storage } from "../services/storage.js";
@@ -13,7 +13,6 @@ export class ListenQuizComponent {
     this.streak = 0;
     this.score = 0;
     this.answered = false;
-    this.initQuiz();
   }
 
   setLevel(levelId) {
@@ -22,16 +21,16 @@ export class ListenQuizComponent {
     this.render();
   }
 
-  initQuiz() {
+  initQuiz(autoPlay = false) {
     const words = VOCABULARY.filter(w => w.level === this.currentLevel);
     this.questions = [...words].sort(() => 0.5 - Math.random());
     this.currentIndex = 0;
     this.streak = 0;
     this.score = 0;
-    this.loadQuestion();
+    this.loadQuestion(autoPlay);
   }
 
-  loadQuestion() {
+  loadQuestion(autoPlay = false) {
     this.answered = false;
     if (this.currentIndex >= this.questions.length) return;
 
@@ -41,10 +40,11 @@ export class ListenQuizComponent {
     const shuffledOthers = [...allOtherWords].sort(() => 0.5 - Math.random()).slice(0, 3);
     this.options = [currentWord, ...shuffledOthers].sort(() => 0.5 - Math.random());
 
-    // Automatically speak the word after a brief delay
-    setTimeout(() => {
-      sound.speak(currentWord.tamil);
-    }, 300);
+    if (autoPlay) {
+      setTimeout(() => {
+        sound.speak(currentWord.tamil);
+      }, 400);
+    }
   }
 
   render() {
@@ -149,7 +149,7 @@ export class ListenQuizComponent {
 
           setTimeout(() => {
             this.currentIndex++;
-            this.loadQuestion();
+            this.loadQuestion(true);
             this.render();
           }, 1200);
 
@@ -172,7 +172,7 @@ export class ListenQuizComponent {
 
           setTimeout(() => {
             this.currentIndex++;
-            this.loadQuestion();
+            this.loadQuestion(true);
             this.render();
           }, 2000);
         }

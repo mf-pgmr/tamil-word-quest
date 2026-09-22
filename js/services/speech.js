@@ -1,4 +1,4 @@
-﻿// Speech and Web Audio Sound Effects Service
+// Speech and Web Audio Sound Effects Service
 
 class SoundService {
   constructor() {
@@ -75,6 +75,10 @@ class SoundService {
     const playPromise = audio.play();
     if (playPromise !== undefined) {
       playPromise.catch(err => {
+        if (err.name === "NotAllowedError") {
+          // Autoplay blocked prior to user interaction; silently ignore
+          return;
+        }
         console.warn("Native TTS audio failed, falling back to Web Speech API:", err);
         this.speakWithWebSpeech(text, rate, onEnd);
       });

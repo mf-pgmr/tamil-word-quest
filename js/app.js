@@ -1,4 +1,4 @@
-﻿// Main Application Controller
+// Main Application Controller
 import { storage, BADGE_DEFINITIONS } from "./services/storage.js";
 import { sound } from "./services/speech.js";
 import { VOCABULARY } from "./data/words.js";
@@ -32,11 +32,6 @@ class App {
 
     // Initial render
     this.switchTab("trainer");
-
-    // Welcome speech
-    setTimeout(() => {
-      sound.speak("வணக்கம்! தமிழ் கற்கலாம் வா!");
-    }, 800);
   }
 
   updateHeaderStats() {
