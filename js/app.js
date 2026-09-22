@@ -95,23 +95,58 @@ class App {
   setupMobileDrawer() {
     const sidebar = document.getElementById("sidebar");
     const backdrop = document.getElementById("sidebar-backdrop");
-    const openBtn = document.getElementById("mobile-menu-btn");
+    const menuBtn = document.getElementById("mobile-menu-btn");
+    const hamburgerIcon = document.getElementById("hamburger-icon");
+    const closeIcon = document.getElementById("close-icon");
     const closeBtn = document.getElementById("sidebar-close-btn");
+
+    const updateIconState = (isOpen) => {
+      if (hamburgerIcon && closeIcon) {
+        if (isOpen) {
+          hamburgerIcon.classList.add("hidden");
+          closeIcon.classList.remove("hidden");
+        } else {
+          hamburgerIcon.classList.remove("hidden");
+          closeIcon.classList.add("hidden");
+        }
+      }
+      if (menuBtn) {
+        menuBtn.setAttribute("aria-expanded", isOpen ? "true" : "false");
+      }
+    };
 
     this.closeDrawer = () => {
       if (sidebar) sidebar.classList.remove("open");
       if (backdrop) backdrop.classList.remove("open");
+      updateIconState(false);
     };
 
     this.openDrawer = () => {
       if (sidebar) sidebar.classList.add("open");
       if (backdrop) backdrop.classList.add("open");
+      updateIconState(true);
     };
 
-    const handleOpen = (e) => {
+    this.toggleDrawer = () => {
+      const isOpen = sidebar && sidebar.classList.contains("open");
+      if (isOpen) {
+        this.closeDrawer();
+      } else {
+        this.openDrawer();
+      }
+    };
+
+    let lastToggleTime = 0;
+    const handleToggle = (e) => {
+      const now = Date.now();
+      if (now - lastToggleTime < 250) {
+        e.preventDefault();
+        return;
+      }
+      lastToggleTime = now;
       e.preventDefault();
       sound.playPop();
-      this.openDrawer();
+      this.toggleDrawer();
     };
 
     const handleClose = (e) => {
@@ -120,9 +155,9 @@ class App {
       this.closeDrawer();
     };
 
-    if (openBtn) {
-      openBtn.addEventListener("click", handleOpen);
-      openBtn.addEventListener("touchend", handleOpen, { passive: false });
+    if (menuBtn) {
+      menuBtn.addEventListener("click", handleToggle);
+      menuBtn.addEventListener("touchend", handleToggle, { passive: false });
     }
 
     if (closeBtn) {
