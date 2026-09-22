@@ -1,4 +1,5 @@
-// Speech and Web Audio Sound Effects Service
+﻿// Speech and Web Audio Sound Effects Service with bundled local MP3 audio
+import { VOCABULARY } from "../data/words.js";
 
 class SoundService {
   constructor() {
@@ -8,6 +9,14 @@ class SoundService {
     this.synth = window.speechSynthesis;
     this.tamilVoice = null;
     this.speechRate = 0.9;
+
+    // Fast lookup for full word audio
+    this.wordMap = new Map();
+    VOCABULARY.forEach(w => {
+      this.wordMap.set(w.tamil, w.id);
+      this.wordMap.set(w.id, w.id);
+    });
+
     this.initAudio();
     this.initVoices();
   }
@@ -51,21 +60,50 @@ class SoundService {
     }
   }
 
-  speak(text, rate = 0.9, onEnd = null) {
-    if (!text) return;
+  getAudioUrl(textOrId) {
+    if (!textOrId) return null;
+    const str = textOrId.trim();
 
-    // Stop any currently playing audio
+    // 1. Check if word ID (e.g. "l1_1")
+    if (/^l\d+_\d+$/.test(str)) {
+      return `audio/words/${str}.mp3`;
+    }
+
+    // 2. Check if known Tamil word text
+    const wordId = this.wordMap.get(str);
+    if (wordId) {
+      return `audio/words/${wordId}.mp3`;
+    }
+
+    // 3. Letter audio filename based on UTF-16 hex codes
+    const hex = Array.from(str)
+      .map(c => c.charCodeAt(0).toString(16).padStart(4, "0"))
+      .join("_");
+    return `audio/letters/${hex}.mp3`;
+  }
+
+  speak(textOrId, rate = 0.95, onEnd = null) {
+    if (!textOrId) return;
+
+    // Stop currently playing audio
     if (this.currentAudio) {
       this.currentAudio.pause();
       this.currentAudio.currentTime = 0;
       this.currentAudio = null;
     }
 
-    // Method 1: High-fidelity Native Tamil Voice Engine (works across all OS without needing OS language packs)
-    const ttsUrl = `https://translate.google.com/translate_tts?ie=UTF-8&tl=ta&client=tw-ob&q=${encodeURIComponent(text)}`;
-    const audio = new Audio(ttsUrl);
+    const audioUrl = this.getAudioUrl(textOrId);
+    if (!audioUrl) return;
+
+    let audio = this.audioCache.get(audioUrl);
+    if (!audio) {
+      audio = new Audio(audioUrl);
+      this.audioCache.set(audioUrl, audio);
+    }
+
     this.currentAudio = audio;
-    audio.playbackRate = rate || 0.9;
+    audio.currentTime = 0;
+    audio.playbackRate = rate || 0.95;
 
     audio.onended = () => {
       if (this.currentAudio === audio) this.currentAudio = null;
@@ -75,12 +113,10 @@ class SoundService {
     const playPromise = audio.play();
     if (playPromise !== undefined) {
       playPromise.catch(err => {
-        if (err.name === "NotAllowedError") {
-          // Autoplay blocked prior to user interaction; silently ignore
-          return;
-        }
-        console.warn("Native TTS audio failed, falling back to Web Speech API:", err);
-        this.speakWithWebSpeech(text, rate, onEnd);
+        if (err.name === "NotAllowedError") return;
+        // Fallback to browser SpeechSynthesis if audio element cannot play
+        console.warn(`Local audio failed for ${textOrId} (${audioUrl}), falling back:`, err);
+        this.speakWithWebSpeech(textOrId, rate, onEnd);
       });
     }
   }
@@ -117,8 +153,8 @@ class SoundService {
     }
   }
 
-  speakSlow(text, onEnd = null) {
-    this.speak(text, 0.65, onEnd);
+  speakSlow(textOrId, onEnd = null) {
+    this.speak(textOrId, 0.7, onEnd);
   }
 
   // Web Audio Synthesized Sound Effects (100% Offline and responsive)
