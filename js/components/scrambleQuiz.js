@@ -1,4 +1,4 @@
-﻿// Word Builder / Spelling Scramble Quiz Component (No emojis, Dark Mode, Screen-Contained)
+// Word Builder / Spelling Scramble Quiz Component (No emojis, Dark Mode, Screen-Contained)
 import { VOCABULARY, LEVELS } from "../data/words.js";
 import { sound } from "../services/speech.js";
 import { storage } from "../services/storage.js";
@@ -60,7 +60,7 @@ export class ScrambleQuizComponent {
     const word = this.quizList[this.currentIndex];
 
     this.container.innerHTML = `
-      <div class="h-full w-full max-w-xl mx-auto flex flex-col justify-between py-1 sm:py-2 select-none">
+      <div class="h-full min-h-0 w-full max-w-xl mx-auto flex flex-col justify-between py-1 sm:py-2 select-none">
         
         <!-- Header Bar -->
         <div class="flex items-center justify-between px-2 mb-2">
@@ -146,7 +146,7 @@ export class ScrambleQuizComponent {
         </div>
 
         <!-- Controls: Clear / Skip -->
-        <div class="flex justify-between items-center px-2 pt-2">
+        <div class="flex-shrink-0 flex justify-between items-center px-2 pt-2 pb-1">
           <button id="btn-clear-slots" class="text-xs font-bold text-slate-400 dark:text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 cursor-pointer">
             Clear Letters
           </button>

@@ -1,4 +1,4 @@
-﻿// Missing Letter Quiz Component (Detective Mode - No emojis, Dark Mode, Screen-Contained)
+// Missing Letter Quiz Component (Detective Mode - No emojis, Dark Mode, Screen-Contained)
 import { VOCABULARY, LEVELS } from "../data/words.js";
 import { sound } from "../services/speech.js";
 import { storage } from "../services/storage.js";
@@ -60,7 +60,7 @@ export class MissingQuizComponent {
     const correctLetter = currentWord.letters[this.hiddenIdx];
 
     this.container.innerHTML = `
-      <div class="h-full w-full max-w-xl mx-auto flex flex-col justify-between py-1 sm:py-2 select-none">
+      <div class="h-full min-h-0 w-full max-w-xl mx-auto flex flex-col justify-between py-1 sm:py-2 select-none">
         
         <!-- Header -->
         <div class="flex items-center justify-between px-2 mb-2">

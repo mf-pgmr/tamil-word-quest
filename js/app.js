@@ -99,39 +99,41 @@ class App {
     const closeBtn = document.getElementById("sidebar-close-btn");
 
     this.closeDrawer = () => {
-      if (sidebar) {
-        sidebar.classList.add("-translate-x-full");
-        setTimeout(() => {
-          if (window.innerWidth < 768) {
-            sidebar.classList.add("hidden");
-          }
-        }, 180);
-      }
-      if (backdrop) backdrop.classList.add("hidden");
+      if (sidebar) sidebar.classList.remove("open");
+      if (backdrop) backdrop.classList.remove("open");
     };
 
     this.openDrawer = () => {
-      if (sidebar) {
-        sidebar.classList.remove("hidden");
-        void sidebar.offsetWidth;
-        sidebar.classList.remove("-translate-x-full");
-      }
-      if (backdrop) backdrop.classList.remove("hidden");
+      if (sidebar) sidebar.classList.add("open");
+      if (backdrop) backdrop.classList.add("open");
     };
 
-    if (openBtn) openBtn.addEventListener("click", () => {
+    const handleOpen = (e) => {
+      e.preventDefault();
       sound.playPop();
       this.openDrawer();
-    });
+    };
 
-    if (closeBtn) closeBtn.addEventListener("click", () => {
+    const handleClose = (e) => {
+      e.preventDefault();
       sound.playPop();
       this.closeDrawer();
-    });
+    };
 
-    if (backdrop) backdrop.addEventListener("click", () => {
-      this.closeDrawer();
-    });
+    if (openBtn) {
+      openBtn.addEventListener("click", handleOpen);
+      openBtn.addEventListener("touchend", handleOpen, { passive: false });
+    }
+
+    if (closeBtn) {
+      closeBtn.addEventListener("click", handleClose);
+      closeBtn.addEventListener("touchend", handleClose, { passive: false });
+    }
+
+    if (backdrop) {
+      backdrop.addEventListener("click", handleClose);
+      backdrop.addEventListener("touchend", handleClose, { passive: false });
+    }
   }
 
   updateHeaderStats() {

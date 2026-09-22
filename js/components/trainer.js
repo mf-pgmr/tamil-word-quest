@@ -31,7 +31,7 @@ export class TrainerComponent {
     const currentLvlObj = LEVELS.find(l => l.id === this.currentLevel) || LEVELS[0];
 
     this.container.innerHTML = `
-      <div class="h-full w-full min-w-0 max-w-2xl mx-auto flex flex-col justify-between py-1 sm:py-2 select-none">
+      <div class="h-full min-h-0 w-full min-w-0 max-w-2xl mx-auto flex flex-col justify-between py-1 sm:py-2 select-none">
         
         <!-- Header Info Bar -->
         <div class="flex items-center justify-between px-1 mb-2">
@@ -116,7 +116,7 @@ export class TrainerComponent {
         </div>
 
         <!-- Navigation Buttons: ALWAYS VISIBLE AT BOTTOM -->
-        <div class="flex items-center justify-between gap-2 sm:gap-3 pt-2 w-full">
+        <div class="flex-shrink-0 flex items-center justify-between gap-2 sm:gap-3 pt-2 pb-1 w-full">
           <button id="btn-prev" class="bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 active:scale-95 text-slate-700 dark:text-slate-200 font-bold px-3 sm:px-5 py-2 sm:py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm disabled:opacity-40 transition-all cursor-pointer text-xs sm:text-sm whitespace-nowrap" ${this.currentIndex === 0 ? 'disabled' : ''}>
             ← Prev
           </button>
