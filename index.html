@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -37,12 +37,45 @@
 
   <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="h-screen w-screen overflow-hidden bg-slate-100/60 dark:bg-slate-950 text-slate-800 dark:text-slate-100 flex flex-col md:flex-row transition-colors">
+<body class="h-screen w-full overflow-hidden bg-slate-100/70 dark:bg-slate-950 text-slate-800 dark:text-slate-100 flex flex-col md:flex-row transition-colors">
 
-  <!-- Left Sidebar (Desktop / Tablet) -->
-  <aside class="w-full md:w-64 lg:w-72 flex-shrink-0 bg-white dark:bg-slate-900 border-b md:border-b-0 md:border-r border-slate-200 dark:border-slate-800 flex flex-col justify-between p-3 sm:p-4 select-none z-20 shadow-sm md:h-screen overflow-y-auto">
+  <!-- Mobile Top Navigation Bar (Mobile only) -->
+  <header class="md:hidden flex items-center justify-between px-3 py-2 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 flex-shrink-0 z-30 w-full">
+    <div class="flex items-center gap-2">
+      <!-- Hamburger Menu Button -->
+      <button id="mobile-menu-btn" class="p-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all cursor-pointer" aria-label="Open Menu">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+
+      <div class="flex items-center gap-1.5">
+        <div class="w-7 h-7 rounded-lg bg-amber-500 text-white flex items-center justify-center text-sm font-black">
+          த
+        </div>
+        <span class="font-black text-sm text-slate-900 dark:text-white">தமிழ் <span class="text-amber-600 dark:text-amber-400">Quest</span></span>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-1.5 text-xs">
+      <div class="font-bold text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-slate-800 px-2 py-1 rounded-lg border border-amber-200 dark:border-slate-700">
+        <span id="mobile-stat-streak">1 d</span>
+      </div>
+      <div class="font-bold text-indigo-700 dark:text-indigo-400 bg-indigo-50 dark:bg-slate-800 px-2 py-1 rounded-lg border border-indigo-200 dark:border-slate-700">
+        <span id="mobile-stat-xp">0 XP</span>
+      </div>
+      <button id="mobile-theme-btn" class="p-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold px-2 py-1 border border-slate-200 dark:border-slate-700 cursor-pointer">
+        Theme
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Sidebar Backdrop Overlay -->
+  <div id="sidebar-backdrop" class="fixed inset-0 bg-slate-900/60 dark:bg-black/70 z-40 backdrop-blur-xs hidden transition-opacity"></div>
+
+  <!-- Left Sidebar (Collapsible Drawer on Mobile, Fixed Sidebar on Desktop) -->
+  <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-72 max-w-[85vw] md:static md:w-64 lg:w-72 md:h-screen flex-shrink-0 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col justify-between p-3.5 sm:p-4 select-none shadow-2xl md:shadow-none -translate-x-full md:translate-x-0 transition-transform duration-200 ease-in-out overflow-y-auto hidden md:flex">
     
-    <!-- Top Brand & Theme Toggle -->
     <div>
       <div class="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
         <div class="flex items-center gap-2">
@@ -57,23 +90,32 @@
           </div>
         </div>
 
-        <!-- Dark / Light Mode Toggle Button -->
-        <button id="theme-toggle-btn" class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all text-xs font-bold flex items-center gap-1 cursor-pointer" title="Toggle Light / Dark mode">
-          <span id="theme-toggle-label">Theme</span>
-        </button>
+        <div class="flex items-center gap-1.5">
+          <!-- Desktop Theme Toggle -->
+          <button id="theme-toggle-btn" class="hidden md:flex p-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all text-xs font-bold items-center gap-1 cursor-pointer" title="Toggle Light / Dark mode">
+            <span id="theme-toggle-label">Theme</span>
+          </button>
+
+          <!-- Mobile Close Button (✕) -->
+          <button id="sidebar-close-btn" class="md:hidden p-1.5 rounded-xl text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer" aria-label="Close menu">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
       </div>
 
-      <!-- Stats Chip Bar -->
+      <!-- Stats Bar in Sidebar -->
       <div class="grid grid-cols-3 gap-1.5 my-3 text-center">
-        <div class="bg-amber-50 dark:bg-slate-800/80 px-2 py-1.5 rounded-xl border border-amber-200 dark:border-slate-700">
+        <div class="bg-amber-50 dark:bg-slate-800/80 px-1.5 py-1.5 rounded-xl border border-amber-200 dark:border-slate-700">
           <div class="text-[9px] uppercase tracking-wider text-amber-700 dark:text-amber-400 font-bold">Streak</div>
           <div id="stat-streak" class="text-xs font-black text-amber-900 dark:text-amber-200">1 Days</div>
         </div>
-        <div class="bg-indigo-50 dark:bg-slate-800/80 px-2 py-1.5 rounded-xl border border-indigo-200 dark:border-slate-700">
+        <div class="bg-indigo-50 dark:bg-slate-800/80 px-1.5 py-1.5 rounded-xl border border-indigo-200 dark:border-slate-700">
           <div class="text-[9px] uppercase tracking-wider text-indigo-700 dark:text-indigo-400 font-bold">XP</div>
           <div id="stat-xp" class="text-xs font-black text-indigo-900 dark:text-indigo-200">0 XP</div>
         </div>
-        <div class="bg-purple-50 dark:bg-slate-800/80 px-2 py-1.5 rounded-xl border border-purple-200 dark:border-slate-700">
+        <div class="bg-purple-50 dark:bg-slate-800/80 px-1.5 py-1.5 rounded-xl border border-purple-200 dark:border-slate-700">
           <div class="text-[9px] uppercase tracking-wider text-purple-700 dark:text-purple-400 font-bold">Rank</div>
           <div id="stat-level" class="text-xs font-black text-purple-900 dark:text-purple-200">Lvl 1</div>
         </div>
@@ -136,7 +178,7 @@
   </aside>
 
   <!-- Main View Area (Strictly Fits Screen Height) -->
-  <main class="flex-1 h-full overflow-hidden flex flex-col justify-center items-center p-2 sm:p-4 md:p-6" id="main-content">
+  <main class="flex-1 min-w-0 h-[calc(100vh-48px)] md:h-screen overflow-hidden flex flex-col justify-center items-center p-2 sm:p-4 md:p-6 w-full max-w-full" id="main-content">
     <!-- Populated by JavaScript Components -->
   </main>
 

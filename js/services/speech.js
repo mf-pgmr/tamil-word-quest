@@ -5,7 +5,6 @@ class SoundService {
   constructor() {
     this.audioCtx = null;
     this.currentAudio = null;
-    this.audioCache = new Map();
     this.synth = window.speechSynthesis;
     this.tamilVoice = null;
     this.speechRate = 0.9;
@@ -85,24 +84,20 @@ class SoundService {
   speak(textOrId, rate = 0.95, onEnd = null) {
     if (!textOrId) return;
 
-    // Stop currently playing audio
-    if (this.currentAudio) {
-      this.currentAudio.pause();
-      this.currentAudio.currentTime = 0;
-      this.currentAudio = null;
-    }
-
     const audioUrl = this.getAudioUrl(textOrId);
     if (!audioUrl) return;
 
-    let audio = this.audioCache.get(audioUrl);
-    if (!audio) {
-      audio = new Audio(audioUrl);
-      this.audioCache.set(audioUrl, audio);
+    // Safely stop previous audio without breaking on unfulfilled promises
+    if (this.currentAudio) {
+      try {
+        this.currentAudio.pause();
+        this.currentAudio.currentTime = 0;
+      } catch (e) {}
+      this.currentAudio = null;
     }
 
+    const audio = new Audio(audioUrl);
     this.currentAudio = audio;
-    audio.currentTime = 0;
     audio.playbackRate = rate || 0.95;
 
     audio.onended = () => {
@@ -113,8 +108,10 @@ class SoundService {
     const playPromise = audio.play();
     if (playPromise !== undefined) {
       playPromise.catch(err => {
-        if (err.name === "NotAllowedError") return;
-        // Fallback to browser SpeechSynthesis if audio element cannot play
+        // AbortError is normal when rapid user clicks interrupt previous audio
+        // NotAllowedError happens if autoplay policy restricts sound before interaction
+        if (err.name === "AbortError" || err.name === "NotAllowedError") return;
+        
         console.warn(`Local audio failed for ${textOrId} (${audioUrl}), falling back:`, err);
         this.speakWithWebSpeech(textOrId, rate, onEnd);
       });
@@ -144,7 +141,10 @@ class SoundService {
       };
 
       utterance.onerror = (e) => {
-        console.warn("SpeechSynthesis error:", e);
+        // Ignore interrupted errors in Web Speech as well
+        if (e.error !== "interrupted") {
+          console.warn("SpeechSynthesis error:", e);
+        }
       };
 
       this.synth.speak(utterance);

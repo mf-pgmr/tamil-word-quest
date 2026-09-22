@@ -1,4 +1,4 @@
-﻿// Main Application Controller (Responsive Left Sidebar, Dark Mode, 80 Words)
+// Main Application Controller (Responsive Left Sidebar with Mobile Drawer & Dark Mode)
 import { storage, BADGE_DEFINITIONS } from "./services/storage.js";
 import { sound } from "./services/speech.js";
 import { VOCABULARY, LEVELS } from "./data/words.js";
@@ -22,6 +22,7 @@ class App {
 
   init() {
     this.initTheme();
+    this.setupMobileDrawer();
     this.updateHeaderStats();
     this.setupSidebarNav();
     this.setupLevelSelector();
@@ -46,15 +47,22 @@ class App {
       }
     });
 
+    const toggleTheme = () => {
+      sound.playPop();
+      const isDark = document.documentElement.classList.contains("dark");
+      const newTheme = isDark ? "light" : "dark";
+      storage.setTheme(newTheme);
+      this.applyTheme(newTheme);
+    };
+
     const themeToggleBtn = document.getElementById("theme-toggle-btn");
     if (themeToggleBtn) {
-      themeToggleBtn.addEventListener("click", () => {
-        sound.playPop();
-        const isDark = document.documentElement.classList.contains("dark");
-        const newTheme = isDark ? "light" : "dark";
-        storage.setTheme(newTheme);
-        this.applyTheme(newTheme);
-      });
+      themeToggleBtn.addEventListener("click", toggleTheme);
+    }
+
+    const mobileThemeBtn = document.getElementById("mobile-theme-btn");
+    if (mobileThemeBtn) {
+      mobileThemeBtn.addEventListener("click", toggleTheme);
     }
   }
 
@@ -65,24 +73,65 @@ class App {
     } else if (theme === "light") {
       isDark = false;
     } else {
-      // Default to system behaviour
       isDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
     }
     this.setDarkMode(isDark);
   }
 
   setDarkMode(isDark) {
-    const iconEl = document.getElementById("theme-toggle-icon");
     const labelEl = document.getElementById("theme-toggle-label");
+    const mobileLabelEl = document.getElementById("mobile-theme-btn");
     if (isDark) {
       document.documentElement.classList.add("dark");
-      if (iconEl) iconEl.textContent = "Light Mode";
       if (labelEl) labelEl.textContent = "Light";
+      if (mobileLabelEl) mobileLabelEl.textContent = "Light";
     } else {
       document.documentElement.classList.remove("dark");
-      if (iconEl) iconEl.textContent = "Dark Mode";
       if (labelEl) labelEl.textContent = "Dark";
+      if (mobileLabelEl) mobileLabelEl.textContent = "Dark";
     }
+  }
+
+  setupMobileDrawer() {
+    const sidebar = document.getElementById("sidebar");
+    const backdrop = document.getElementById("sidebar-backdrop");
+    const openBtn = document.getElementById("mobile-menu-btn");
+    const closeBtn = document.getElementById("sidebar-close-btn");
+
+    this.closeDrawer = () => {
+      if (sidebar) {
+        sidebar.classList.add("-translate-x-full");
+        setTimeout(() => {
+          if (window.innerWidth < 768) {
+            sidebar.classList.add("hidden");
+          }
+        }, 180);
+      }
+      if (backdrop) backdrop.classList.add("hidden");
+    };
+
+    this.openDrawer = () => {
+      if (sidebar) {
+        sidebar.classList.remove("hidden");
+        void sidebar.offsetWidth;
+        sidebar.classList.remove("-translate-x-full");
+      }
+      if (backdrop) backdrop.classList.remove("hidden");
+    };
+
+    if (openBtn) openBtn.addEventListener("click", () => {
+      sound.playPop();
+      this.openDrawer();
+    });
+
+    if (closeBtn) closeBtn.addEventListener("click", () => {
+      sound.playPop();
+      this.closeDrawer();
+    });
+
+    if (backdrop) backdrop.addEventListener("click", () => {
+      this.closeDrawer();
+    });
   }
 
   updateHeaderStats() {
@@ -91,10 +140,16 @@ class App {
     const levelEl = document.getElementById("stat-level");
     const wordsCountEl = document.getElementById("stat-words-count");
 
+    const mStreak = document.getElementById("mobile-stat-streak");
+    const mXp = document.getElementById("mobile-stat-xp");
+
     if (xpEl) xpEl.textContent = `${storage.data.xp} XP`;
-    if (streakEl) streakEl.textContent = `${storage.data.streak} Days`;
+    if (streakEl) streakEl.textContent = `${storage.data.streak} d`;
     if (levelEl) levelEl.textContent = `Lvl ${storage.getLearnerLevel()}`;
     if (wordsCountEl) wordsCountEl.textContent = `${storage.data.masteredWords.length} / ${VOCABULARY.length} Words`;
+
+    if (mStreak) mStreak.textContent = `${storage.data.streak} d`;
+    if (mXp) mXp.textContent = `${storage.data.xp} XP`;
   }
 
   setupSidebarNav() {
@@ -104,6 +159,9 @@ class App {
         if (tab !== this.activeTab) {
           sound.playPop();
           this.switchTab(tab);
+        }
+        if (window.innerWidth < 768) {
+          this.closeDrawer();
         }
       });
     });
@@ -115,6 +173,9 @@ class App {
         sound.playPop();
         const lvl = parseInt(btn.dataset.level);
         this.setLevel(lvl);
+        if (window.innerWidth < 768) {
+          this.closeDrawer();
+        }
       });
     });
     this.updateActiveLevelUI();
@@ -153,7 +214,6 @@ class App {
   switchTab(tab) {
     this.activeTab = tab;
 
-    // Update active tab buttons in sidebar
     document.querySelectorAll(".nav-tab-btn").forEach(btn => {
       const isCurrent = btn.dataset.tab === tab;
       if (isCurrent) {
@@ -210,7 +270,7 @@ class App {
           </div>
         </div>
 
-        <!-- Badges Trophy Room (Clean, No emojis) -->
+        <!-- Badges Trophy Room -->
         <div class="bg-white dark:bg-slate-900 rounded-3xl p-5 shadow-lg border-2 border-slate-100 dark:border-slate-800 mb-3">
           <h3 class="font-black text-slate-800 dark:text-white text-base mb-3">
             Achievement Badges

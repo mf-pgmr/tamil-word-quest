@@ -1,4 +1,4 @@
-﻿// Flashcard & Phonics Reading Trainer Component (No Emojis, Dark Mode & Screen-Contained)
+// Flashcard & Phonics Reading Trainer Component (No Emojis, Dark Mode & Screen-Contained)
 import { VOCABULARY, LEVELS } from "../data/words.js";
 import { sound } from "../services/speech.js";
 import { storage } from "../services/storage.js";
@@ -31,7 +31,7 @@ export class TrainerComponent {
     const currentLvlObj = LEVELS.find(l => l.id === this.currentLevel) || LEVELS[0];
 
     this.container.innerHTML = `
-      <div class="h-full w-full max-w-2xl mx-auto flex flex-col justify-between py-1 sm:py-2 select-none">
+      <div class="h-full w-full min-w-0 max-w-2xl mx-auto flex flex-col justify-between py-1 sm:py-2 select-none">
         
         <!-- Header Info Bar -->
         <div class="flex items-center justify-between px-1 mb-2">
@@ -57,7 +57,7 @@ export class TrainerComponent {
         </div>
 
         <!-- Main Flashcard (Contained & Centered) -->
-        <div class="bg-white dark:bg-slate-900 rounded-3xl p-5 sm:p-7 shadow-xl border-2 border-slate-100 dark:border-slate-800 flex-1 flex flex-col justify-between my-1">
+        <div class="bg-white dark:bg-slate-900 rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-xl border-2 border-slate-100 dark:border-slate-800 flex-1 min-w-0 flex flex-col justify-between my-1 w-full">
           
           <!-- Meaning & Category -->
           <div class="text-center pt-1">
@@ -78,11 +78,11 @@ export class TrainerComponent {
               ${word.letters.map((letter, idx) => `
                 <button 
                   data-letter-idx="${idx}"
-                  class="letter-tile group bg-amber-50/80 dark:bg-slate-800 hover:bg-amber-100 dark:hover:bg-slate-700/80 active:scale-95 border-2 border-amber-300 dark:border-amber-500/40 text-amber-950 dark:text-amber-300 font-bold rounded-2xl w-18 h-20 sm:w-22 sm:h-24 flex flex-col items-center justify-center shadow-md transition-all cursor-pointer"
+                  class="letter-tile group bg-amber-50/80 dark:bg-slate-800 hover:bg-amber-100 dark:hover:bg-slate-700/80 active:scale-95 border-2 border-amber-300 dark:border-amber-500/40 text-amber-950 dark:text-amber-300 font-bold rounded-2xl w-16 h-18 sm:w-20 sm:h-22 flex flex-col items-center justify-center shadow-md transition-all cursor-pointer"
                   title="Hear '${letter}'"
                 >
-                  <span class="text-3xl sm:text-4xl font-tamil leading-tight">${letter}</span>
-                  <span class="text-[10px] sm:text-[11px] text-amber-700 dark:text-amber-400 font-semibold mt-1">
+                  <span class="text-2xl sm:text-3xl font-tamil leading-tight">${letter}</span>
+                  <span class="text-[10px] text-amber-700 dark:text-amber-400 font-semibold mt-1">
                     ${word.breakdowns && word.breakdowns[idx] ? word.breakdowns[idx].sound : ''}
                   </span>
                 </button>
@@ -91,7 +91,7 @@ export class TrainerComponent {
           </div>
 
           <!-- Phonics Anatomy Formula Box -->
-          <div id="breakdown-box" class="bg-amber-50/70 dark:bg-slate-800/80 border border-amber-200 dark:border-slate-700 rounded-xl px-4 py-2.5 text-xs text-amber-900 dark:text-amber-200 max-w-md mx-auto w-full transition-all text-center">
+          <div id="breakdown-box" class="bg-amber-50/70 dark:bg-slate-800/80 border border-amber-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-amber-900 dark:text-amber-200 max-w-full mx-auto w-full transition-all text-center">
             <span class="font-bold">Phonics Tip:</span> Tap any letter above to hear its sound!
           </div>
 
@@ -116,20 +116,20 @@ export class TrainerComponent {
         </div>
 
         <!-- Navigation Buttons: ALWAYS VISIBLE AT BOTTOM -->
-        <div class="flex items-center justify-between gap-3 pt-2">
-          <button id="btn-prev" class="bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 active:scale-95 text-slate-700 dark:text-slate-200 font-bold px-5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm disabled:opacity-40 transition-all cursor-pointer" ${this.currentIndex === 0 ? 'disabled' : ''}>
-            ← Previous
+        <div class="flex items-center justify-between gap-2 sm:gap-3 pt-2 w-full">
+          <button id="btn-prev" class="bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 active:scale-95 text-slate-700 dark:text-slate-200 font-bold px-3 sm:px-5 py-2 sm:py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm disabled:opacity-40 transition-all cursor-pointer text-xs sm:text-sm whitespace-nowrap" ${this.currentIndex === 0 ? 'disabled' : ''}>
+            ← Prev
           </button>
 
-          <button id="btn-master" class="flex-1 max-w-xs font-bold py-2.5 rounded-xl shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer
+          <button id="btn-master" class="flex-1 font-bold py-2 sm:py-2.5 rounded-xl shadow-md transition-all flex items-center justify-center gap-1.5 cursor-pointer text-xs sm:text-sm truncate
             ${isMastered 
               ? 'bg-emerald-600 text-white hover:bg-emerald-700' 
               : 'bg-emerald-500 text-white hover:bg-emerald-600 shadow-emerald-200 dark:shadow-none'}"
           >
-            <span>${isMastered ? '✓ Mastered (+20 XP)' : 'I Can Read This!'}</span>
+            <span class="truncate">${isMastered ? '✓ Mastered' : 'I Can Read This!'}</span>
           </button>
 
-          <button id="btn-next" class="bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 active:scale-95 text-slate-700 dark:text-slate-200 font-bold px-5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm disabled:opacity-40 transition-all cursor-pointer" ${this.currentIndex === this.activeWords.length - 1 ? 'disabled' : ''}>
+          <button id="btn-next" class="bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 active:scale-95 text-slate-700 dark:text-slate-200 font-bold px-3 sm:px-5 py-2 sm:py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm disabled:opacity-40 transition-all cursor-pointer text-xs sm:text-sm whitespace-nowrap" ${this.currentIndex === this.activeWords.length - 1 ? 'disabled' : ''}>
             Next →
           </button>
         </div>
