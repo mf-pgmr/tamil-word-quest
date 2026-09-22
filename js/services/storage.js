@@ -3,11 +3,13 @@
 const STORAGE_KEY = "tamil_word_quest_data_v1";
 
 const DEFAULT_DATA = {
+  theme: "system", // "system", "dark", "light"
   xp: 0,
   streak: 0,
   bestStreak: 0,
   lastActiveDate: null,
   showTranslit: true,
+  currentLevel: 1,
   masteredWords: [], // Array of word IDs
   badges: [],
   levelProgress: {
@@ -19,11 +21,13 @@ const DEFAULT_DATA = {
 };
 
 export const BADGE_DEFINITIONS = [
-  { id: "first_word", title: "🌱 First Step", desc: "Read your very first Tamil word!" },
-  { id: "word_10", title: "📚 Reader 10", desc: "Mastered 10 Tamil words!" },
-  { id: "streak_5", title: "🔥 On Fire", desc: "Get 5 quiz questions right in a row!" },
-  { id: "spelling_champ", title: "✍️ Letter Builder", desc: "Spell 5 words correctly in Scramble Mode!" },
-  { id: "level1_master", title: "🌟 Level 1 Hero", desc: "Completed all Level 1 root words!" }
+  { id: "first_word", title: "First Step", desc: "Read your very first Tamil word!" },
+  { id: "word_10", title: "Reader 10", desc: "Mastered 10 Tamil words!" },
+  { id: "word_25", title: "Reader 25", desc: "Mastered 25 Tamil words!" },
+  { id: "word_50", title: "Tamil Scholar", desc: "Mastered 50 Tamil words!" },
+  { id: "streak_5", title: "On Fire", desc: "Get 5 quiz questions right in a row!" },
+  { id: "spelling_champ", title: "Letter Builder", desc: "Spell 5 words correctly in Scramble Mode!" },
+  { id: "level1_master", title: "Level 1 Hero", desc: "Completed all Level 1 root words!" }
 ];
 
 class StorageService {
@@ -52,6 +56,17 @@ class StorageService {
     }
   }
 
+  setTheme(theme) {
+    this.data.theme = theme;
+    this.save();
+    return this.data.theme;
+  }
+
+  setCurrentLevel(lvl) {
+    this.data.currentLevel = lvl;
+    this.save();
+  }
+
   checkStreak() {
     const today = new Date().toDateString();
     if (!this.data.lastActiveDate) {
@@ -62,7 +77,7 @@ class StorageService {
     }
 
     if (this.data.lastActiveDate === today) {
-      return; // Already counted today
+      return;
     }
 
     const yesterday = new Date(Date.now() - 86400000).toDateString();
@@ -109,10 +124,15 @@ class StorageService {
     if (this.data.masteredWords.length >= 10) {
       this.unlockBadge("word_10");
     }
+    if (this.data.masteredWords.length >= 25) {
+      this.unlockBadge("word_25");
+    }
+    if (this.data.masteredWords.length >= 50) {
+      this.unlockBadge("word_50");
+    }
   }
 
   getLearnerLevel() {
-    // Level formula: each level is 100 XP
     return Math.floor(this.data.xp / 100) + 1;
   }
 
@@ -123,7 +143,8 @@ class StorageService {
   }
 
   resetProgress() {
-    this.data = { ...DEFAULT_DATA };
+    const curTheme = this.data.theme;
+    this.data = { ...DEFAULT_DATA, theme: curTheme };
     this.save();
   }
 }
