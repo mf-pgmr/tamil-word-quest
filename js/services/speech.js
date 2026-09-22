@@ -3,15 +3,16 @@
 class SoundService {
   constructor() {
     this.audioCtx = null;
+    this.currentAudio = null;
+    this.audioCache = new Map();
     this.synth = window.speechSynthesis;
     this.tamilVoice = null;
-    this.speechRate = 0.85; // Slightly slower than 1.0 for better clarity for learners
+    this.speechRate = 0.9;
     this.initAudio();
     this.initVoices();
   }
 
   initAudio() {
-    // Lazy initialize AudioContext on user gesture
     const startAudio = () => {
       if (!this.audioCtx) {
         const AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -22,10 +23,15 @@ class SoundService {
       if (this.audioCtx && this.audioCtx.state === "suspended") {
         this.audioCtx.resume();
       }
+      if (this.synth && this.synth.paused) {
+        this.synth.resume();
+      }
       window.removeEventListener("click", startAudio);
+      window.removeEventListener("touchstart", startAudio);
       window.removeEventListener("keydown", startAudio);
     };
     window.addEventListener("click", startAudio);
+    window.addEventListener("touchstart", startAudio);
     window.addEventListener("keydown", startAudio);
   }
 
@@ -34,8 +40,9 @@ class SoundService {
 
     const findVoice = () => {
       const voices = this.synth.getVoices();
-      // Look for Tamil voice (ta-IN, ta-LK, or containing Tamil)
-      this.tamilVoice = voices.find(v => v.lang.startsWith("ta") || v.lang.includes("Tamil")) || null;
+      this.tamilVoice = voices.find(v => 
+        v.lang === "ta-IN" || v.lang === "ta_IN" || v.lang.startsWith("ta") || v.name.toLowerCase().includes("tamil")
+      ) || null;
     };
 
     findVoice();
@@ -44,30 +51,85 @@ class SoundService {
     }
   }
 
-  speak(text, rate = null) {
-    if (!this.synth) return;
-    this.synth.cancel(); // Stop any pending speech
+  speak(text, rate = 0.9, onEnd = null) {
+    if (!text) return;
 
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = "ta-IN";
-    utterance.rate = rate || this.speechRate;
-    utterance.pitch = 1.05;
-
-    if (this.tamilVoice) {
-      utterance.voice = this.tamilVoice;
+    // Stop any currently playing audio
+    if (this.currentAudio) {
+      this.currentAudio.pause();
+      this.currentAudio.currentTime = 0;
+      this.currentAudio = null;
     }
 
-    this.synth.speak(utterance);
+    // Method 1: High-fidelity Native Tamil Voice Engine (works across all OS without needing OS language packs)
+    const ttsUrl = `https://translate.google.com/translate_tts?ie=UTF-8&tl=ta&client=tw-ob&q=${encodeURIComponent(text)}`;
+    const audio = new Audio(ttsUrl);
+    this.currentAudio = audio;
+    audio.playbackRate = rate || 0.9;
+
+    audio.onended = () => {
+      if (this.currentAudio === audio) this.currentAudio = null;
+      if (onEnd) onEnd();
+    };
+
+    const playPromise = audio.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(err => {
+        console.warn("Native TTS audio failed, falling back to Web Speech API:", err);
+        this.speakWithWebSpeech(text, rate, onEnd);
+      });
+    }
   }
 
-  speakSlow(text) {
-    this.speak(text, 0.6);
-  }
+  speakWithWebSpeech(text, rate = 0.9, onEnd = null) {
+    if (!this.synth) return;
 
-  // Web Audio Synthesized Sound Effects
-  playTone(freq, type = "sine", duration = 0.15, startTimeOffset = 0, gainLevel = 0.15) {
-    if (!this.audioCtx) return;
     try {
+      this.synth.cancel();
+      if (this.synth.paused) {
+        this.synth.resume();
+      }
+
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = "ta-IN";
+      utterance.rate = rate;
+      utterance.pitch = 1.0;
+
+      if (this.tamilVoice) {
+        utterance.voice = this.tamilVoice;
+      }
+
+      utterance.onend = () => {
+        if (onEnd) onEnd();
+      };
+
+      utterance.onerror = (e) => {
+        console.warn("SpeechSynthesis error:", e);
+      };
+
+      this.synth.speak(utterance);
+    } catch (e) {
+      console.warn("Speech error:", e);
+    }
+  }
+
+  speakSlow(text, onEnd = null) {
+    this.speak(text, 0.65, onEnd);
+  }
+
+  // Web Audio Synthesized Sound Effects (100% Offline and responsive)
+  playTone(freq, type = "sine", duration = 0.15, startTimeOffset = 0, gainLevel = 0.15) {
+    if (!this.audioCtx) {
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      if (AudioContext) this.audioCtx = new AudioContext();
+    }
+    if (!this.audioCtx) return;
+
+    try {
+      if (this.audioCtx.state === "suspended") {
+        this.audioCtx.resume();
+      }
+
       const osc = this.audioCtx.createOscillator();
       const gain = this.audioCtx.createGain();
 
@@ -83,7 +145,7 @@ class SoundService {
       osc.start(this.audioCtx.currentTime + startTimeOffset);
       osc.stop(this.audioCtx.currentTime + startTimeOffset + duration);
     } catch (e) {
-      console.warn("Audio error:", e);
+      console.warn("Tone error:", e);
     }
   }
 
@@ -92,7 +154,6 @@ class SoundService {
   }
 
   playSuccess() {
-    // Cheerful ascending arpeggio (C5, E5, G5, C6)
     const notes = [523.25, 659.25, 783.99, 1046.50];
     notes.forEach((freq, idx) => {
       this.playTone(freq, "triangle", 0.18, idx * 0.08, 0.2);
@@ -100,7 +161,6 @@ class SoundService {
   }
 
   playError() {
-    // Gentle buzz/wobble for retry
     if (!this.audioCtx) return;
     try {
       const osc = this.audioCtx.createOscillator();
@@ -122,7 +182,6 @@ class SoundService {
   }
 
   playFanfare() {
-    // Triumphant level up fanfare
     const notes = [
       { f: 523.25, d: 0.12, t: 0 },
       { f: 659.25, d: 0.12, t: 0.12 },

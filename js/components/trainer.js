@@ -1,4 +1,4 @@
-﻿// Flashcard & Phonics Reading Trainer Component
+// Flashcard & Phonics Reading Trainer Component
 import { VOCABULARY, LEVELS } from "../data/words.js";
 import { sound } from "../services/speech.js";
 import { storage } from "../services/storage.js";
@@ -191,7 +191,14 @@ export class TrainerComponent {
     const speakBtn = this.container.querySelector("#btn-speak-word");
     if (speakBtn) {
       speakBtn.addEventListener("click", () => {
-        sound.speak(word.tamil);
+        sound.playPop();
+        speakBtn.classList.add("ring-4", "ring-indigo-300", "animate-pulse");
+        sound.speak(word.tamil, 0.9, () => {
+          speakBtn.classList.remove("ring-4", "ring-indigo-300", "animate-pulse");
+        });
+        setTimeout(() => {
+          speakBtn.classList.remove("ring-4", "ring-indigo-300", "animate-pulse");
+        }, 1500);
       });
     }
 
@@ -199,7 +206,14 @@ export class TrainerComponent {
     const speakSlowBtn = this.container.querySelector("#btn-speak-slow");
     if (speakSlowBtn) {
       speakSlowBtn.addEventListener("click", () => {
-        sound.speakSlow(word.tamil);
+        sound.playPop();
+        speakSlowBtn.classList.add("ring-4", "ring-slate-300", "animate-pulse");
+        sound.speakSlow(word.tamil, () => {
+          speakSlowBtn.classList.remove("ring-4", "ring-slate-300", "animate-pulse");
+        });
+        setTimeout(() => {
+          speakSlowBtn.classList.remove("ring-4", "ring-slate-300", "animate-pulse");
+        }, 2200);
       });
     }
 
