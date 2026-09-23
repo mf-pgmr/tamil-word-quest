@@ -23,7 +23,7 @@ export class MissingQuizComponent {
   }
 
   initQuiz() {
-    const words = VOCABULARY.filter(w => w.level === this.currentLevel && w.letters.length >= 2);
+    const words = storage.getAllWords().filter(w => w.level === this.currentLevel && w.letters.length >= 2);
     this.questions = [...words].sort(() => 0.5 - Math.random());
     this.currentIndex = 0;
     this.streak = 0;
@@ -39,7 +39,7 @@ export class MissingQuizComponent {
     this.hiddenIdx = Math.floor(Math.random() * currentWord.letters.length);
     const correctLetter = currentWord.letters[this.hiddenIdx];
 
-    const distractorPool = VOCABULARY
+    const distractorPool = storage.getAllWords()
       .filter(w => w.level === this.currentLevel)
       .flatMap(w => w.letters)
       .filter(l => l !== correctLetter);

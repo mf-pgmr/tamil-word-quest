@@ -1,5 +1,6 @@
 // Speech and Web Audio Sound Effects Service with bundled local MP3 audio
 import { VOCABULARY } from "../data/words.js";
+import { storage } from "./storage.js";
 
 class SoundService {
   constructor() {
@@ -91,8 +92,17 @@ class SoundService {
   speak(textOrId, rate = 0.95, onEnd = null) {
     if (!textOrId) return;
 
+    // 1. Direct handling for custom word IDs or explicit text
+    if (typeof textOrId === "string" && textOrId.startsWith("custom_")) {
+      this.speakWithWebSpeech(textOrId, rate, onEnd);
+      return;
+    }
+
     const audioUrl = this.getAudioUrl(textOrId);
-    if (!audioUrl) return;
+    if (!audioUrl) {
+      this.speakWithWebSpeech(textOrId, rate, onEnd);
+      return;
+    }
 
     // Safely stop previous audio without breaking on unfulfilled promises
     if (this.currentAudio) {
@@ -115,18 +125,24 @@ class SoundService {
     const playPromise = audio.play();
     if (playPromise !== undefined) {
       playPromise.catch(err => {
-        // AbortError is normal when rapid user clicks interrupt previous audio
-        // NotAllowedError happens if autoplay policy restricts sound before interaction
         if (err.name === "AbortError" || err.name === "NotAllowedError") return;
-        
-        console.warn(`Local audio failed for ${textOrId} (${audioUrl}), falling back:`, err);
+        // Smoothly fall back to Web Speech synthesis
         this.speakWithWebSpeech(textOrId, rate, onEnd);
       });
     }
   }
 
   speakWithWebSpeech(text, rate = 0.9, onEnd = null) {
-    if (!this.synth) return;
+    if (!this.synth || !text) return;
+
+    let spokenText = text;
+    if (typeof text === "string" && text.startsWith("custom_")) {
+      const allWords = storage.getAllWords ? storage.getAllWords() : [];
+      const found = allWords.find(w => w.id === text);
+      if (found && found.tamil) {
+        spokenText = found.tamil;
+      }
+    }
 
     try {
       this.synth.cancel();
@@ -134,7 +150,7 @@ class SoundService {
         this.synth.resume();
       }
 
-      const utterance = new SpeechSynthesisUtterance(text);
+      const utterance = new SpeechSynthesisUtterance(spokenText);
       utterance.lang = "ta-IN";
       utterance.rate = rate;
       utterance.pitch = 1.0;

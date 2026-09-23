@@ -1,4 +1,5 @@
-﻿// LocalStorage Persistence & Gamification Progress
+// LocalStorage Persistence & Gamification Progress
+import { VOCABULARY } from "../data/words.js";
 
 const STORAGE_KEY = "tamil_word_quest_data_v1";
 
@@ -11,6 +12,7 @@ const DEFAULT_DATA = {
   showTranslit: true,
   currentLevel: 1,
   masteredWords: [], // Array of word IDs
+  customWords: [],   // Array of parent-added custom word objects
   badges: [],
   levelProgress: {
     1: { stars: 0, quizHighScore: 0 },
@@ -142,9 +144,69 @@ class StorageService {
     return this.data.showTranslit;
   }
 
+  getCustomWords() {
+    return this.data.customWords || [];
+  }
+
+  getAllWords() {
+    return [...VOCABULARY, ...(this.data.customWords || [])];
+  }
+
+  addCustomWord(word) {
+    if (!this.data.customWords) {
+      this.data.customWords = [];
+    }
+    // Ensure unique ID
+    if (!word.id) {
+      word.id = "custom_" + Date.now();
+    }
+    // Prevent duplicates by ID or Tamil word
+    const existingIdx = this.data.customWords.findIndex(w => w.id === word.id || w.tamil === word.tamil);
+    if (existingIdx >= 0) {
+      this.data.customWords[existingIdx] = word;
+    } else {
+      this.data.customWords.push(word);
+    }
+    this.save();
+    return word;
+  }
+
+  deleteCustomWord(wordId) {
+    if (!this.data.customWords) return false;
+    const initialLen = this.data.customWords.length;
+    this.data.customWords = this.data.customWords.filter(w => w.id !== wordId);
+    if (this.data.masteredWords.includes(wordId)) {
+      this.data.masteredWords = this.data.masteredWords.filter(id => id !== wordId);
+    }
+    this.save();
+    return this.data.customWords.length < initialLen;
+  }
+
+  exportCustomWordsJSON() {
+    return JSON.stringify(this.data.customWords || [], null, 2);
+  }
+
+  importCustomWordsJSON(jsonStr) {
+    try {
+      const parsed = JSON.parse(jsonStr);
+      if (!Array.isArray(parsed)) throw new Error("JSON must be an array of words");
+      let count = 0;
+      parsed.forEach(w => {
+        if (w.tamil && w.english && Array.isArray(w.letters)) {
+          this.addCustomWord(w);
+          count++;
+        }
+      });
+      return { success: true, count };
+    } catch (e) {
+      return { success: false, error: e.message };
+    }
+  }
+
   resetProgress() {
     const curTheme = this.data.theme;
-    this.data = { ...DEFAULT_DATA, theme: curTheme };
+    const curCustom = this.data.customWords || [];
+    this.data = { ...DEFAULT_DATA, theme: curTheme, customWords: curCustom };
     this.save();
   }
 }

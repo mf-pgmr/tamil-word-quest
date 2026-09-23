@@ -1,4 +1,4 @@
-﻿// Curated Tamil vocabulary database with 80 words across 4 progressive tiers (No emojis)
+// Curated Tamil vocabulary database with 80 words across 4 progressive tiers (No emojis)
 export const LEVELS = [
   {
     id: 1,
@@ -439,3 +439,97 @@ export const VOCABULARY = [
     translit: "Koo-du", english: "Bird Nest", hint: "Cozy twigs where birds lay eggs and raise their chicks."
   }
 ];
+
+// Helper to correctly segment Tamil words into grapheme clusters (letter tiles)
+export function splitTamilLetters(text) {
+  if (!text) return [];
+  const clean = text.trim();
+  if (typeof Intl !== "undefined" && Intl.Segmenter) {
+    const segmenter = new Intl.Segmenter("ta", { granularity: "grapheme" });
+    return Array.from(segmenter.segment(clean), s => s.segment).filter(s => s.trim().length > 0);
+  }
+  const matches = clean.match(/[\u0B80-\u0BFF][\u0BBE-\u0BCD\u0BD7]*/g);
+  return matches ? matches.filter(s => s.trim().length > 0) : Array.from(clean);
+}
+
+// Letter phonics mapping dictionary
+const TAMIL_PHONICS = {
+  // Pure vowels
+  "அ": { root: "Vowel (உயிர்)", sound: "A" },
+  "ஆ": { root: "Long Vowel (நெடில்)", sound: "Aa" },
+  "இ": { root: "Vowel (உயிர்)", sound: "I" },
+  "ஈ": { root: "Long Vowel (நெடில்)", sound: "Ee" },
+  "உ": { root: "Vowel (உயிர்)", sound: "U" },
+  "ஊ": { root: "Long Vowel (நெடில்)", sound: "Oo" },
+  "எ": { root: "Vowel (உயிர்)", sound: "E" },
+  "ஏ": { root: "Long Vowel (நெடில்)", sound: "Ae" },
+  "ஐ": { root: "Vowel (உயிர்)", sound: "Ai" },
+  "ஒ": { root: "Vowel (உயிர்)", sound: "O" },
+  "ஓ": { root: "Long Vowel (நெடில்)", sound: "Oa" },
+  "ஔ": { root: "Vowel (உயிர்)", sound: "Au" },
+  "ஃ": { root: "Ayutham (ஆய்தம்)", sound: "Akh" }
+};
+
+export function autoGeneratePhonics(letters) {
+  if (!letters || !letters.length) return { breakdowns: [], translit: "" };
+
+  const breakdowns = letters.map(letter => {
+    // 1. Check known vowels
+    if (TAMIL_PHONICS[letter]) {
+      return { letter, root: TAMIL_PHONICS[letter].root, sound: TAMIL_PHONICS[letter].sound };
+    }
+
+    // 2. Pure consonant with Pulli (்)
+    if (letter.endsWith("\u0BCD")) {
+      return { letter, root: "Pure Consonant (மெய்)", sound: estimateConsonantSound(letter) };
+    }
+
+    // 3. Vowel compound
+    return { letter, root: "Consonant + Vowel", sound: estimateSyllableSound(letter) };
+  });
+
+  const translit = breakdowns.map(b => b.sound).join("-");
+  return { breakdowns, translit };
+}
+
+function estimateConsonantSound(char) {
+  const base = char.charAt(0);
+  const map = {
+    "க": "K", "ங": "Ng", "ச": "S", "ஞ": "Nj", "ட": "T", "ண": "N",
+    "த": "Th", "ந": "N", "ப": "P", "ம": "M", "ய": "Y", "ர": "R",
+    "ல": "L", "வ": "V", "ழ": "Zh", "ள": "L", "ற": "R", "ன": "N",
+    "ஜ": "J", "ஷ": "Sh", "ஸ": "S", "ஹ": "H"
+  };
+  return map[base] || "C";
+}
+
+function estimateSyllableSound(char) {
+  const base = char.charAt(0);
+  const sign = char.slice(1);
+  const consMap = {
+    "க": "k", "ங": "ng", "ச": "s", "ஞ": "nj", "ட": "d", "ண": "n",
+    "த": "th", "ந": "n", "ப": "p", "ம": "m", "ய": "y", "ர": "r",
+    "ல": "l", "வ": "v", "ழ": "zh", "ள": "l", "ற": "r", "ன": "n",
+    "ஜ": "j", "ஷ": "sh", "ஸ": "s", "ஹ": "h"
+  };
+  const vowelMap = {
+    "": "a",
+    "\u0BBE": "aa", // ா
+    "\u0BBF": "i",  // ி
+    "\u0BC0": "ee", // ீ
+    "\u0BC1": "u",  // ு
+    "\u0BC2": "oo", // ூ
+    "\u0BC6": "e",  // ெ
+    "\u0BC7": "ae", // ே
+    "\u0BC8": "ai", // ை
+    "\u0BCA": "o",  // ொ
+    "\u0BCB": "oa", // ோ
+    "\u0BCC": "au"  // ௌ
+  };
+
+  const c = consMap[base] || "t";
+  const v = vowelMap[sign] !== undefined ? vowelMap[sign] : "a";
+  const res = c + v;
+  return res.charAt(0).toUpperCase() + res.slice(1);
+}
+

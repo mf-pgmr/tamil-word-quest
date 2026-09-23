@@ -14,7 +14,7 @@ export class TrainerComponent {
   }
 
   filterWords() {
-    this.activeWords = VOCABULARY.filter(w => w.level === this.currentLevel);
+    this.activeWords = storage.getAllWords().filter(w => w.level === this.currentLevel);
     this.currentIndex = 0;
   }
 

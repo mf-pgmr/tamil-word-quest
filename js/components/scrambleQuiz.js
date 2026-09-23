@@ -24,7 +24,7 @@ export class ScrambleQuizComponent {
   }
 
   initQuiz() {
-    const words = VOCABULARY.filter(w => w.level === this.currentLevel);
+    const words = storage.getAllWords().filter(w => w.level === this.currentLevel);
     this.quizList = [...words].sort(() => 0.5 - Math.random());
     this.currentIndex = 0;
     this.streak = 0;

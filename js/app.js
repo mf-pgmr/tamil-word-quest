@@ -6,6 +6,7 @@ import { TrainerComponent } from "./components/trainer.js";
 import { ScrambleQuizComponent } from "./components/scrambleQuiz.js";
 import { ListenQuizComponent } from "./components/listenQuiz.js";
 import { MissingQuizComponent } from "./components/missingQuiz.js";
+import { ParentComponent } from "./components/parent.js";
 
 class App {
   constructor() {
@@ -16,6 +17,7 @@ class App {
     this.scramble = null;
     this.listen = null;
     this.missing = null;
+    this.parent = null;
 
     this.init();
   }
@@ -32,8 +34,21 @@ class App {
     this.scramble = new ScrambleQuizComponent(this.contentEl, updateStatsCb);
     this.listen = new ListenQuizComponent(this.contentEl, updateStatsCb);
     this.missing = new MissingQuizComponent(this.contentEl, updateStatsCb);
+    this.parent = new ParentComponent(this.contentEl, () => this.onWordsChanged());
 
-    this.switchTab("trainer");
+    const checkHash = () => {
+      const h = window.location.hash.toLowerCase();
+      if (h === "#/parent" || h === "#parent") {
+        this.switchTab("parent");
+      }
+    };
+    window.addEventListener("hashchange", checkHash);
+
+    if (window.location.hash.toLowerCase() === "#/parent" || window.location.hash.toLowerCase() === "#parent") {
+      this.switchTab("parent");
+    } else {
+      this.switchTab("trainer");
+    }
   }
 
   initTheme() {
@@ -180,13 +195,39 @@ class App {
     const mStreak = document.getElementById("mobile-stat-streak");
     const mXp = document.getElementById("mobile-stat-xp");
 
+    const allWords = storage.getAllWords();
+    const totalWords = allWords.length;
+
     if (xpEl) xpEl.textContent = `${storage.data.xp} XP`;
     if (streakEl) streakEl.textContent = `${storage.data.streak} d`;
     if (levelEl) levelEl.textContent = `Lvl ${storage.getLearnerLevel()}`;
-    if (wordsCountEl) wordsCountEl.textContent = `${storage.data.masteredWords.length} / ${VOCABULARY.length} Words`;
+    if (wordsCountEl) wordsCountEl.textContent = `${storage.data.masteredWords.length} / ${totalWords} Words`;
 
     if (mStreak) mStreak.textContent = `${storage.data.streak} d`;
     if (mXp) mXp.textContent = `${storage.data.xp} XP`;
+
+    // Update level tier buttons count
+    document.querySelectorAll(".sidebar-level-btn").forEach(btn => {
+      const lvl = parseInt(btn.dataset.level, 10);
+      const countEl = btn.querySelector("span:last-child");
+      if (countEl) {
+        const count = allWords.filter(w => w.level === lvl).length;
+        countEl.textContent = `${count} words`;
+      }
+    });
+  }
+
+  onWordsChanged() {
+    this.updateHeaderStats();
+    if (this.activeTab === "trainer") {
+      this.trainer.filterWords();
+    } else if (this.activeTab === "scramble") {
+      this.scramble.initQuiz();
+    } else if (this.activeTab === "listen") {
+      this.listen.initQuiz();
+    } else if (this.activeTab === "missing") {
+      this.missing.initQuiz();
+    }
   }
 
   setupSidebarNav() {
@@ -262,20 +303,30 @@ class App {
       }
     });
 
-    if (tab === "trainer") {
-      this.trainer.setLevel(this.currentLevel);
-      this.trainer.render();
-    } else if (tab === "scramble") {
-      this.scramble.setLevel(this.currentLevel);
-      this.scramble.render();
-    } else if (tab === "listen") {
-      this.listen.setLevel(this.currentLevel);
-      this.listen.render();
-    } else if (tab === "missing") {
-      this.missing.setLevel(this.currentLevel);
-      this.missing.render();
-    } else if (tab === "progress") {
-      this.renderProgressView();
+    if (tab === "parent") {
+      if (window.location.hash !== "#/parent") {
+        window.location.hash = "#/parent";
+      }
+      this.parent.render();
+    } else {
+      if (window.location.hash === "#/parent" || window.location.hash === "#parent") {
+        history.replaceState(null, "", window.location.pathname + window.location.search);
+      }
+      if (tab === "trainer") {
+        this.trainer.setLevel(this.currentLevel);
+        this.trainer.render();
+      } else if (tab === "scramble") {
+        this.scramble.setLevel(this.currentLevel);
+        this.scramble.render();
+      } else if (tab === "listen") {
+        this.listen.setLevel(this.currentLevel);
+        this.listen.render();
+      } else if (tab === "missing") {
+        this.missing.setLevel(this.currentLevel);
+        this.missing.render();
+      } else if (tab === "progress") {
+        this.renderProgressView();
+      }
     }
   }
 
@@ -289,7 +340,7 @@ class App {
         <!-- Summary Card -->
         <div class="bg-gradient-to-r from-indigo-600 to-purple-700 rounded-3xl p-5 text-white shadow-xl text-center mb-3">
           <h2 class="text-2xl font-black">Learner Level ${storage.getLearnerLevel()}</h2>
-          <p class="text-xs text-indigo-100 mt-0.5">Keep reading daily to master all 80 Tamil words</p>
+          <p class="text-xs text-indigo-100 mt-0.5">Keep reading daily to master all ${storage.getAllWords().length} Tamil words</p>
 
           <div class="grid grid-cols-3 gap-2 mt-4">
             <div class="bg-white/10 rounded-2xl p-2.5 border border-white/20">

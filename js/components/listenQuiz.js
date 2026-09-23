@@ -23,7 +23,7 @@ export class ListenQuizComponent {
   }
 
   initQuiz(autoPlay = false) {
-    const words = VOCABULARY.filter(w => w.level === this.currentLevel);
+    const words = storage.getAllWords().filter(w => w.level === this.currentLevel);
     this.questions = [...words].sort(() => 0.5 - Math.random());
     this.currentIndex = 0;
     this.streak = 0;
@@ -36,7 +36,7 @@ export class ListenQuizComponent {
     if (this.currentIndex >= this.questions.length) return;
 
     const currentWord = this.questions[this.currentIndex];
-    const allOtherWords = VOCABULARY.filter(w => w.id !== currentWord.id);
+    const allOtherWords = storage.getAllWords().filter(w => w.id !== currentWord.id);
     const shuffledOthers = [...allOtherWords].sort(() => 0.5 - Math.random()).slice(0, 3);
     this.options = [currentWord, ...shuffledOthers].sort(() => 0.5 - Math.random());
 
