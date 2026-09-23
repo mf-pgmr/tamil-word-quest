@@ -128,8 +128,8 @@ export const VOCABULARY = [
     translit: "An-nan", english: "Elder Brother", hint: "An older brother in the family."
   },
   {
-    id: "l1_20", level: 1, tamil: "வனம்", letters: ["வ", "ந", "ம்"],
-    breakdowns: [{ letter: "வ", root: "வ் + அ", sound: "Va" }, { letter: "ந", root: "ந் + அ", sound: "Nam" }, { letter: "ம்", root: "Pure Consonant (மெய்)", sound: "M" }],
+    id: "l1_20", level: 1, tamil: "வனம்", letters: ["வ", "ன", "ம்"],
+    breakdowns: [{ letter: "வ", root: "வ் + அ", sound: "Va" }, { letter: "ன", root: "ன் + அ", sound: "Na" }, { letter: "ம்", root: "Pure Consonant (மெய்)", sound: "M" }],
     translit: "Va-nam", english: "Forest / Woods", hint: "A peaceful woodland full of tall green trees."
   },
 
