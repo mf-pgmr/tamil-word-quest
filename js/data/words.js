@@ -170,8 +170,8 @@ export const VOCABULARY = [
     translit: "Maa-du", english: "Cow / Ox", hint: "A gentle farm animal that grazes in green pastures."
   },
   {
-    id: "l2_8", level: 2, tamil: "வானம்", letters: ["வா", "ந", "ம்"],
-    breakdowns: [{ letter: "வா", root: "வ் + ஆ", sound: "Vaa" }, { letter: "ந", root: "ந் + அ", sound: "Na" }, { letter: "ம்", root: "Pure Consonant (மெய்)", sound: "M" }],
+    id: "l2_8", level: 2, tamil: "வானம்", letters: ["வா", "ன", "ம்"],
+    breakdowns: [{ letter: "வா", root: "வ் + ஆ", sound: "Vaa" }, { letter: "ன", root: "ன் + அ", sound: "Na" }, { letter: "ம்", root: "Pure Consonant (மெய்)", sound: "M" }],
     translit: "Vaa-nam", english: "Sky", hint: "The expansive blue space above us."
   },
   {
@@ -307,8 +307,8 @@ export const VOCABULARY = [
     translit: "Ki-na-ru", english: "Water Well", hint: "Deep stone well where fresh water is drawn with a bucket."
   },
   {
-    id: "l3_15", level: 3, tamil: "பனி", letters: ["ப", "நி"],
-    breakdowns: [{ letter: "ப", root: "ப் + அ", sound: "Pa" }, { letter: "நி", root: "ந் + இ", sound: "Ni" }],
+    id: "l3_15", level: 3, tamil: "பனி", letters: ["ப", "னி"],
+    breakdowns: [{ letter: "ப", root: "ப் + அ", sound: "Pa" }, { letter: "னி", root: "ன் + இ", sound: "Ni" }],
     translit: "Pa-ni", english: "Mist / Snow", hint: "Cold dewy mist on winter mornings."
   },
   {
@@ -317,8 +317,8 @@ export const VOCABULARY = [
     translit: "Kee-rai", english: "Spinach / Greens", hint: "Healthy green leafy vegetables full of vitamins."
   },
   {
-    id: "l3_17", level: 3, tamil: "சீனி", letters: ["சீ", "நி"],
-    breakdowns: [{ letter: "சீ", root: "ச் + ஈ", sound: "See" }, { letter: "நி", root: "ந் + இ", sound: "Ni" }],
+    id: "l3_17", level: 3, tamil: "சீனி", letters: ["சீ", "னி"],
+    breakdowns: [{ letter: "சீ", root: "ச் + ஈ", sound: "See" }, { letter: "னி", root: "ன் + இ", sound: "Ni" }],
     translit: "See-ni", english: "Sugar", hint: "White sweet crystals added to milk and sweets."
   },
   {
