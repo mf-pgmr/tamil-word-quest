@@ -101,7 +101,9 @@ export class ListenQuizComponent {
                 class="quiz-choice-btn group p-3 sm:p-4 rounded-2xl border-2 border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 hover:bg-indigo-50/50 dark:hover:bg-slate-700 active:scale-95 transition-all text-center flex flex-col items-center justify-center min-h-[90px] cursor-pointer"
               >
                 <span class="text-2xl sm:text-3xl font-tamil font-black text-slate-800 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400">${opt.tamil}</span>
-                <span class="text-xs font-medium text-slate-400 dark:text-slate-500 mt-1">${opt.english}</span>
+                ${(storage.data.showMeaning !== false) ? `
+                  <span class="text-xs font-medium text-slate-400 dark:text-slate-500 mt-1">${opt.english}</span>
+                ` : ''}
               </button>
             `).join("")}
           </div>

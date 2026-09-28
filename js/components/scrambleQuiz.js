@@ -14,6 +14,7 @@ export class ScrambleQuizComponent {
     this.availableTiles = [];
     this.streak = 0;
     this.score = 0;
+    this.isMeaningPeeked = false;
   }
 
   setLevel(levelId) {
@@ -29,11 +30,13 @@ export class ScrambleQuizComponent {
     this.currentIndex = 0;
     this.streak = 0;
     this.score = 0;
+    this.isMeaningPeeked = false;
     this.loadQuestion();
   }
 
   loadQuestion() {
     if (this.currentIndex >= this.quizList.length) return;
+    this.isMeaningPeeked = false;
     const word = this.quizList[this.currentIndex];
     this.placedLetters = [];
 
@@ -85,13 +88,27 @@ export class ScrambleQuizComponent {
         <div class="bg-white dark:bg-slate-900 rounded-3xl p-5 sm:p-6 shadow-xl border-2 border-slate-100 dark:border-slate-800 text-center flex-1 flex flex-col justify-between my-1">
           
           <div>
-            <span class="text-xs uppercase font-extrabold tracking-wider text-slate-400 dark:text-slate-500">Spell in Tamil:</span>
-            <h3 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white mt-1">
-              ${word.english}
-            </h3>
-            <p class="text-xs text-slate-400 dark:text-slate-500 mt-0.5 italic">
-              "${word.hint}"
-            </p>
+            ${(storage.data.showMeaning !== false || this.isMeaningPeeked) ? `
+              <span class="text-xs uppercase font-extrabold tracking-wider text-slate-400 dark:text-slate-500">Spell in Tamil:</span>
+              <h3 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white mt-1">
+                ${word.english}
+              </h3>
+              <p class="text-xs text-slate-400 dark:text-slate-500 mt-0.5 italic">
+                "${word.hint}"
+              </p>
+              ${storage.data.showMeaning === false && this.isMeaningPeeked ? `
+                <button id="btn-peek-meaning" class="text-[10px] text-indigo-500 hover:text-indigo-600 dark:text-indigo-400 font-semibold mt-1 cursor-pointer underline">
+                  Hide meaning
+                </button>
+              ` : ''}
+            ` : `
+              <span class="text-xs uppercase font-extrabold tracking-wider text-slate-400 dark:text-slate-500">Listen & Spell in Tamil:</span>
+              <div class="my-2">
+                <button id="btn-peek-meaning" class="inline-flex items-center gap-1 text-[11px] text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 font-semibold cursor-pointer bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded-full border border-slate-200 dark:border-slate-700 transition-colors">
+                  <span>English Meaning Hidden (Tap to Peek)</span>
+                </button>
+              </div>
+            `}
           </div>
 
           <!-- Hear Audio Clue -->
@@ -162,6 +179,15 @@ export class ScrambleQuizComponent {
   }
 
   attachEvents(word) {
+    const peekBtn = this.container.querySelector("#btn-peek-meaning");
+    if (peekBtn) {
+      peekBtn.addEventListener("click", () => {
+        sound.playPop();
+        this.isMeaningPeeked = !this.isMeaningPeeked;
+        this.render();
+      });
+    }
+
     const hearBtn = this.container.querySelector("#btn-hear-word");
     if (hearBtn) {
       hearBtn.addEventListener("click", () => {

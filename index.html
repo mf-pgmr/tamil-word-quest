@@ -164,6 +164,37 @@
           <span class="text-[10px] opacity-70">20 words</span>
         </button>
       </div>
+
+      <!-- Study Aids / Learning Toggles -->
+      <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 space-y-2">
+        <div class="text-[10px] font-extrabold uppercase tracking-widest text-slate-400 dark:text-slate-500 px-1">
+          Study Aids
+        </div>
+
+        <!-- English Meaning Toggle -->
+        <label class="flex items-center justify-between p-2 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700/80 cursor-pointer select-none hover:bg-slate-100/70 dark:hover:bg-slate-800 transition-colors">
+          <div class="flex flex-col pr-2">
+            <span class="text-xs font-bold text-slate-800 dark:text-slate-200 leading-tight">English Meaning</span>
+            <span class="text-[10px] text-slate-400 dark:text-slate-500 leading-tight">Words & definitions</span>
+          </div>
+          <div class="relative inline-flex items-center">
+            <input type="checkbox" id="toggle-meaning" class="sr-only peer">
+            <div class="w-9 h-5 bg-slate-300 peer-focus:outline-none rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-4 peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-slate-600 peer-checked:bg-indigo-600"></div>
+          </div>
+        </label>
+
+        <!-- English Phonic Sound Letters Toggle -->
+        <label class="flex items-center justify-between p-2 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700/80 cursor-pointer select-none hover:bg-slate-100/70 dark:hover:bg-slate-800 transition-colors">
+          <div class="flex flex-col pr-2">
+            <span class="text-xs font-bold text-slate-800 dark:text-slate-200 leading-tight">Phonic Sounds</span>
+            <span class="text-[10px] text-slate-400 dark:text-slate-500 leading-tight">Letter sound letters</span>
+          </div>
+          <div class="relative inline-flex items-center">
+            <input type="checkbox" id="toggle-phonics" class="sr-only peer">
+            <div class="w-9 h-5 bg-slate-300 peer-focus:outline-none rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-4 peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-slate-600 peer-checked:bg-amber-500"></div>
+          </div>
+        </label>
+      </div>
     </div>
 
     <!-- Bottom Footer Mastered Counter -->

@@ -28,9 +28,11 @@ class App {
     this.updateHeaderStats();
     this.setupSidebarNav();
     this.setupLevelSelector();
+    this.setupStudyAids();
 
     const updateStatsCb = () => this.updateHeaderStats();
-    this.trainer = new TrainerComponent(this.contentEl, updateStatsCb);
+    const onSettingChangeCb = () => this.onSettingChanged();
+    this.trainer = new TrainerComponent(this.contentEl, updateStatsCb, onSettingChangeCb);
     this.scramble = new ScrambleQuizComponent(this.contentEl, updateStatsCb);
     this.listen = new ListenQuizComponent(this.contentEl, updateStatsCb);
     this.missing = new MissingQuizComponent(this.contentEl, updateStatsCb);
@@ -227,6 +229,49 @@ class App {
       this.listen.initQuiz();
     } else if (this.activeTab === "missing") {
       this.missing.initQuiz();
+    }
+  }
+
+  setupStudyAids() {
+    const meaningCheckbox = document.getElementById("toggle-meaning");
+    const phonicsCheckbox = document.getElementById("toggle-phonics");
+
+    this.syncStudyAidsUI();
+
+    if (meaningCheckbox) {
+      meaningCheckbox.addEventListener("change", (e) => {
+        sound.playPop();
+        storage.setMeaning(e.target.checked);
+        this.onSettingChanged();
+      });
+    }
+
+    if (phonicsCheckbox) {
+      phonicsCheckbox.addEventListener("change", (e) => {
+        sound.playPop();
+        storage.setPhonics(e.target.checked);
+        this.onSettingChanged();
+      });
+    }
+  }
+
+  syncStudyAidsUI() {
+    const meaningCheckbox = document.getElementById("toggle-meaning");
+    const phonicsCheckbox = document.getElementById("toggle-phonics");
+    if (meaningCheckbox) meaningCheckbox.checked = storage.data.showMeaning !== false;
+    if (phonicsCheckbox) phonicsCheckbox.checked = storage.data.showPhonics !== false;
+  }
+
+  onSettingChanged() {
+    this.syncStudyAidsUI();
+    if (this.activeTab === "trainer" && this.trainer) {
+      this.trainer.render();
+    } else if (this.activeTab === "scramble" && this.scramble) {
+      this.scramble.render();
+    } else if (this.activeTab === "listen" && this.listen) {
+      this.listen.render();
+    } else if (this.activeTab === "missing" && this.missing) {
+      this.missing.render();
     }
   }
 

@@ -4,18 +4,21 @@ import { sound } from "../services/speech.js";
 import { storage } from "../services/storage.js";
 
 export class TrainerComponent {
-  constructor(containerEl, onProgressUpdate) {
+  constructor(containerEl, onProgressUpdate, onSettingChange) {
     this.container = containerEl;
     this.onProgressUpdate = onProgressUpdate;
+    this.onSettingChange = onSettingChange;
     this.currentLevel = storage.data.currentLevel || 1;
     this.currentIndex = 0;
     this.activeWords = [];
+    this.isMeaningPeeked = false;
     this.filterWords();
   }
 
   filterWords() {
     this.activeWords = storage.getAllWords().filter(w => w.level === this.currentLevel);
     this.currentIndex = 0;
+    this.isMeaningPeeked = false;
   }
 
   setLevel(levelId) {
@@ -29,13 +32,16 @@ export class TrainerComponent {
     const word = this.activeWords[this.currentIndex] || this.activeWords[0];
     const isMastered = storage.data.masteredWords.includes(word.id);
     const currentLvlObj = LEVELS.find(l => l.id === this.currentLevel) || LEVELS[0];
+    const showMeaning = storage.data.showMeaning !== false;
+    const showPhonics = storage.data.showPhonics !== false;
+    const isMeaningVisible = showMeaning || this.isMeaningPeeked;
 
     this.container.innerHTML = `
       <div class="h-full min-h-0 w-full min-w-0 max-w-2xl mx-auto flex flex-col justify-between py-1 sm:py-2 select-none">
         
         <!-- Header Info Bar -->
-        <div class="flex items-center justify-between px-1 mb-2">
-          <div class="flex items-center gap-2">
+        <div class="flex items-center justify-between px-1 mb-2 gap-2 flex-wrap sm:flex-nowrap">
+          <div class="flex items-center gap-1.5 sm:gap-2">
             <span class="text-xs font-black uppercase tracking-wider text-amber-600 dark:text-amber-400">
               Level ${this.currentLevel}
             </span>
@@ -43,16 +49,24 @@ export class TrainerComponent {
             <span class="text-xs text-slate-500 dark:text-slate-400 font-semibold">
               Word ${this.currentIndex + 1} of ${this.activeWords.length}
             </span>
-          </div>
-
-          <div>
             ${isMastered ? `
-              <span class="bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 px-3 py-1 rounded-full text-xs font-bold border border-emerald-300 dark:border-emerald-800">
+              <span class="bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 px-2 py-0.5 rounded-full text-[11px] font-bold border border-emerald-300 dark:border-emerald-800 ml-1">
                 ✓ Mastered
               </span>
-            ` : `
-              <span class="text-xs text-slate-400 dark:text-slate-500">Not Mastered Yet</span>
-            `}
+            ` : ''}
+          </div>
+
+          <!-- Quick Study Aid Pills in Header -->
+          <div class="flex items-center gap-1.5">
+            <button id="pill-toggle-meaning" class="px-2 py-0.5 rounded-full text-[10px] sm:text-[11px] font-bold border transition-all cursor-pointer flex items-center gap-1 ${showMeaning ? 'bg-indigo-50 dark:bg-indigo-950/70 text-indigo-700 dark:text-indigo-300 border-indigo-200 dark:border-indigo-800' : 'bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-500 border-slate-200 dark:border-slate-700'}" title="Toggle English Meaning">
+              <span>Meaning:</span>
+              <span class="font-extrabold">${showMeaning ? 'ON' : 'OFF'}</span>
+            </button>
+
+            <button id="pill-toggle-phonics" class="px-2 py-0.5 rounded-full text-[10px] sm:text-[11px] font-bold border transition-all cursor-pointer flex items-center gap-1 ${showPhonics ? 'bg-amber-50 dark:bg-amber-950/70 text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-800' : 'bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-500 border-slate-200 dark:border-slate-700'}" title="Toggle Phonic Sound Letters">
+              <span>Phonics:</span>
+              <span class="font-extrabold">${showPhonics ? 'ON' : 'OFF'}</span>
+            </button>
           </div>
         </div>
 
@@ -60,13 +74,27 @@ export class TrainerComponent {
         <div class="bg-white dark:bg-slate-900 rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-xl border-2 border-slate-100 dark:border-slate-800 flex-1 min-w-0 flex flex-col justify-between my-1 w-full">
           
           <!-- Meaning & Category -->
-          <div class="text-center pt-1">
-            <div class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
-              ${word.english}
-            </div>
-            <div class="text-xs text-slate-400 dark:text-slate-500 italic mt-0.5">
-              "${word.hint}"
-            </div>
+          <div class="text-center pt-1 min-h-[64px] flex flex-col justify-center items-center">
+            ${isMeaningVisible ? `
+              <div class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
+                ${word.english}
+              </div>
+              <div class="text-xs text-slate-400 dark:text-slate-500 italic mt-0.5">
+                "${word.hint}"
+              </div>
+              ${!showMeaning && this.isMeaningPeeked ? `
+                <button id="btn-peek-meaning" class="text-[10px] text-indigo-500 hover:text-indigo-600 dark:text-indigo-400 font-semibold mt-0.5 cursor-pointer underline">
+                  Hide meaning
+                </button>
+              ` : ''}
+            ` : `
+              <div class="text-3xl sm:text-4xl font-black font-tamil text-slate-900 dark:text-white tracking-tight">
+                ${word.tamil}
+              </div>
+              <button id="btn-peek-meaning" class="inline-flex items-center gap-1 text-[11px] text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 font-semibold mt-1 cursor-pointer bg-slate-100 dark:bg-slate-800/80 px-2.5 py-0.5 rounded-full border border-slate-200 dark:border-slate-700/60 transition-colors">
+                <span>Show English Meaning</span>
+              </button>
+            `}
           </div>
 
           <!-- Main Interactive Letter Tiles -->
@@ -82,9 +110,11 @@ export class TrainerComponent {
                   title="Hear '${letter}'"
                 >
                   <span class="text-2xl sm:text-3xl font-tamil leading-tight">${letter}</span>
-                  <span class="text-[10px] text-amber-700 dark:text-amber-400 font-semibold mt-1">
-                    ${word.breakdowns && word.breakdowns[idx] ? word.breakdowns[idx].sound : ''}
-                  </span>
+                  ${showPhonics ? `
+                    <span class="text-[10px] text-amber-700 dark:text-amber-400 font-semibold mt-1">
+                      ${word.breakdowns && word.breakdowns[idx] ? word.breakdowns[idx].sound : ''}
+                    </span>
+                  ` : ''}
                 </button>
               `).join("")}
             </div>
@@ -106,12 +136,18 @@ export class TrainerComponent {
           </div>
 
           <!-- English Sounds / Transliteration -->
-          <div class="border-t border-slate-100 dark:border-slate-800/80 pt-2.5 text-center">
-            <span class="text-xs text-slate-400 dark:text-slate-500">English Phonics:</span>
-            <span class="font-mono font-bold text-indigo-600 dark:text-indigo-400 tracking-wider text-sm ml-1.5">
-              ${word.translit}
-            </span>
-          </div>
+          ${showPhonics ? `
+            <div class="border-t border-slate-100 dark:border-slate-800/80 pt-2.5 text-center">
+              <span class="text-xs text-slate-400 dark:text-slate-500">English Phonics:</span>
+              <span class="font-mono font-bold text-indigo-600 dark:text-indigo-400 tracking-wider text-sm ml-1.5">
+                ${word.translit}
+              </span>
+            </div>
+          ` : `
+            <div class="border-t border-slate-100 dark:border-slate-800/80 pt-2 text-center">
+              <span class="text-[11px] text-slate-400 dark:text-slate-500 italic">Pure Tamil reading mode</span>
+            </div>
+          `}
 
         </div>
 
@@ -153,21 +189,55 @@ export class TrainerComponent {
         const box = this.container.querySelector("#breakdown-box");
         if (box && word.breakdowns && word.breakdowns[idx]) {
           const b = word.breakdowns[idx];
+          const showPhonics = storage.data.showPhonics !== false;
           box.innerHTML = `
-            <div class="flex items-center justify-between text-xs">
+            <div class="flex items-center ${showPhonics ? 'justify-between' : 'justify-center'} text-xs">
               <div>
                 <span class="font-bold font-tamil text-amber-950 dark:text-amber-300 text-base">${b.letter}</span>
                 <span class="mx-1 text-slate-400">=</span>
                 <span class="font-bold text-amber-800 dark:text-amber-200">${b.root}</span>
               </div>
-              <div class="bg-amber-200/60 dark:bg-slate-700 px-2 py-0.5 rounded text-[11px] font-bold text-amber-900 dark:text-amber-300">
-                "${b.sound}"
-              </div>
+              ${showPhonics ? `
+                <div class="bg-amber-200/60 dark:bg-slate-700 px-2 py-0.5 rounded text-[11px] font-bold text-amber-900 dark:text-amber-300">
+                  "${b.sound}"
+                </div>
+              ` : ''}
             </div>
           `;
         }
       });
     });
+
+    // Quick Pill Toggles in Header
+    const pillMeaning = this.container.querySelector("#pill-toggle-meaning");
+    if (pillMeaning) {
+      pillMeaning.addEventListener("click", () => {
+        sound.playPop();
+        storage.toggleMeaning();
+        if (this.onSettingChange) this.onSettingChange();
+        this.render();
+      });
+    }
+
+    const pillPhonics = this.container.querySelector("#pill-toggle-phonics");
+    if (pillPhonics) {
+      pillPhonics.addEventListener("click", () => {
+        sound.playPop();
+        storage.togglePhonics();
+        if (this.onSettingChange) this.onSettingChange();
+        this.render();
+      });
+    }
+
+    // Peek / Hide Meaning toggle button
+    const peekBtn = this.container.querySelector("#btn-peek-meaning");
+    if (peekBtn) {
+      peekBtn.addEventListener("click", () => {
+        sound.playPop();
+        this.isMeaningPeeked = !this.isMeaningPeeked;
+        this.render();
+      });
+    }
 
     // Speak whole word
     const speakBtn = this.container.querySelector("#btn-speak-word");
@@ -206,6 +276,7 @@ export class TrainerComponent {
         if (this.currentIndex > 0) {
           sound.playPop();
           this.currentIndex--;
+          this.isMeaningPeeked = false;
           this.render();
         }
       });
@@ -217,6 +288,7 @@ export class TrainerComponent {
         if (this.currentIndex < this.activeWords.length - 1) {
           sound.playPop();
           this.currentIndex++;
+          this.isMeaningPeeked = false;
           this.render();
         }
       });

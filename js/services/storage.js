@@ -9,7 +9,9 @@ const DEFAULT_DATA = {
   streak: 0,
   bestStreak: 0,
   lastActiveDate: null,
-  showTranslit: true,
+  showMeaning: true, // Toggle English word and hint meaning
+  showPhonics: true, // Toggle English phonic sound letters and transliteration
+  showTranslit: true, // Legacy compatibility
   currentLevel: 1,
   masteredWords: [], // Array of word IDs
   customWords: [],   // Array of parent-added custom word objects
@@ -42,7 +44,15 @@ class StorageService {
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
       if (stored) {
-        return { ...DEFAULT_DATA, ...JSON.parse(stored) };
+        const parsed = JSON.parse(stored);
+        // Migration / defaults for study aid toggles
+        if (parsed.showMeaning === undefined) {
+          parsed.showMeaning = true;
+        }
+        if (parsed.showPhonics === undefined) {
+          parsed.showPhonics = parsed.showTranslit !== undefined ? parsed.showTranslit : true;
+        }
+        return { ...DEFAULT_DATA, ...parsed };
       }
     } catch (e) {
       console.warn("Storage load error:", e);
@@ -139,9 +149,33 @@ class StorageService {
   }
 
   toggleTranslit() {
-    this.data.showTranslit = !this.data.showTranslit;
+    return this.togglePhonics();
+  }
+
+  setMeaning(val) {
+    this.data.showMeaning = !!val;
     this.save();
-    return this.data.showTranslit;
+    return this.data.showMeaning;
+  }
+
+  toggleMeaning() {
+    this.data.showMeaning = !this.data.showMeaning;
+    this.save();
+    return this.data.showMeaning;
+  }
+
+  setPhonics(val) {
+    this.data.showPhonics = !!val;
+    this.data.showTranslit = this.data.showPhonics;
+    this.save();
+    return this.data.showPhonics;
+  }
+
+  togglePhonics() {
+    this.data.showPhonics = !this.data.showPhonics;
+    this.data.showTranslit = this.data.showPhonics;
+    this.save();
+    return this.data.showPhonics;
   }
 
   getCustomWords() {
