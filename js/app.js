@@ -212,11 +212,16 @@ class App {
 
     // Update level tier buttons count
     document.querySelectorAll(".sidebar-level-btn").forEach(btn => {
-      const lvl = parseInt(btn.dataset.level, 10);
+      const lvlAttr = btn.dataset.level;
       const countEl = btn.querySelector("span:last-child");
       if (countEl) {
-        const count = allWords.filter(w => w.level === lvl).length;
-        countEl.textContent = `${count} words`;
+        if (lvlAttr === "all") {
+          countEl.textContent = `${totalWords} words`;
+        } else {
+          const lvl = parseInt(lvlAttr, 10);
+          const count = allWords.filter(w => w.level === lvl).length;
+          countEl.textContent = `${count} words`;
+        }
       }
     });
   }
@@ -300,7 +305,8 @@ class App {
     document.querySelectorAll(".sidebar-level-btn").forEach(btn => {
       btn.addEventListener("click", () => {
         sound.playPop();
-        const lvl = parseInt(btn.dataset.level);
+        const lvlAttr = btn.dataset.level;
+        const lvl = lvlAttr === "all" ? "all" : parseInt(lvlAttr, 10);
         this.setLevel(lvl);
         if (window.innerWidth < 768) {
           this.closeDrawer();
@@ -328,7 +334,8 @@ class App {
 
   updateActiveLevelUI() {
     document.querySelectorAll(".sidebar-level-btn").forEach(btn => {
-      const lvl = parseInt(btn.dataset.level);
+      const lvlAttr = btn.dataset.level;
+      const lvl = lvlAttr === "all" ? "all" : parseInt(lvlAttr, 10);
       const isCurrent = lvl === this.currentLevel;
       if (isCurrent) {
         btn.classList.add("bg-amber-500", "text-white", "shadow-sm");

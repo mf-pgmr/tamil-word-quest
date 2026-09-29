@@ -16,7 +16,9 @@ export class TrainerComponent {
   }
 
   filterWords() {
-    this.activeWords = storage.getAllWords().filter(w => w.level === this.currentLevel);
+    this.activeWords = this.currentLevel === "all"
+      ? storage.getAllWords()
+      : storage.getAllWords().filter(w => w.level === this.currentLevel);
     this.currentIndex = 0;
     this.isMeaningPeeked = false;
   }
@@ -30,7 +32,7 @@ export class TrainerComponent {
 
   render() {
     const word = this.activeWords[this.currentIndex] || this.activeWords[0];
-    const isMastered = storage.data.masteredWords.includes(word.id);
+    const isMastered = word ? storage.data.masteredWords.includes(word.id) : false;
     const currentLvlObj = LEVELS.find(l => l.id === this.currentLevel) || LEVELS[0];
     const showMeaning = storage.data.showMeaning !== false;
     const showPhonics = storage.data.showPhonics !== false;
@@ -43,7 +45,7 @@ export class TrainerComponent {
         <div class="flex items-center justify-between px-1 mb-2 gap-2 flex-wrap sm:flex-nowrap">
           <div class="flex items-center gap-1.5 sm:gap-2">
             <span class="text-xs font-black uppercase tracking-wider text-amber-600 dark:text-amber-400">
-              Level ${this.currentLevel}
+              ${this.currentLevel === "all" ? "All Words" : `Level ${this.currentLevel}`}
             </span>
             <span class="text-xs text-slate-400 dark:text-slate-500 font-semibold">•</span>
             <span class="text-xs text-slate-500 dark:text-slate-400 font-semibold">

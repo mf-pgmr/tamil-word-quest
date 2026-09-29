@@ -25,7 +25,9 @@ export class ScrambleQuizComponent {
   }
 
   initQuiz() {
-    const words = storage.getAllWords().filter(w => w.level === this.currentLevel);
+    const words = this.currentLevel === "all"
+      ? storage.getAllWords()
+      : storage.getAllWords().filter(w => w.level === this.currentLevel);
     this.quizList = [...words].sort(() => 0.5 - Math.random());
     this.currentIndex = 0;
     this.streak = 0;
@@ -40,8 +42,8 @@ export class ScrambleQuizComponent {
     const word = this.quizList[this.currentIndex];
     this.placedLetters = [];
 
-    const distractorPool = VOCABULARY
-      .filter(w => w.id !== word.id && w.level === this.currentLevel)
+    const distractorPool = storage.getAllWords()
+      .filter(w => w.id !== word.id && (this.currentLevel === "all" || w.level === this.currentLevel))
       .flatMap(w => w.letters);
     
     const distractor = distractorPool.length > 0 
@@ -68,7 +70,7 @@ export class ScrambleQuizComponent {
         <!-- Header Bar -->
         <div class="flex items-center justify-between px-2 mb-2">
           <div class="flex items-center gap-2">
-            <span class="text-xs font-black uppercase text-amber-600 dark:text-amber-400">Level ${this.currentLevel}</span>
+            <span class="text-xs font-black uppercase text-amber-600 dark:text-amber-400">${this.currentLevel === "all" ? "All Words" : `Level ${this.currentLevel}`}</span>
             <span class="text-xs bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 font-bold px-2 py-0.5 rounded-full">
               ${this.currentIndex + 1} / ${this.quizList.length}
             </span>
@@ -320,7 +322,8 @@ export class ScrambleQuizComponent {
     if (nextLvl) {
       nextLvl.addEventListener("click", () => {
         sound.playPop();
-        const next = this.currentLevel < 4 ? this.currentLevel + 1 : 1;
+        const maxLevel = LEVELS ? LEVELS.length : 7;
+        const next = (typeof this.currentLevel === "number" && this.currentLevel < maxLevel) ? this.currentLevel + 1 : 1;
         this.setLevel(next);
       });
     }

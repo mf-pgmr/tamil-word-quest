@@ -24,7 +24,9 @@ export class MissingQuizComponent {
   }
 
   initQuiz() {
-    const words = storage.getAllWords().filter(w => w.level === this.currentLevel && w.letters.length >= 2);
+    const words = storage.getAllWords().filter(w => 
+      (this.currentLevel === "all" || w.level === this.currentLevel) && w.letters.length >= 2
+    );
     this.questions = [...words].sort(() => 0.5 - Math.random());
     this.currentIndex = 0;
     this.streak = 0;
@@ -43,7 +45,7 @@ export class MissingQuizComponent {
     const correctLetter = currentWord.letters[this.hiddenIdx];
 
     const distractorPool = storage.getAllWords()
-      .filter(w => w.level === this.currentLevel)
+      .filter(w => this.currentLevel === "all" || w.level === this.currentLevel)
       .flatMap(w => w.letters)
       .filter(l => l !== correctLetter);
 
@@ -68,7 +70,7 @@ export class MissingQuizComponent {
         <!-- Header -->
         <div class="flex items-center justify-between px-2 mb-2">
           <div class="flex items-center gap-2">
-            <span class="text-xs font-black uppercase text-amber-600 dark:text-amber-400">Level ${this.currentLevel}</span>
+            <span class="text-xs font-black uppercase text-amber-600 dark:text-amber-400">${this.currentLevel === "all" ? "All Words" : `Level ${this.currentLevel}`}</span>
             <span class="text-xs bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 font-bold px-2 py-0.5 rounded-full">
               ${this.currentIndex + 1} / ${this.questions.length}
             </span>
