@@ -184,6 +184,8 @@ export class ParentComponent {
                   <option value="2">Level 2: Long 'Aa' Sound (ா)</option>
                   <option value="3">Level 3: Sounds of 'i' (ி, ீ)</option>
                   <option value="4" selected>Level 4: Curves & Loops (ு, ூ, ை, ோ)</option>
+                  <option value="5">Level 5: Sound Pairs (ஒலி வேறுபாடுகள்)</option>
+                  <option value="6">Level 6: Everyday & Actions (சொற்களும் செயல்களும்)</option>
                 </select>
               </div>
             </div>

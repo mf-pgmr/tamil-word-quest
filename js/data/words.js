@@ -1,4 +1,4 @@
-// Curated Tamil vocabulary database with 80 words across 4 progressive tiers (No emojis)
+﻿// Curated Tamil vocabulary database with 138 words across 6 progressive tiers (No emojis)
 export const LEVELS = [
   {
     id: 1,
@@ -27,6 +27,20 @@ export const LEVELS = [
     subtitle: "Everyday 2, 3, and 4 letter words with complex vowel signs",
     badge: "Tamil Master",
     color: "from-amber-500 to-orange-600"
+  },
+  {
+    id: 5,
+    title: "Level 5: Sound Pairs (ஒலி வேறுபாடுகள்)",
+    subtitle: "Paired contrasting words exploring short/long vowels and unique consonants",
+    badge: "Sound Master",
+    color: "from-pink-500 to-rose-600"
+  },
+  {
+    id: 6,
+    title: "Level 6: Everyday & Actions (சொற்களும் செயல்களும்)",
+    subtitle: "U/Oo series words, everyday objects, and action verbs",
+    badge: "Tamil Champion",
+    color: "from-violet-500 to-purple-600"
   }
 ];
 
@@ -437,7 +451,301 @@ export const VOCABULARY = [
     id: "l4_20", level: 4, tamil: "கூடு", letters: ["கூ", "டு"],
     breakdowns: [{ letter: "கூ", root: "க் + ஊ", sound: "Koo" }, { letter: "டு", root: "ட் + உ", sound: "Du" }],
     translit: "Koo-du", english: "Bird Nest", hint: "Cozy twigs where birds lay eggs and raise their chicks."
-  }
+  },
+
+  // ==================== LEVEL 5: SOUND PAIRS & CONTRASTS (ஒலி வேறுபாடுகள்) ====================
+  {
+    id: "l5_1", level: 5, tamil: "கல்", letters: ["க", "ல்"],
+    breakdowns: [{ letter: "க", root: "Consonant + Vowel", sound: "Ka" }, { letter: "ல்", root: "Pure Consonant (மெய்)", sound: "L" }],
+    translit: "Kal", english: "Stone", hint: "Hard and found on the ground or in river beds."
+  },
+  {
+    id: "l5_2", level: 5, tamil: "கால்", letters: ["கா", "ல்"],
+    breakdowns: [{ letter: "கா", root: "Consonant + Vowel", sound: "Kaa" }, { letter: "ல்", root: "Pure Consonant (மெய்)", sound: "L" }],
+    translit: "Kaal", english: "Leg / Foot", hint: "You use your legs to stand, walk, and run."
+  },
+  {
+    id: "l5_3", level: 5, tamil: "பல்", letters: ["ப", "ல்"],
+    breakdowns: [{ letter: "ப", root: "Consonant + Vowel", sound: "Pa" }, { letter: "ல்", root: "Pure Consonant (மெய்)", sound: "L" }],
+    translit: "Pal", english: "Tooth", hint: "You brush them every morning."
+  },
+  {
+    id: "l5_4", level: 5, tamil: "பால்", letters: ["பா", "ல்"],
+    breakdowns: [{ letter: "பா", root: "Consonant + Vowel", sound: "Paa" }, { letter: "ல்", root: "Pure Consonant (மெய்)", sound: "L" }],
+    translit: "Paal", english: "Milk", hint: "Healthy white drink that makes bones strong."
+  },
+  {
+    id: "l5_5", level: 5, tamil: "கொடி", letters: ["கொ", "டி"],
+    breakdowns: [{ letter: "கொ", root: "Consonant + Vowel", sound: "Ko" }, { letter: "டி", root: "Consonant + Vowel", sound: "Di" }],
+    translit: "Ko-di", english: "Flag / Banner", hint: "Flutters proudly in the wind on a pole."
+  },
+  {
+    id: "l5_6", level: 5, tamil: "கோடி", letters: ["கோ", "டி"],
+    breakdowns: [{ letter: "கோ", root: "Consonant + Vowel", sound: "Koa" }, { letter: "டி", root: "Consonant + Vowel", sound: "Di" }],
+    translit: "Koo-di", english: "10 Millions / Crore", hint: "A very large number equal to ten million."
+  },
+  {
+    id: "l5_7", level: 5, tamil: "மடி", letters: ["ம", "டி"],
+    breakdowns: [{ letter: "ம", root: "Consonant + Vowel", sound: "Ma" }, { letter: "டி", root: "Consonant + Vowel", sound: "Di" }],
+    translit: "Ma-di", english: "Lap / Fold", hint: "Comfortable place to sit on mom's or dad's knees."
+  },
+  {
+    id: "l5_8", level: 5, tamil: "மாடி", letters: ["மா", "டி"],
+    breakdowns: [{ letter: "மா", root: "Consonant + Vowel", sound: "Maa" }, { letter: "டி", root: "Consonant + Vowel", sound: "Di" }],
+    translit: "Maa-di", english: "Upstairs / Balcony", hint: "The upper floor or rooftop of a house."
+  },
+  {
+    id: "l5_9", level: 5, tamil: "கை", letters: ["கை"],
+    breakdowns: [{ letter: "கை", root: "Consonant + Vowel", sound: "Kai" }],
+    translit: "Kai", english: "Hand / Arm", hint: "You hold a pencil, write, and clap with this."
+  },
+  {
+    id: "l5_10", level: 5, tamil: "காய்", letters: ["கா", "ய்"],
+    breakdowns: [{ letter: "கா", root: "Consonant + Vowel", sound: "Kaa" }, { letter: "ய்", root: "Pure Consonant (மெய்)", sound: "Y" }],
+    translit: "Kaay", english: "Vegetable", hint: "Crisp, fresh vegetable used to cook delicious food."
+  },
+  {
+    id: "l5_11", level: 5, tamil: "பை", letters: ["பை"],
+    breakdowns: [{ letter: "பை", root: "Consonant + Vowel", sound: "Pai" }],
+    translit: "Pai", english: "Bag", hint: "A schoolbag or shopping tote for carrying things."
+  },
+  {
+    id: "l5_12", level: 5, tamil: "பாய்", letters: ["பா", "ய்"],
+    breakdowns: [{ letter: "பா", root: "Consonant + Vowel", sound: "Paa" }, { letter: "ய்", root: "Pure Consonant (மெய்)", sound: "Y" }],
+    translit: "Paay", english: "Mat", hint: "Woven grass mat spread on the floor to sit or rest."
+  },
+  {
+    id: "l5_13", level: 5, tamil: "ஒலி", letters: ["ஒ", "லி"],
+    breakdowns: [{ letter: "ஒ", root: "Vowel (உயிர்)", sound: "O" }, { letter: "லி", root: "Consonant + Vowel", sound: "Li" }],
+    translit: "O-li", english: "Sound / Noise", hint: "What you hear with your ears, like music or a chime."
+  },
+  {
+    id: "l5_14", level: 5, tamil: "ஒளி", letters: ["ஒ", "ளி"],
+    breakdowns: [{ letter: "ஒ", root: "Vowel (உயிர்)", sound: "O" }, { letter: "ளி", root: "Consonant + Vowel", sound: "Li" }],
+    translit: "O-li", english: "Light / Brightness", hint: "Bright glow from the sun or a warm oil lamp."
+  },
+  {
+    id: "l5_15", level: 5, tamil: "வலி", letters: ["வ", "லி"],
+    breakdowns: [{ letter: "வ", root: "Consonant + Vowel", sound: "Va" }, { letter: "லி", root: "Consonant + Vowel", sound: "Li" }],
+    translit: "Va-li", english: "Pain / Ache", hint: "An ouch sensation when you get hurt or stub your toe."
+  },
+  {
+    id: "l5_16", level: 5, tamil: "வழி", letters: ["வ", "ழி"],
+    breakdowns: [{ letter: "வ", root: "Consonant + Vowel", sound: "Va" }, { letter: "ழி", root: "Consonant + Vowel", sound: "Zhi" }],
+    translit: "Va-zhi", english: "Path / Route", hint: "A walkway, road, or trail that leads somewhere."
+  },
+  {
+    id: "l5_17", level: 5, tamil: "மலை", letters: ["ம", "லை"],
+    breakdowns: [{ letter: "ம", root: "Consonant + Vowel", sound: "Ma" }, { letter: "லை", root: "Consonant + Vowel", sound: "Lai" }],
+    translit: "Ma-lai", english: "Mountain / Hill", hint: "A towering rocky peak rising high into the clouds."
+  },
+  {
+    id: "l5_18", level: 5, tamil: "மழை", letters: ["ம", "ழை"],
+    breakdowns: [{ letter: "ம", root: "Consonant + Vowel", sound: "Ma" }, { letter: "ழை", root: "Consonant + Vowel", sound: "Zhai" }],
+    translit: "Ma-zhai", english: "Rain", hint: "Water droplets falling gently from gray storm clouds."
+  },
+  {
+    id: "l5_19", level: 5, tamil: "வலை", letters: ["வ", "லை"],
+    breakdowns: [{ letter: "வ", root: "Consonant + Vowel", sound: "Va" }, { letter: "லை", root: "Consonant + Vowel", sound: "Lai" }],
+    translit: "Va-lai", english: "Net / Web", hint: "Woven mesh used by fishermen or spun by spiders."
+  },
+  {
+    id: "l5_20", level: 5, tamil: "வாழை", letters: ["வா", "ழை"],
+    breakdowns: [{ letter: "வா", root: "Consonant + Vowel", sound: "Vaa" }, { letter: "ழை", root: "Consonant + Vowel", sound: "Zhai" }],
+    translit: "Vaa-zhai", english: "Plantain / Banana Tree", hint: "Tropical tree with broad green leaves and sweet yellow fruit."
+  },
+  {
+    id: "l5_21", level: 5, tamil: "பல்லி", letters: ["ப", "ல்", "லி"],
+    breakdowns: [{ letter: "ப", root: "Consonant + Vowel", sound: "Pa" }, { letter: "ல்", root: "Pure Consonant (மெய்)", sound: "L" }, { letter: "லி", root: "Consonant + Vowel", sound: "Li" }],
+    translit: "Pal-li", english: "Lizard (Gecko)", hint: "Small harmless reptile that walks on walls and eats bugs."
+  },
+  {
+    id: "l5_22", level: 5, tamil: "பள்ளி", letters: ["ப", "ள்", "ளி"],
+    breakdowns: [{ letter: "ப", root: "Consonant + Vowel", sound: "Pa" }, { letter: "ள்", root: "Pure Consonant (மெய்)", sound: "L" }, { letter: "ளி", root: "Consonant + Vowel", sound: "Li" }],
+    translit: "Pal-li", english: "School", hint: "Where kids go every morning to learn and make friends."
+  },
+  {
+    id: "l5_23", level: 5, tamil: "இலை", letters: ["இ", "லை"],
+    breakdowns: [{ letter: "இ", root: "Vowel (உயிர்)", sound: "I" }, { letter: "லை", root: "Consonant + Vowel", sound: "Lai" }],
+    translit: "I-lai", english: "Leaf", hint: "Green flat part of a plant that soaks in sunshine."
+  },
+  {
+    id: "l5_24", level: 5, tamil: "இல்லை", letters: ["இ", "ல்", "லை"],
+    breakdowns: [{ letter: "இ", root: "Vowel (உயிர்)", sound: "I" }, { letter: "ல்", root: "Pure Consonant (மெய்)", sound: "L" }, { letter: "லை", root: "Consonant + Vowel", sound: "Lai" }],
+    translit: "Il-lai", english: "No / Not", hint: "A word meaning none, absent, or no."
+  },
+  // ==================== LEVEL 6: EVERYDAY WORDS & ACTIONS (சொற்களும் செயல்களும்) ====================
+  {
+    id: "l6_1", level: 6, tamil: "கதவு", letters: ["க", "த", "வு"],
+    breakdowns: [{ letter: "க", root: "Consonant + Vowel", sound: "Ka" }, { letter: "த", root: "Consonant + Vowel", sound: "Tha" }, { letter: "வு", root: "Consonant + Vowel", sound: "Vu" }],
+    translit: "Ka-dha-vu", english: "Door", hint: "You turn the handle and open this to enter a room."
+  },
+  {
+    id: "l6_2", level: 6, tamil: "ரூபாய்", letters: ["ரூ", "பா", "ய்"],
+    breakdowns: [{ letter: "ரூ", root: "Consonant + Vowel", sound: "Roo" }, { letter: "பா", root: "Consonant + Vowel", sound: "Paa" }, { letter: "ய்", root: "Pure Consonant (மெய்)", sound: "Y" }],
+    translit: "Roo-paay", english: "Rupee", hint: "Indian currency unit used to buy toys and treats."
+  },
+  {
+    id: "l6_3", level: 6, tamil: "தட்டு", letters: ["த", "ட்", "டு"],
+    breakdowns: [{ letter: "த", root: "Consonant + Vowel", sound: "Tha" }, { letter: "ட்", root: "Pure Consonant (மெய்)", sound: "T" }, { letter: "டு", root: "Consonant + Vowel", sound: "Du" }],
+    translit: "That-tu", english: "Plate / Dish", hint: "Round shallow dish on which food is served."
+  },
+  {
+    id: "l6_4", level: 6, tamil: "பசு", letters: ["ப", "சு"],
+    breakdowns: [{ letter: "ப", root: "Consonant + Vowel", sound: "Pa" }, { letter: "சு", root: "Consonant + Vowel", sound: "Su" }],
+    translit: "Pa-su", english: "Cow", hint: "Gentle holy farm animal that gives delicious milk."
+  },
+  {
+    id: "l6_5", level: 6, tamil: "கருப்பு", letters: ["க", "ரு", "ப்", "பு"],
+    breakdowns: [{ letter: "க", root: "Consonant + Vowel", sound: "Ka" }, { letter: "ரு", root: "Consonant + Vowel", sound: "Ru" }, { letter: "ப்", root: "Pure Consonant (மெய்)", sound: "P" }, { letter: "பு", root: "Consonant + Vowel", sound: "Pu" }],
+    translit: "Ka-rup-pu", english: "Black (Color)", hint: "The dark shade of the midnight sky or a crow's feathers."
+  },
+  {
+    id: "l6_6", level: 6, tamil: "மூன்று", letters: ["மூ", "ன்", "று"],
+    breakdowns: [{ letter: "மூ", root: "Consonant + Vowel", sound: "Moo" }, { letter: "ன்", root: "Pure Consonant (மெய்)", sound: "N" }, { letter: "று", root: "Consonant + Vowel", sound: "Ru" }],
+    translit: "Moon-ru", english: "Three", hint: "The number that comes right after two: 1, 2, 3!"
+  },
+  {
+    id: "l6_7", level: 6, tamil: "கழுத்து", letters: ["க", "ழு", "த்", "து"],
+    breakdowns: [{ letter: "க", root: "Consonant + Vowel", sound: "Ka" }, { letter: "ழு", root: "Consonant + Vowel", sound: "Zhu" }, { letter: "த்", root: "Pure Consonant (மெய்)", sound: "Th" }, { letter: "து", root: "Consonant + Vowel", sound: "Thu" }],
+    translit: "Ka-zhuth-thu", english: "Neck", hint: "Connects your head to your shoulders."
+  },
+  {
+    id: "l6_8", level: 6, tamil: "கழுகு", letters: ["க", "ழு", "கு"],
+    breakdowns: [{ letter: "க", root: "Consonant + Vowel", sound: "Ka" }, { letter: "ழு", root: "Consonant + Vowel", sound: "Zhu" }, { letter: "கு", root: "Consonant + Vowel", sound: "Ku" }],
+    translit: "Ka-zhu-gu", english: "Eagle", hint: "Majestic bird of prey with sharp eyesight flying high."
+  },
+  {
+    id: "l6_9", level: 6, tamil: "தூக்கம்", letters: ["தூ", "க்", "க", "ம்"],
+    breakdowns: [{ letter: "தூ", root: "Consonant + Vowel", sound: "Thoo" }, { letter: "க்", root: "Pure Consonant (மெய்)", sound: "K" }, { letter: "க", root: "Consonant + Vowel", sound: "Ka" }, { letter: "ம்", root: "Pure Consonant (மெய்)", sound: "M" }],
+    translit: "Thook-kam", english: "Sleep / Slumber", hint: "Restful snooze in bed at night to dream and recharge."
+  },
+  {
+    id: "l6_10", level: 6, tamil: "நூறு", letters: ["நூ", "று"],
+    breakdowns: [{ letter: "நூ", root: "Consonant + Vowel", sound: "Noo" }, { letter: "று", root: "Consonant + Vowel", sound: "Ru" }],
+    translit: "Noo-ru", english: "One Hundred", hint: "The number 100, equal to ten tens."
+  },
+  {
+    id: "l6_11", level: 6, tamil: "கூடை", letters: ["கூ", "டை"],
+    breakdowns: [{ letter: "கூ", root: "Consonant + Vowel", sound: "Koo" }, { letter: "டை", root: "Consonant + Vowel", sound: "Dai" }],
+    translit: "Koo-dai", english: "Basket", hint: "Woven container with a handle to carry fruit or flowers."
+  },
+  {
+    id: "l6_12", level: 6, tamil: "சூடு", letters: ["சூ", "டு"],
+    breakdowns: [{ letter: "சூ", root: "Consonant + Vowel", sound: "Soo" }, { letter: "டு", root: "Consonant + Vowel", sound: "Du" }],
+    translit: "Soo-du", english: "Heat / Warmth", hint: "Warm feeling from fresh hot food or the midday sun."
+  },
+  {
+    id: "l6_13", level: 6, tamil: "கழுதை", letters: ["க", "ழு", "தை"],
+    breakdowns: [{ letter: "க", root: "Consonant + Vowel", sound: "Ka" }, { letter: "ழு", root: "Consonant + Vowel", sound: "Zhu" }, { letter: "தை", root: "Consonant + Vowel", sound: "Thai" }],
+    translit: "Ka-zhu-dhai", english: "Donkey", hint: "Hardworking animal with long ears that brays 'hee-haw'."
+  },
+  {
+    id: "l6_14", level: 6, tamil: "தோட்டம்", letters: ["தோ", "ட்", "ட", "ம்"],
+    breakdowns: [{ letter: "தோ", root: "Consonant + Vowel", sound: "Thoa" }, { letter: "ட்", root: "Pure Consonant (மெய்)", sound: "T" }, { letter: "ட", root: "Consonant + Vowel", sound: "Da" }, { letter: "ம்", root: "Pure Consonant (மெய்)", sound: "M" }],
+    translit: "Thoot-tam", english: "Garden", hint: "A lovely outdoor plot filled with plants and blooming flowers."
+  },
+  {
+    id: "l6_15", level: 6, tamil: "சட்டை", letters: ["ச", "ட்", "டை"],
+    breakdowns: [{ letter: "ச", root: "Consonant + Vowel", sound: "Sa" }, { letter: "ட்", root: "Pure Consonant (மெய்)", sound: "T" }, { letter: "டை", root: "Consonant + Vowel", sound: "Dai" }],
+    translit: "Sat-tai", english: "Shirt", hint: "Garment worn on your upper body with sleeves and collar."
+  },
+  {
+    id: "l6_16", level: 6, tamil: "பெட்டி", letters: ["பெ", "ட்", "டி"],
+    breakdowns: [{ letter: "பெ", root: "Consonant + Vowel", sound: "Pe" }, { letter: "ட்", root: "Pure Consonant (மெய்)", sound: "T" }, { letter: "டி", root: "Consonant + Vowel", sound: "Di" }],
+    translit: "Pet-ti", english: "Box / Trunk", hint: "Sturdy container with a lid used for storage."
+  },
+  {
+    id: "l6_17", level: 6, tamil: "கத்தரிக்காய்", letters: ["க", "த்", "த", "ரி", "க்", "கா", "ய்"],
+    breakdowns: [{ letter: "க", root: "Consonant + Vowel", sound: "Ka" }, { letter: "த்", root: "Pure Consonant (மெய்)", sound: "Th" }, { letter: "த", root: "Consonant + Vowel", sound: "Tha" }, { letter: "ரி", root: "Consonant + Vowel", sound: "Ri" }, { letter: "க்", root: "Pure Consonant (மெய்)", sound: "K" }, { letter: "கா", root: "Consonant + Vowel", sound: "Kaa" }, { letter: "ய்", root: "Pure Consonant (மெய்)", sound: "Y" }],
+    translit: "Kath-tha-rik-kaay", english: "Eggplant (Brinjal)", hint: "Glossy purple vegetable cooked in savory curries."
+  },
+  {
+    id: "l6_18", level: 6, tamil: "எறும்பு", letters: ["எ", "று", "ம்", "பு"],
+    breakdowns: [{ letter: "எ", root: "Vowel (உயிர்)", sound: "E" }, { letter: "று", root: "Consonant + Vowel", sound: "Ru" }, { letter: "ம்", root: "Pure Consonant (மெய்)", sound: "M" }, { letter: "பு", root: "Consonant + Vowel", sound: "Pu" }],
+    translit: "E-rum-bu", english: "Ant", hint: "Tiny industrious insect that marches in lines and loves sugar."
+  },
+  {
+    id: "l6_19", level: 6, tamil: "தேங்காய்", letters: ["தே", "ங்", "கா", "ய்"],
+    breakdowns: [{ letter: "தே", root: "Consonant + Vowel", sound: "Thae" }, { letter: "ங்", root: "Pure Consonant (மெய்)", sound: "Ng" }, { letter: "கா", root: "Consonant + Vowel", sound: "Kaa" }, { letter: "ய்", root: "Pure Consonant (மெய்)", sound: "Y" }],
+    translit: "Thaeng-kaay", english: "Coconut", hint: "Hard brown shell with sweet water and white kernel inside."
+  },
+  {
+    id: "l6_20", level: 6, tamil: "வடை", letters: ["வ", "டை"],
+    breakdowns: [{ letter: "வ", root: "Consonant + Vowel", sound: "Va" }, { letter: "டை", root: "Consonant + Vowel", sound: "Dai" }],
+    translit: "Va-dai", english: "Vada (Fritter)", hint: "Crispy golden donut-shaped savory treat dipped in sambar."
+  },
+  {
+    id: "l6_21", level: 6, tamil: "ஆடு", letters: ["ஆ", "டு"],
+    breakdowns: [{ letter: "ஆ", root: "Long Vowel (நெடில்)", sound: "Aa" }, { letter: "டு", root: "Consonant + Vowel", sound: "Du" }],
+    translit: "Aa-du", english: "Goat", hint: "Playful farm animal that chews grass and says 'maa-maa'."
+  },
+  {
+    id: "l6_22", level: 6, tamil: "பூ", letters: ["பூ"],
+    breakdowns: [{ letter: "பூ", root: "Consonant + Vowel", sound: "Poo" }],
+    translit: "Poo", english: "Flower", hint: "Fragrant, colorful bloom in a garden or garland."
+  },
+  {
+    id: "l6_23", level: 6, tamil: "வாங்கு", letters: ["வா", "ங்", "கு"],
+    breakdowns: [{ letter: "வா", root: "Consonant + Vowel", sound: "Vaa" }, { letter: "ங்", root: "Pure Consonant (மெய்)", sound: "Ng" }, { letter: "கு", root: "Consonant + Vowel", sound: "Ku" }],
+    translit: "Vaan-gu", english: "(To) Buy", hint: "Action of purchasing goods with money."
+  },
+  {
+    id: "l6_24", level: 6, tamil: "எழுது", letters: ["எ", "ழு", "து"],
+    breakdowns: [{ letter: "எ", root: "Vowel (உயிர்)", sound: "E" }, { letter: "ழு", root: "Consonant + Vowel", sound: "Zhu" }, { letter: "து", root: "Consonant + Vowel", sound: "Thu" }],
+    translit: "E-zhu-dhu", english: "(To) Write", hint: "Action of putting pencil to paper to form words."
+  },
+  {
+    id: "l6_25", level: 6, tamil: "வேலை", letters: ["வே", "லை"],
+    breakdowns: [{ letter: "வே", root: "Consonant + Vowel", sound: "Vae" }, { letter: "லை", root: "Consonant + Vowel", sound: "Lai" }],
+    translit: "Vae-lai", english: "Work / Task", hint: "Chore or duty you complete with effort."
+  },
+  {
+    id: "l6_26", level: 6, tamil: "பாடு", letters: ["பா", "டு"],
+    breakdowns: [{ letter: "பா", root: "Consonant + Vowel", sound: "Paa" }, { letter: "டு", root: "Consonant + Vowel", sound: "Du" }],
+    translit: "Paa-du", english: "(To) Sing", hint: "Action of making melodious musical tunes with your voice."
+  },
+  {
+    id: "l6_27", level: 6, tamil: "சாப்பிடு", letters: ["சா", "ப்", "பி", "டு"],
+    breakdowns: [{ letter: "சா", root: "Consonant + Vowel", sound: "Saa" }, { letter: "ப்", root: "Pure Consonant (மெய்)", sound: "P" }, { letter: "பி", root: "Consonant + Vowel", sound: "Pi" }, { letter: "டு", root: "Consonant + Vowel", sound: "Du" }],
+    translit: "Saap-pi-du", english: "(To) Eat", hint: "Action of chewing and enjoying delicious food."
+  },
+  {
+    id: "l6_28", level: 6, tamil: "நில்", letters: ["நி", "ல்"],
+    breakdowns: [{ letter: "நி", root: "Consonant + Vowel", sound: "Ni" }, { letter: "ல்", root: "Pure Consonant (மெய்)", sound: "L" }],
+    translit: "Nil", english: "(To) Stand", hint: "Action of being upright on your feet without moving."
+  },
+  {
+    id: "l6_29", level: 6, tamil: "நட", letters: ["ந", "ட"],
+    breakdowns: [{ letter: "ந", root: "Consonant + Vowel", sound: "Na" }, { letter: "ட", root: "Consonant + Vowel", sound: "Da" }],
+    translit: "Na-da", english: "(To) Walk", hint: "Action of taking steps forward on your feet."
+  },
+  {
+    id: "l6_30", level: 6, tamil: "நடி", letters: ["ந", "டி"],
+    breakdowns: [{ letter: "ந", root: "Consonant + Vowel", sound: "Na" }, { letter: "டி", root: "Consonant + Vowel", sound: "Di" }],
+    translit: "Na-di", english: "(To) Act", hint: "Action of performing a character in a play or drama."
+  },
+  {
+    id: "l6_31", level: 6, tamil: "உட்கார்", letters: ["உ", "ட்", "கா", "ர்"],
+    breakdowns: [{ letter: "உ", root: "Vowel (உயிர்)", sound: "U" }, { letter: "ட்", root: "Pure Consonant (மெய்)", sound: "T" }, { letter: "கா", root: "Consonant + Vowel", sound: "Kaa" }, { letter: "ர்", root: "Pure Consonant (மெய்)", sound: "R" }],
+    translit: "Ut-kaar", english: "(To) Sit", hint: "Action of resting on a chair or on the floor."
+  },
+  {
+    id: "l6_32", level: 6, tamil: "புத்தகம்", letters: ["பு", "த்", "த", "க", "ம்"],
+    breakdowns: [{ letter: "பு", root: "Consonant + Vowel", sound: "Pu" }, { letter: "த்", root: "Pure Consonant (மெய்)", sound: "Th" }, { letter: "த", root: "Consonant + Vowel", sound: "Tha" }, { letter: "க", root: "Consonant + Vowel", sound: "Ka" }, { letter: "ம்", root: "Pure Consonant (மெய்)", sound: "M" }],
+    translit: "Puth-tha-gam", english: "Book", hint: "Collection of printed pages filled with exciting stories and knowledge."
+  },
+  {
+    id: "l6_33", level: 6, tamil: "நண்பன்", letters: ["ந", "ண்", "ப", "ன்"],
+    breakdowns: [{ letter: "ந", root: "Consonant + Vowel", sound: "Na" }, { letter: "ண்", root: "Pure Consonant (மெய்)", sound: "N" }, { letter: "ப", root: "Consonant + Vowel", sound: "Pa" }, { letter: "ன்", root: "Pure Consonant (மெய்)", sound: "N" }],
+    translit: "Nan-ban", english: "Friend", hint: "A buddy you play, share, and laugh with at school."
+  },
+  {
+    id: "l6_34", level: 6, tamil: "ஆசிரியர்", letters: ["ஆ", "சி", "ரி", "ய", "ர்"],
+    breakdowns: [{ letter: "ஆ", root: "Long Vowel (நெடில்)", sound: "Aa" }, { letter: "சி", root: "Consonant + Vowel", sound: "Si" }, { letter: "ரி", root: "Consonant + Vowel", sound: "Ri" }, { letter: "ய", root: "Consonant + Vowel", sound: "Ya" }, { letter: "ர்", root: "Pure Consonant (மெய்)", sound: "R" }],
+    translit: "Aa-si-ri-yar", english: "Teacher", hint: "A caring educator who teaches reading, math, and wisdom."
+  },
+
 ];
 
 // Helper to correctly segment Tamil words into grapheme clusters (letter tiles)

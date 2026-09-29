@@ -136,8 +136,8 @@ class SoundService {
     if (!this.synth || !text) return;
 
     let spokenText = text;
-    if (typeof text === "string" && text.startsWith("custom_")) {
-      const allWords = storage.getAllWords ? storage.getAllWords() : [];
+    if (typeof text === "string" && (/^l\d+_\d+$/.test(text) || text.startsWith("custom_"))) {
+      const allWords = storage.getAllWords ? storage.getAllWords() : VOCABULARY;
       const found = allWords.find(w => w.id === text);
       if (found && found.tamil) {
         spokenText = found.tamil;

@@ -20,7 +20,9 @@ const DEFAULT_DATA = {
     1: { stars: 0, quizHighScore: 0 },
     2: { stars: 0, quizHighScore: 0 },
     3: { stars: 0, quizHighScore: 0 },
-    4: { stars: 0, quizHighScore: 0 }
+    4: { stars: 0, quizHighScore: 0 },
+    5: { stars: 0, quizHighScore: 0 },
+    6: { stars: 0, quizHighScore: 0 }
   }
 };
 
@@ -29,6 +31,7 @@ export const BADGE_DEFINITIONS = [
   { id: "word_10", title: "Reader 10", desc: "Mastered 10 Tamil words!" },
   { id: "word_25", title: "Reader 25", desc: "Mastered 25 Tamil words!" },
   { id: "word_50", title: "Tamil Scholar", desc: "Mastered 50 Tamil words!" },
+  { id: "word_100", title: "Century Reader", desc: "Mastered 100 Tamil words!" },
   { id: "streak_5", title: "On Fire", desc: "Get 5 quiz questions right in a row!" },
   { id: "spelling_champ", title: "Letter Builder", desc: "Spell 5 words correctly in Scramble Mode!" },
   { id: "level1_master", title: "Level 1 Hero", desc: "Completed all Level 1 root words!" }
