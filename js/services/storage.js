@@ -22,7 +22,8 @@ const DEFAULT_DATA = {
     3: { stars: 0, quizHighScore: 0 },
     4: { stars: 0, quizHighScore: 0 },
     5: { stars: 0, quizHighScore: 0 },
-    6: { stars: 0, quizHighScore: 0 }
+    6: { stars: 0, quizHighScore: 0 },
+    7: { stars: 0, quizHighScore: 0 }
   }
 };
 

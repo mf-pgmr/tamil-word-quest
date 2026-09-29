@@ -186,6 +186,7 @@ export class ParentComponent {
                   <option value="4" selected>Level 4: Curves & Loops (ு, ூ, ை, ோ)</option>
                   <option value="5">Level 5: Sound Pairs (ஒலி வேறுபாடுகள்)</option>
                   <option value="6">Level 6: Everyday & Actions (சொற்களும் செயல்களும்)</option>
+                  <option value="7">Level 7: School & Dialogue (பள்ளியும் உரையாடலும்)</option>
                 </select>
               </div>
             </div>

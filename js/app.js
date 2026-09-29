@@ -7,6 +7,7 @@ import { ScrambleQuizComponent } from "./components/scrambleQuiz.js";
 import { ListenQuizComponent } from "./components/listenQuiz.js";
 import { MissingQuizComponent } from "./components/missingQuiz.js";
 import { ParentComponent } from "./components/parent.js";
+import { dialogueReader } from "./components/dialogueReader.js";
 
 class App {
   constructor() {
@@ -18,6 +19,7 @@ class App {
     this.listen = null;
     this.missing = null;
     this.parent = null;
+    this.dialogue = dialogueReader;
 
     this.init();
   }
@@ -229,6 +231,8 @@ class App {
       this.listen.initQuiz();
     } else if (this.activeTab === "missing") {
       this.missing.initQuiz();
+    } else if (this.activeTab === "dialogue") {
+      this.dialogue.render(this.contentEl);
     }
   }
 
@@ -272,6 +276,8 @@ class App {
       this.listen.render();
     } else if (this.activeTab === "missing" && this.missing) {
       this.missing.render();
+    } else if (this.activeTab === "dialogue" && this.dialogue) {
+      this.dialogue.render(this.contentEl);
     }
   }
 
@@ -369,6 +375,8 @@ class App {
       } else if (tab === "missing") {
         this.missing.setLevel(this.currentLevel);
         this.missing.render();
+      } else if (tab === "dialogue") {
+        this.dialogue.render(this.contentEl);
       } else if (tab === "progress") {
         this.renderProgressView();
       }
@@ -397,7 +405,7 @@ class App {
               <div class="text-[10px] text-indigo-200 uppercase font-bold">Active Streak</div>
             </div>
             <div class="bg-white/10 rounded-2xl p-2.5 border border-white/20">
-              <div class="text-xl font-black">${mastered.length} / 80</div>
+              <div class="text-xl font-black">${mastered.length} / ${storage.getAllWords().length}</div>
               <div class="text-[10px] text-indigo-200 uppercase font-bold">Words Mastered</div>
             </div>
           </div>
@@ -491,6 +499,12 @@ class App {
   }
 }
 
-window.addEventListener("DOMContentLoaded", () => {
-  new App();
-});
+function startApp() {
+  window.app = new App();
+}
+
+if (document.readyState === "loading") {
+  window.addEventListener("DOMContentLoaded", startApp);
+} else {
+  startApp();
+}

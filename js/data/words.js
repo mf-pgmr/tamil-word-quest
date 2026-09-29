@@ -41,6 +41,13 @@ export const LEVELS = [
     subtitle: "U/Oo series words, everyday objects, and action verbs",
     badge: "Tamil Champion",
     color: "from-violet-500 to-purple-600"
+  },
+  {
+    id: 7,
+    title: "Level 7: School & Dialogue (பள்ளியும் உரையாடலும்)",
+    subtitle: "Conversation, school items, and helpful habits from textbook Page 11",
+    badge: "Dialogue Expert",
+    color: "from-teal-500 to-cyan-600"
   }
 ];
 
@@ -730,23 +737,193 @@ export const VOCABULARY = [
     breakdowns: [{ letter: "உ", root: "Vowel (உயிர்)", sound: "U" }, { letter: "ட்", root: "Pure Consonant (மெய்)", sound: "T" }, { letter: "கா", root: "Consonant + Vowel", sound: "Kaa" }, { letter: "ர்", root: "Pure Consonant (மெய்)", sound: "R" }],
     translit: "Ut-kaar", english: "(To) Sit", hint: "Action of resting on a chair or on the floor."
   },
+  // ==================== LEVEL 7: SCHOOL & DIALOGUE (பள்ளியும் உரையாடலும்) ====================
   {
-    id: "l6_32", level: 6, tamil: "புத்தகம்", letters: ["பு", "த்", "த", "க", "ம்"],
-    breakdowns: [{ letter: "பு", root: "Consonant + Vowel", sound: "Pu" }, { letter: "த்", root: "Pure Consonant (மெய்)", sound: "Th" }, { letter: "த", root: "Consonant + Vowel", sound: "Tha" }, { letter: "க", root: "Consonant + Vowel", sound: "Ka" }, { letter: "ம்", root: "Pure Consonant (மெய்)", sound: "M" }],
-    translit: "Puth-tha-gam", english: "Book", hint: "Collection of printed pages filled with exciting stories and knowledge."
+    id: "l7_1", level: 7, tamil: "உரையாடல்", letters: ["உ", "ரை", "யா", "ட", "ல்"],
+    breakdowns: [{ letter: "உ", root: "Vowel (உயிர்)", sound: "U" }, { letter: "ரை", root: "ர் + ஐ", sound: "Rai" }, { letter: "யா", root: "ய் + ஆ", sound: "Yaa" }, { letter: "ட", root: "ட் + அ", sound: "Da" }, { letter: "ல்", root: "Pure Consonant (மெய்)", sound: "L" }],
+    translit: "U-rai-yaa-dal", english: "Dialogue / Conversation", hint: "A friendly talk between two people sharing ideas and stories."
   },
   {
-    id: "l6_33", level: 6, tamil: "நண்பன்", letters: ["ந", "ண்", "ப", "ன்"],
-    breakdowns: [{ letter: "ந", root: "Consonant + Vowel", sound: "Na" }, { letter: "ண்", root: "Pure Consonant (மெய்)", sound: "N" }, { letter: "ப", root: "Consonant + Vowel", sound: "Pa" }, { letter: "ன்", root: "Pure Consonant (மெய்)", sound: "N" }],
-    translit: "Nan-ban", english: "Friend", hint: "A buddy you play, share, and laugh with at school."
+    id: "l7_2", level: 7, tamil: "ஆசிரியர்", letters: ["ஆ", "சி", "ரி", "ய", "ர்"],
+    breakdowns: [{ letter: "ஆ", root: "Long Vowel (நெடில்)", sound: "Aa" }, { letter: "சி", root: "ச் + இ", sound: "Si" }, { letter: "ரி", root: "ர் + இ", sound: "Ri" }, { letter: "ய", root: "ய் + அ", sound: "Ya" }, { letter: "ர்", root: "Pure Consonant (மெய்)", sound: "R" }],
+    translit: "Aa-si-ri-yar", english: "Teacher", hint: "A caring guide at school who teaches reading, math, and knowledge."
   },
   {
-    id: "l6_34", level: 6, tamil: "ஆசிரியர்", letters: ["ஆ", "சி", "ரி", "ய", "ர்"],
-    breakdowns: [{ letter: "ஆ", root: "Long Vowel (நெடில்)", sound: "Aa" }, { letter: "சி", root: "Consonant + Vowel", sound: "Si" }, { letter: "ரி", root: "Consonant + Vowel", sound: "Ri" }, { letter: "ய", root: "Consonant + Vowel", sound: "Ya" }, { letter: "ர்", root: "Pure Consonant (மெய்)", sound: "R" }],
-    translit: "Aa-si-ri-yar", english: "Teacher", hint: "A caring educator who teaches reading, math, and wisdom."
+    id: "l7_3", level: 7, tamil: "நண்பன்", letters: ["ந", "ண்", "ப", "ன்"],
+    breakdowns: [{ letter: "ந", root: "ந் + அ", sound: "Na" }, { letter: "ண்", root: "Pure Consonant (மெய்)", sound: "N" }, { letter: "ப", root: "ப் + அ", sound: "Pa" }, { letter: "ன்", root: "Pure Consonant (மெய்)", sound: "N" }],
+    translit: "Nan-ban", english: "Friend / Buddy", hint: "A buddy you talk, play, and share secrets with."
   },
-
+  {
+    id: "l7_4", level: 7, tamil: "வகுப்பு", letters: ["வ", "கு", "ப்", "பு"],
+    breakdowns: [{ letter: "வ", root: "வ் + அ", sound: "Va" }, { letter: "கு", root: "க் + உ", sound: "Ku" }, { letter: "ப்", root: "Pure Consonant (மெய்)", sound: "P" }, { letter: "பு", root: "ப் + உ", sound: "Pu" }],
+    translit: "Va-gup-pu", english: "Class / Grade", hint: "Your classroom where you learn lessons with schoolmates."
+  },
+  {
+    id: "l7_5", level: 7, tamil: "சாப்பாடு", letters: ["சா", "ப்", "பா", "டு"],
+    breakdowns: [{ letter: "சா", root: "ச் + ஆ", sound: "Saa" }, { letter: "ப்", root: "Pure Consonant (மெய்)", sound: "P" }, { letter: "பா", root: "ப் + ஆ", sound: "Paa" }, { letter: "டு", root: "ட் + உ", sound: "Du" }],
+    translit: "Saap-paa-du", english: "Food / Meal", hint: "A delicious meal or lunch packed carefully for school."
+  },
+  {
+    id: "l7_6", level: 7, tamil: "நாளை", letters: ["நா", "ளை"],
+    breakdowns: [{ letter: "நா", root: "ந் + ஆ", sound: "Naa" }, { letter: "ளை", root: "ள் + ஐ", sound: "Lai" }],
+    translit: "Naa-lai", english: "Tomorrow", hint: "The upcoming day right after today."
+  },
+  {
+    id: "l7_7", level: 7, tamil: "இன்று", letters: ["இ", "ன்", "று"],
+    breakdowns: [{ letter: "இ", root: "Vowel (உயிர்)", sound: "I" }, { letter: "ன்", root: "Pure Consonant (மெய்)", sound: "N" }, { letter: "று", root: "ற் + உ", sound: "Ru" }],
+    translit: "In-ru", english: "Today", hint: "The present day that is happening right now."
+  },
+  {
+    id: "l7_8", level: 7, tamil: "சீக்கிரம்", letters: ["சீ", "க்", "கி", "ர", "ம்"],
+    breakdowns: [{ letter: "சீ", root: "ச் + ஈ", sound: "See" }, { letter: "க்", root: "Pure Consonant (மெய்)", sound: "K" }, { letter: "கி", root: "க் + இ", sound: "Ki" }, { letter: "ர", root: "ர் + அ", sound: "Ra" }, { letter: "ம்", root: "Pure Consonant (மெய்)", sound: "M" }],
+    translit: "See-kki-ram", english: "Early / Soon", hint: "Waking up or doing something quickly without delay."
+  },
+  {
+    id: "l7_9", level: 7, tamil: "நன்றி", letters: ["ந", "ன்", "றி"],
+    breakdowns: [{ letter: "ந", root: "ந் + அ", sound: "Na" }, { letter: "ன்", root: "Pure Consonant (மெய்)", sound: "N" }, { letter: "றி", root: "ற் + இ", sound: "Ri" }],
+    translit: "Nan-ri", english: "Thanks / Thank You", hint: "Polite word spoken when someone helps or shares with you."
+  },
+  {
+    id: "l7_10", level: 7, tamil: "அட்டை", letters: ["அ", "ட்", "டை"],
+    breakdowns: [{ letter: "அ", root: "Vowel (உயிர்)", sound: "A" }, { letter: "ட்", root: "Pure Consonant (மெய்)", sound: "T" }, { letter: "டை", root: "ட் + ஐ", sound: "Dai" }],
+    translit: "At-tai", english: "Card / Flashcard", hint: "A stiff paper flashcard with pictures or words."
+  },
+  {
+    id: "l7_11", level: 7, tamil: "யோசனை", letters: ["யோ", "ச", "னை"],
+    breakdowns: [{ letter: "யோ", root: "ய் + ஓ", sound: "Yoa" }, { letter: "ச", root: "ச் + அ", sound: "Sa" }, { letter: "னை", root: "ன் + ஐ", sound: "Nai" }],
+    translit: "Yoa-sa-nai", english: "Idea / Thought", hint: "A clever thought or bright suggestion in your mind."
+  },
+  {
+    id: "l7_12", level: 7, tamil: "பொருள்", letters: ["பொ", "ரு", "ள்"],
+    breakdowns: [{ letter: "பொ", root: "ப் + ஒ", sound: "Po" }, { letter: "ரு", root: "ர் + உ", sound: "Ru" }, { letter: "ள்", root: "Pure Consonant (மெய்)", sound: "L" }],
+    translit: "Po-rul", english: "Thing / Item", hint: "An object or item you pack inside your school bag."
+  },
+  {
+    id: "l7_13", level: 7, tamil: "தேவை", letters: ["தே", "வை"],
+    breakdowns: [{ letter: "தே", root: "த் + ஏ", sound: "Thae" }, { letter: "வை", root: "வ் + ஐ", sound: "Vai" }],
+    translit: "Thae-vai", english: "Need / Requirement", hint: "Something necessary or useful that you must have."
+  },
+  {
+    id: "l7_14", level: 7, tamil: "பழகு", letters: ["ப", "ழ", "கு"],
+    breakdowns: [{ letter: "ப", root: "ப் + அ", sound: "Pa" }, { letter: "ழ", root: "ழ் + அ", sound: "Zha" }, { letter: "கு", root: "க் + உ", sound: "Ku" }],
+    translit: "Pa-zha-gu", english: "(To) Practice / Learn", hint: "Doing an activity repeatedly until you get skilled at it."
+  },
+  {
+    id: "l7_15", level: 7, tamil: "ஆரம்பி", letters: ["ஆ", "ர", "ம்", "பி"],
+    breakdowns: [{ letter: "ஆ", root: "Long Vowel (நெடில்)", sound: "Aa" }, { letter: "ர", root: "ர் + அ", sound: "Ra" }, { letter: "ம்", root: "Pure Consonant (மெய்)", sound: "M" }, { letter: "பி", root: "ப் + இ", sound: "Pi" }],
+    translit: "Aa-ram-bi", english: "(To) Begin / Start", hint: "Taking the very first step to start an activity."
+  },
+  {
+    id: "l7_16", level: 7, tamil: "சரிபார்", letters: ["ச", "ரி", "பா", "ர்"],
+    breakdowns: [{ letter: "ச", root: "ச் + அ", sound: "Sa" }, { letter: "ரி", root: "ர் + இ", sound: "Ri" }, { letter: "பா", root: "ப் + ஆ", sound: "Paa" }, { letter: "ர்", root: "Pure Consonant (மெய்)", sound: "R" }],
+    translit: "Sa-ri-paar", english: "(To) Verify / Check", hint: "Looking carefully over items to ensure nothing is missing."
+  },
+  {
+    id: "l7_17", level: 7, tamil: "இப்பொழுது", letters: ["இ", "ப்", "பொ", "ழு", "து"],
+    breakdowns: [{ letter: "இ", root: "Vowel (உயிர்)", sound: "I" }, { letter: "ப்", root: "Pure Consonant (மெய்)", sound: "P" }, { letter: "பொ", root: "ப் + ஒ", sound: "Po" }, { letter: "ழு", root: "ழ் + உ", sound: "Zhu" }, { letter: "து", root: "த் + உ", sound: "Dhu" }],
+    translit: "Ip-po-zhu-dhu", english: "Now / At Present", hint: "At this exact moment in time without waiting."
+  },
+  {
+    id: "l7_18", level: 7, tamil: "வேண்டும்", letters: ["வே", "ண்", "டு", "ம்"],
+    breakdowns: [{ letter: "வே", root: "வ் + ஏ", sound: "Vae" }, { letter: "ண்", root: "Pure Consonant (மெய்)", sound: "N" }, { letter: "டு", root: "ட் + உ", sound: "Du" }, { letter: "ம்", root: "Pure Consonant (மெய்)", sound: "M" }],
+    translit: "Vaen-dum", english: "Must / Needed", hint: "Expressing something that is required or necessary."
+  },
+  {
+    id: "l7_19", level: 7, tamil: "புத்தகம்", letters: ["பு", "த்", "த", "க", "ம்"],
+    breakdowns: [{ letter: "பு", root: "ப் + உ", sound: "Pu" }, { letter: "த்", root: "Pure Consonant (மெய்)", sound: "Th" }, { letter: "த", root: "த் + அ", sound: "Tha" }, { letter: "க", root: "க் + அ", sound: "Ka" }, { letter: "ம்", root: "Pure Consonant (மெய்)", sound: "M" }],
+    translit: "Puth-tha-gam", english: "Book", hint: "Printed pages bound together filled with knowledge and stories."
+  },
 ];
+
+// Page 11 Dialogue Script (Mani & Babu Conversation)
+export const PAGE_11_DIALOGUE = {
+  title: "உரையாடல்",
+  subtitle: "ஆசிரியர் சொல்வதைக் கேட்டு, நண்பனுடன் உரையாடுக:",
+  englishTitle: "Dialogue: Getting Ready for School",
+  englishSubtitle: "Listen to the teacher, converse with friend:",
+  lines: [
+    {
+      id: 1,
+      speaker: "மணி",
+      speakerRole: "Mani",
+      tamil: "பாபு, நாளைக்கு நீ பள்ளிக்குப் போக வேண்டுமா?",
+      english: "Babu, do you have to go to school tomorrow?",
+      translit: "Baabu, naalaikku nee pallikkup poaga vaendum-aa?",
+      audio: "audio/dialogue/dialogue_1.mp3",
+      vocabulary: ["நாளை", "பள்ளி", "வேண்டும்"]
+    },
+    {
+      id: 2,
+      speaker: "பாபு",
+      speakerRole: "Babu",
+      tamil: "போக வேண்டும் மணி. நீ போக வேண்டாமா?",
+      english: "I have to go, Mani. Don't you have to go?",
+      translit: "Poaga vaendum Mani. Nee poaga vaendaam-aa?",
+      audio: "audio/dialogue/dialogue_2.mp3",
+      vocabulary: ["வேண்டும்"]
+    },
+    {
+      id: 3,
+      speaker: "மணி",
+      speakerRole: "Mani",
+      tamil: "நானும் போக வேண்டும். நாளைக்குச் சீக்கிரமாகப் போக வேண்டும். இப்பொழுதே வகுப்புக்குத் தேவையான பொருள்களை என் பையில் எடுத்துவைக்க வேண்டும்.",
+      english: "I also have to go. Tomorrow I must go early. Right now, I have to pack the things needed for class into my bag.",
+      translit: "Naanum poaga vaendum. Naalaikkuch cheekkiramaagap poaga vaendum. Ippozhudhae vaguppukkuth thaevaiyaana porulgalai en paiyil eduthuvaikka vaendum.",
+      audio: null,
+      vocabulary: ["சீக்கிரம்", "இப்பொழுது", "வகுப்பு", "தேவை", "பொருள்", "பை", "வேண்டும்"]
+    },
+    {
+      id: 4,
+      speaker: "பாபு",
+      speakerRole: "Babu",
+      tamil: "உனக்குத் தேவையான பொருள்களை நீயே பையில் எடுத்துவைப்பாயா? எனக்குத் தேவையான பொருள்களை என் அம்மாதான் என் பையில் எடுத்துவைப்பார்கள்.",
+      english: "Do you pack the things you need into your bag yourself? For me, my mother packs the things I need into my bag.",
+      translit: "Unakkuth thaevaiyaana porulgalai neeyae paiyil eduthuvaippaayaa? Enakkuth thaevaiyaana porulgalai en ammaa thaan en paiyil eduthuvaippaargal.",
+      audio: null,
+      vocabulary: ["தேவை", "பொருள்", "பை", "அம்மா"]
+    },
+    {
+      id: 5,
+      speaker: "மணி",
+      speakerRole: "Mani",
+      tamil: "அம்மா ஏன் இந்த வேலை எல்லாம் செய்ய வேண்டும்? நீயும், நான் செய்வதுபோலச் செய்து பழகலாமே. சாப்பாடுதவிர மீதிப் பொருள்களை முதன்நாளே எடுத்துவைப்பேன்.",
+      english: "Why should mother do all this work? You too can practice doing it like I do. Except for food, I pack the rest of the items on the previous day itself.",
+      translit: "Ammaa aen indha vaelai ellaam seyya vaendum? Neeyum, naan seyvadhupoalach seydhu pazhagalaamae. Saappaduthavira meedhip porulgalai mudhannaalae eduthuvaippaen.",
+      audio: null,
+      vocabulary: ["வேலை", "பழகு", "சாப்பாடு", "பொருள்", "வேண்டும்"]
+    },
+    {
+      id: 6,
+      speaker: "பாபு",
+      speakerRole: "Babu",
+      tamil: "நன்றி மணி. நாளையிலிருந்து... இல்லை இல்லை இன்றைக்கே நான் இந்த வேலையைச் செய்ய ஆரம்பிக்கிறேன்.",
+      english: "Thanks Mani. From tomorrow... no, no, starting today itself I will begin doing this work.",
+      translit: "Nanri Mani. Naalaiyilirundhu... illai illai inraikkae naan indha vaelaiyaich cheyya aarambikkiraen.",
+      audio: null,
+      vocabulary: ["நன்றி", "நாளை", "இல்லை", "இன்று", "வேலை", "ஆரம்பி"]
+    },
+    {
+      id: 7,
+      speaker: "மணி",
+      speakerRole: "Mani",
+      tamil: "என்ன என்ன பொருள்களைப் பையில் வைக்க வேண்டும் என்று நான் பட அட்டைகள் வைத்திருக்கிறேன். அதைப் பார்த்து எல்லாப் பொருள்களையும் பையில் வைத்தேனா என்று சரிபார்ப்பேன்.",
+      english: "I have picture flashcards showing what things to put in the bag. Looking at them, I check if I put all the things into the bag.",
+      translit: "Enna enna porulgalaip paiyil vaikka vaendum endru naan pada attaikal vaiththirukkiraen. Adhaip paarththu ellaap porulgalaiyum paiyil vaiththaenaa endru saripaarppaen.",
+      audio: null,
+      vocabulary: ["பொருள்", "பை", "வேண்டும்", "படம்", "அட்டை", "சரிபார்"]
+    },
+    {
+      id: 8,
+      speaker: "பாபு",
+      speakerRole: "Babu",
+      tamil: "நல்ல யோசனை. உன் பட அட்டைகளைப் பற்றிச்சொல் மணி.",
+      english: "Good idea! Tell me about your picture flashcards, Mani.",
+      translit: "Nalla yoasanai. Un pada attaikalaip patrich chol Mani.",
+      audio: "audio/dialogue/dialogue_8.mp3",
+      vocabulary: ["யோசனை", "அட்டை"]
+    }
+  ]
+};
 
 // Helper to correctly segment Tamil words into grapheme clusters (letter tiles)
 export function splitTamilLetters(text) {

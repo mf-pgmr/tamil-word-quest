@@ -180,6 +180,41 @@ class SoundService {
     this.speak(textOrId, 0.7, onEnd);
   }
 
+  stop() {
+    if (this.currentAudio) {
+      try {
+        this.currentAudio.pause();
+        this.currentAudio.currentTime = 0;
+      } catch (e) {}
+      this.currentAudio = null;
+    }
+    if (this.synth) {
+      try {
+        this.synth.cancel();
+      } catch (e) {}
+    }
+  }
+
+  playLocalAudio(audioUrl, onEnd = null, onError = null) {
+    this.stop();
+    const audio = new Audio(audioUrl);
+    this.currentAudio = audio;
+    audio.playbackRate = this.speechRate || 0.95;
+
+    audio.onended = () => {
+      if (this.currentAudio === audio) this.currentAudio = null;
+      if (onEnd) onEnd();
+    };
+
+    const playPromise = audio.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(err => {
+        if (err.name === "AbortError" || err.name === "NotAllowedError") return;
+        if (onError) onError(err);
+      });
+    }
+  }
+
   // Web Audio Synthesized Sound Effects (100% Offline and responsive)
   playTone(freq, type = "sine", duration = 0.15, startTimeOffset = 0, gainLevel = 0.15) {
     this.ensureAudioContext();
@@ -250,3 +285,4 @@ class SoundService {
 }
 
 export const sound = new SoundService();
+export const speech = sound;
