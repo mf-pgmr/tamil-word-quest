@@ -13,18 +13,19 @@ const DEFAULT_DATA = {
   showPhonics: true, // Toggle English phonic sound letters and transliteration
   showTranslit: true, // Legacy compatibility
   showHighlights: true, // Toggle vocabulary highlights in dialogue
+  speedHighScore: 0, // Global high score for Speed Challenge
   currentLevel: 1,
   masteredWords: [], // Array of word IDs
   customWords: [],   // Array of parent-added custom word objects
   badges: [],
   levelProgress: {
-    1: { stars: 0, quizHighScore: 0 },
-    2: { stars: 0, quizHighScore: 0 },
-    3: { stars: 0, quizHighScore: 0 },
-    4: { stars: 0, quizHighScore: 0 },
-    5: { stars: 0, quizHighScore: 0 },
-    6: { stars: 0, quizHighScore: 0 },
-    7: { stars: 0, quizHighScore: 0 }
+    1: { stars: 0, quizHighScore: 0, speedHighScore: 0 },
+    2: { stars: 0, quizHighScore: 0, speedHighScore: 0 },
+    3: { stars: 0, quizHighScore: 0, speedHighScore: 0 },
+    4: { stars: 0, quizHighScore: 0, speedHighScore: 0 },
+    5: { stars: 0, quizHighScore: 0, speedHighScore: 0 },
+    6: { stars: 0, quizHighScore: 0, speedHighScore: 0 },
+    7: { stars: 0, quizHighScore: 0, speedHighScore: 0 }
   }
 };
 
@@ -36,7 +37,10 @@ export const BADGE_DEFINITIONS = [
   { id: "word_100", title: "Century Reader", desc: "Mastered 100 Tamil words!" },
   { id: "streak_5", title: "On Fire", desc: "Get 5 quiz questions right in a row!" },
   { id: "spelling_champ", title: "Letter Builder", desc: "Spell 5 words correctly in Scramble Mode!" },
-  { id: "level1_master", title: "Level 1 Hero", desc: "Completed all Level 1 root words!" }
+  { id: "level1_master", title: "Level 1 Hero", desc: "Completed all Level 1 root words!" },
+  { id: "speed_10", title: "Speed Reader", desc: "Answered 10+ words in 60s Speed Challenge!" },
+  { id: "speed_20", title: "Lightning Scholar", desc: "Answered 20+ words in 60s Speed Challenge!" },
+  { id: "speed_streak_5", title: "Speed Demon", desc: "Hit a 5x streak in Speed Challenge!" }
 ];
 
 class StorageService {
@@ -59,6 +63,9 @@ class StorageService {
         }
         if (parsed.showHighlights === undefined) {
           parsed.showHighlights = true;
+        }
+        if (parsed.speedHighScore === undefined) {
+          parsed.speedHighScore = 0;
         }
         return { ...DEFAULT_DATA, ...parsed };
       }
@@ -212,6 +219,44 @@ class StorageService {
     this.data.showHighlights = !this.getShowHighlights();
     this.save();
     return this.data.showHighlights;
+  }
+
+  getSpeedHighScore(level = "all") {
+    if (level === "all" || !level) {
+      return this.data.speedHighScore || 0;
+    }
+    const lvl = parseInt(level, 10);
+    return this.data.levelProgress?.[lvl]?.speedHighScore || 0;
+  }
+
+  saveSpeedScore(score, level = "all", maxStreak = 0) {
+    let isNewBest = false;
+    if (level === "all" || !level) {
+      if (score > (this.data.speedHighScore || 0)) {
+        this.data.speedHighScore = score;
+        isNewBest = true;
+      }
+    } else {
+      const lvl = parseInt(level, 10);
+      if (!this.data.levelProgress[lvl]) {
+        this.data.levelProgress[lvl] = { stars: 0, quizHighScore: 0, speedHighScore: 0 };
+      }
+      if (score > (this.data.levelProgress[lvl].speedHighScore || 0)) {
+        this.data.levelProgress[lvl].speedHighScore = score;
+        isNewBest = true;
+      }
+      if (score > (this.data.speedHighScore || 0)) {
+        this.data.speedHighScore = score;
+        isNewBest = true;
+      }
+    }
+
+    if (score >= 10) this.unlockBadge("speed_10");
+    if (score >= 20) this.unlockBadge("speed_20");
+    if (maxStreak >= 5) this.unlockBadge("speed_streak_5");
+
+    this.save();
+    return isNewBest;
   }
 
   getCustomWords() {

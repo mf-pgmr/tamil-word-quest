@@ -8,6 +8,7 @@ import { ListenQuizComponent } from "./components/listenQuiz.js";
 import { MissingQuizComponent } from "./components/missingQuiz.js";
 import { ParentComponent } from "./components/parent.js";
 import { dialogueReader } from "./components/dialogueReader.js";
+import { SpeedQuizComponent } from "./components/speedQuiz.js";
 
 class App {
   constructor() {
@@ -18,6 +19,7 @@ class App {
     this.scramble = null;
     this.listen = null;
     this.missing = null;
+    this.speed = null;
     this.parent = null;
     this.dialogue = dialogueReader;
 
@@ -38,6 +40,7 @@ class App {
     this.scramble = new ScrambleQuizComponent(this.contentEl, updateStatsCb);
     this.listen = new ListenQuizComponent(this.contentEl, updateStatsCb);
     this.missing = new MissingQuizComponent(this.contentEl, updateStatsCb);
+    this.speed = new SpeedQuizComponent(this.contentEl, updateStatsCb);
     this.parent = new ParentComponent(this.contentEl, () => this.onWordsChanged());
 
     const checkHash = () => {
@@ -236,6 +239,8 @@ class App {
       this.listen.initQuiz();
     } else if (this.activeTab === "missing") {
       this.missing.initQuiz();
+    } else if (this.activeTab === "speed" && this.speed) {
+      this.speed.setLevel(this.currentLevel);
     } else if (this.activeTab === "dialogue") {
       this.dialogue.render(this.contentEl);
     }
@@ -340,6 +345,8 @@ class App {
       this.listen.setLevel(lvl);
     } else if (this.activeTab === "missing") {
       this.missing.setLevel(lvl);
+    } else if (this.activeTab === "speed") {
+      this.speed.setLevel(lvl);
     }
   }
 
@@ -359,6 +366,9 @@ class App {
   }
 
   switchTab(tab) {
+    if (this.activeTab === "speed" && tab !== "speed" && this.speed) {
+      this.speed.stopTimer();
+    }
     this.activeTab = tab;
 
     document.querySelectorAll(".nav-tab-btn").forEach(btn => {
@@ -393,6 +403,9 @@ class App {
       } else if (tab === "missing") {
         this.missing.setLevel(this.currentLevel);
         this.missing.render();
+      } else if (tab === "speed") {
+        this.speed.setLevel(this.currentLevel);
+        this.speed.render();
       } else if (tab === "dialogue") {
         this.dialogue.render(this.contentEl);
       } else if (tab === "progress") {

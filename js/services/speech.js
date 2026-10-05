@@ -303,6 +303,15 @@ class SoundService {
       this.playTone(n.f, "sine", n.d, n.t, 0.25);
     });
   }
+
+  playBonus() {
+    this.playTone(880, "sine", 0.08, 0, 0.2);
+    this.playTone(1174.66, "sine", 0.12, 0.07, 0.25);
+  }
+
+  playTick() {
+    this.playTone(700, "sine", 0.03, 0, 0.1);
+  }
 }
 
 export const sound = new SoundService();
