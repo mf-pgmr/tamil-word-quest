@@ -151,6 +151,7 @@ class SoundService {
       }
 
       const utterance = new SpeechSynthesisUtterance(spokenText);
+      this.currentUtterance = utterance;
       utterance.lang = "ta-IN";
       utterance.rate = rate;
       utterance.pitch = 1.0;
@@ -160,10 +161,16 @@ class SoundService {
       }
 
       utterance.onend = () => {
+        if (this.currentUtterance === utterance) {
+          this.currentUtterance = null;
+        }
         if (onEnd) onEnd();
       };
 
       utterance.onerror = (e) => {
+        if (this.currentUtterance === utterance) {
+          this.currentUtterance = null;
+        }
         // Ignore interrupted errors in Web Speech as well
         if (e.error !== "interrupted") {
           console.warn("SpeechSynthesis error:", e);
@@ -193,6 +200,7 @@ class SoundService {
         this.synth.cancel();
       } catch (e) {}
     }
+    this.currentUtterance = null;
   }
 
   playLocalAudio(audioUrl, onEnd = null, onError = null) {

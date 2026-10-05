@@ -9,6 +9,7 @@ class DialogueReader {
     this.isPlayingAll = false;
     this.currentPlayingIndex = -1;
     this.playbackRate = 0.9;
+    this.playTimeout = null;
   }
 
   render(container) {
@@ -54,6 +55,14 @@ class DialogueReader {
               }" title="Toggle vocabulary word highlights">
                 <span id="highlights-btn-icon">${showHighlights ? "✨" : "👁️"}</span>
                 <span id="highlights-btn-text">Highlights: ${showHighlights ? "On" : "Off"}</span>
+              </button>
+              <button id="dialogue-toggle-translit-btn" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer border ${
+                showPhonics
+                  ? "bg-amber-50 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 border-amber-200 dark:border-amber-800 hover:bg-amber-100 dark:hover:bg-amber-900/80"
+                  : "bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700"
+              }" title="Toggle English transliteration / phonetics">
+                <span id="translit-btn-icon">${showPhonics ? "🔤" : "🚫"}</span>
+                <span id="translit-btn-text">Translit: ${showPhonics ? "On" : "Off"}</span>
               </button>
               <button id="dialogue-play-all-btn" class="flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-700 hover:to-emerald-700 shadow-md shadow-teal-500/20 active:scale-95 transition cursor-pointer">
                 <span id="play-all-icon">▶</span>
@@ -191,13 +200,9 @@ class DialogueReader {
           </div>
 
           <!-- Phonetics & Transliteration with Clear Spacing -->
-          ${
-            showPhonics && line.translit
-              ? `<div class="dialogue-translit-line text-xs text-amber-700 dark:text-amber-400 font-medium">
-                  ${line.translit}
-                </div>`
-              : ""
-          }
+          <div class="dialogue-translit-line text-xs text-amber-700 dark:text-amber-400 font-medium ${showPhonics ? '' : 'hidden'}">
+            ${line.translit || ""}
+          </div>
 
           <!-- English Meaning -->
           ${
@@ -213,7 +218,6 @@ class DialogueReader {
   }
 
   updateHighlightsUI(showHighlights) {
-    // 1. Update button styling & label
     const highlightBtn = this.container ? this.container.querySelector("#dialogue-toggle-highlights-btn") : null;
     const iconEl = this.container ? this.container.querySelector("#highlights-btn-icon") : null;
     const textEl = this.container ? this.container.querySelector("#highlights-btn-text") : null;
@@ -229,7 +233,6 @@ class DialogueReader {
       }
     }
 
-    // 2. Toggle pill classes without destroying DOM or interrupting audio
     if (this.container) {
       this.container.querySelectorAll(".dialogue-word-pill").forEach(pill => {
         if (showHighlights) {
@@ -244,13 +247,48 @@ class DialogueReader {
       });
     }
 
-    // 3. Update legend tip
     const legendText = this.container ? this.container.querySelector("#legend-text-main") : null;
     if (legendText) {
       legendText.innerHTML = showHighlights
         ? `Tap any <span class="inline-block px-2 py-0.5 rounded-md bg-teal-50 text-teal-700 dark:bg-teal-950/60 dark:text-teal-300 border border-teal-200 dark:border-teal-800 font-bold font-tamil">highlighted word</span> in the dialogue to hear its pronunciation!`
         : `Highlights are currently hidden. Tap <strong>Highlights: Off</strong> above or in Study Aids to reveal word cards!`;
     }
+  }
+
+  updateTranslitUI(showPhonics) {
+    const translitBtn = this.container ? this.container.querySelector("#dialogue-toggle-translit-btn") : null;
+    const iconEl = this.container ? this.container.querySelector("#translit-btn-icon") : null;
+    const textEl = this.container ? this.container.querySelector("#translit-btn-text") : null;
+    if (translitBtn) {
+      if (showPhonics) {
+        translitBtn.className = "flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer border bg-amber-50 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 border-amber-200 dark:border-amber-800 hover:bg-amber-100 dark:hover:bg-amber-900/80";
+        if (iconEl) iconEl.textContent = "🔤";
+        if (textEl) textEl.textContent = "Translit: On";
+      } else {
+        translitBtn.className = "flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer border bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700";
+        if (iconEl) iconEl.textContent = "🚫";
+        if (textEl) textEl.textContent = "Translit: Off";
+      }
+    }
+
+    if (this.container) {
+      this.container.querySelectorAll(".dialogue-translit-line").forEach(el => {
+        if (showPhonics) {
+          el.classList.remove("hidden");
+        } else {
+          el.classList.add("hidden");
+        }
+      });
+    }
+  }
+
+  cleanSpeechText(text) {
+    if (!text) return "";
+    return text
+      .replace(/\.{2,}/g, ", ")
+      .replace(/[—–]/g, " ")
+      .replace(/["“”'‘’]/g, "")
+      .trim();
   }
 
   bindEvents() {
@@ -315,6 +353,22 @@ class DialogueReader {
         }
       });
     }
+
+    // 6. Toggle Transliteration button
+    const translitBtn = this.container.querySelector("#dialogue-toggle-translit-btn");
+    if (translitBtn) {
+      translitBtn.addEventListener("click", () => {
+        sound.playPop();
+        const newShow = storage.togglePhonics();
+        this.updateTranslitUI(newShow);
+
+        // Sync sidebar checkbox if present
+        const sidebarCheckbox = document.getElementById("toggle-phonics");
+        if (sidebarCheckbox) {
+          sidebarCheckbox.checked = newShow;
+        }
+      });
+    }
   }
 
   playLine(index, onEnded = null) {
@@ -322,29 +376,12 @@ class DialogueReader {
 
     this.highlightLine(index);
     const line = PAGE_11_DIALOGUE.lines[index];
+    const textToSpeak = this.cleanSpeechText(line.tamil);
 
-    // If native line MP3 exists, play it; otherwise speak via Web Speech API
-    if (line.audio) {
-      speech.playLocalAudio(
-        line.audio,
-        () => {
-          this.clearLineHighlight(index);
-          if (onEnded) onEnded();
-        },
-        () => {
-          // Fallback to Web Speech
-          speech.speakWithWebSpeech(line.tamil, this.playbackRate, () => {
-            this.clearLineHighlight(index);
-            if (onEnded) onEnded();
-          });
-        }
-      );
-    } else {
-      speech.speakWithWebSpeech(line.tamil, this.playbackRate, () => {
-        this.clearLineHighlight(index);
-        if (onEnded) onEnded();
-      });
-    }
+    speech.speakWithWebSpeech(textToSpeak, this.playbackRate, () => {
+      this.clearLineHighlight(index);
+      if (onEnded) onEnded();
+    });
   }
 
   startPlayAll() {
@@ -366,15 +403,19 @@ class DialogueReader {
       if (this.isPlayingAll) {
         this.currentPlayingIndex++;
         // Short pause between speaker turns
-        setTimeout(() => {
+        this.playTimeout = setTimeout(() => {
           this.playNextSequentialLine();
-        }, 500);
+        }, 600);
       }
     });
   }
 
   stopPlayback() {
     this.isPlayingAll = false;
+    if (this.playTimeout) {
+      clearTimeout(this.playTimeout);
+      this.playTimeout = null;
+    }
     this.updatePlayAllButtonState(false);
     this.clearAllHighlights();
     speech.stop();

@@ -172,6 +172,10 @@ class StorageService {
     return this.data.showMeaning;
   }
 
+  getShowMeaning() {
+    return this.data.showMeaning !== false;
+  }
+
   setPhonics(val) {
     this.data.showPhonics = !!val;
     this.data.showTranslit = this.data.showPhonics;
@@ -180,10 +184,18 @@ class StorageService {
   }
 
   togglePhonics() {
-    this.data.showPhonics = !this.data.showPhonics;
+    this.data.showPhonics = !this.getShowPhonics();
     this.data.showTranslit = this.data.showPhonics;
     this.save();
     return this.data.showPhonics;
+  }
+
+  getShowPhonics() {
+    return this.data.showPhonics !== false;
+  }
+
+  getShowTranslit() {
+    return this.data.showTranslit !== false;
   }
 
   getShowHighlights() {

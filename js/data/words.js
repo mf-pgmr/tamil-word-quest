@@ -1,4 +1,4 @@
-﻿// Curated Tamil vocabulary database with 138 words across 6 progressive tiers (No emojis)
+// Curated Tamil vocabulary database with 138 words across 6 progressive tiers (No emojis)
 export const LEVELS = [
   {
     id: 1,
@@ -849,7 +849,7 @@ export const PAGE_11_DIALOGUE = {
       tamil: "பாபு, நாளைக்கு நீ பள்ளிக்குப் போக வேண்டுமா?",
       english: "Babu, do you have to go to school tomorrow?",
       translit: "Baabu, naalaikku nee pallikkup poaga vaendum-aa?",
-      audio: "audio/dialogue/dialogue_1.mp3",
+      audio: null,
       vocabulary: ["நாளை", "பள்ளி", "வேண்டும்"]
     },
     {
@@ -859,7 +859,7 @@ export const PAGE_11_DIALOGUE = {
       tamil: "போக வேண்டும் மணி. நீ போக வேண்டாமா?",
       english: "I have to go, Mani. Don't you have to go?",
       translit: "Poaga vaendum Mani. Nee poaga vaendaam-aa?",
-      audio: "audio/dialogue/dialogue_2.mp3",
+      audio: null,
       vocabulary: ["வேண்டும்"]
     },
     {
@@ -919,7 +919,7 @@ export const PAGE_11_DIALOGUE = {
       tamil: "நல்ல யோசனை. உன் பட அட்டைகளைப் பற்றிச்சொல் மணி.",
       english: "Good idea! Tell me about your picture flashcards, Mani.",
       translit: "Nalla yoasanai. Un pada attaikalaip patrich chol Mani.",
-      audio: "audio/dialogue/dialogue_8.mp3",
+      audio: null,
       vocabulary: ["யோசனை", "அட்டை"]
     }
   ]
