@@ -3,6 +3,9 @@ import { PAGE_11_DIALOGUE } from "../data/words.js";
 import { speech, sound } from "../services/speech.js";
 import { storage } from "../services/storage.js";
 
+// Calibrated line audio durations (seconds)
+const DIALOGUE_LINE_DURATIONS = [3.2, 3.0, 10.4, 10.2, 12.0, 7.2, 11.2, 4.1];
+
 class DialogueReader {
   constructor() {
     this.container = null;
@@ -10,6 +13,10 @@ class DialogueReader {
     this.currentPlayingIndex = -1;
     this.playbackRate = 0.9;
     this.playTimeout = null;
+    this.currentActiveLine = -1;
+    this.currentActiveWordIdx = -1;
+    this.highlightRafId = null;
+    this.isHighlightingWords = false;
   }
 
   render(container) {
@@ -134,11 +141,11 @@ class DialogueReader {
     return null;
   }
 
-  formatTamilText(tamilText, vocabularyList, showHighlights) {
+  formatTamilText(tamilText, vocabularyList, showHighlights, lineIndex) {
     if (!tamilText) return "";
     const words = tamilText.split(" ");
 
-    return words.map(rawWord => {
+    return words.map((rawWord, wordIdx) => {
       if (!rawWord) return "";
 
       // Separate leading and trailing punctuation (e.g. "பாபு," -> "பாபு" + ",", "வேண்டுமா?" -> "வேண்டுமா" + "?")
@@ -148,11 +155,14 @@ class DialogueReader {
       const trailingPunct = punctMatch ? punctMatch[3] : "";
 
       const matchedVocab = this.findMatchingVocab(coreWord, vocabularyList);
+      const wordId = `line-${lineIndex}-word-${wordIdx}`;
+
       if (matchedVocab) {
         const pillClass = showHighlights ? "pill-highlighted" : "pill-plain";
-        return `${leadingPunct}<span class="dialogue-word-pill ${pillClass}" data-word="${matchedVocab}" data-spoken="${coreWord}" title="${showHighlights ? `Tap to listen: ${matchedVocab}` : coreWord}">${coreWord}</span>${trailingPunct}`;
+        return `${leadingPunct}<span id="${wordId}" class="dialogue-word-token dialogue-word-pill ${pillClass}" data-line="${lineIndex}" data-word-idx="${wordIdx}" data-word="${matchedVocab}" data-spoken="${coreWord}" title="${showHighlights ? `Tap to listen: ${matchedVocab}` : coreWord}">${coreWord}</span>${trailingPunct}`;
+      } else {
+        return `${leadingPunct}<span id="${wordId}" class="dialogue-word-token" data-line="${lineIndex}" data-word-idx="${wordIdx}" data-spoken="${coreWord}" title="Tap to listen">${coreWord}</span>${trailingPunct}`;
       }
-      return rawWord;
     }).join(" ");
   }
 
@@ -168,7 +178,7 @@ class DialogueReader {
       ? "bg-teal-100 text-teal-800 dark:bg-teal-950 dark:text-teal-300"
       : "bg-indigo-100 text-indigo-800 dark:bg-indigo-950 dark:text-indigo-300";
 
-    const formattedTamil = this.formatTamilText(line.tamil, line.vocabulary, showHighlights);
+    const formattedTamil = this.formatTamilText(line.tamil, line.vocabulary, showHighlights, index);
 
     return `
       <div id="dialogue-line-${index}" class="dialogue-line-card flex items-start gap-3 p-4 rounded-2xl border ${bubbleBg} shadow-sm transition-all duration-300">
@@ -291,6 +301,110 @@ class DialogueReader {
       .trim();
   }
 
+  // Calculate weighted timing for each word based on Tamil phonetic length & punctuation
+  computeWordTimings(words, totalDuration) {
+    if (!words || !words.length) return [];
+    const dur = totalDuration > 0 ? totalDuration : 3.0;
+
+    const weights = words.map(w => {
+      const cleanLen = w.replace(/[^\p{L}\p{M}]/gu, "").length;
+      let weight = Math.max(cleanLen, 2);
+
+      if (/[,\-]/.test(w)) weight += 2.0;
+      if (/[\.?!]/.test(w)) weight += 3.0;
+      if (/\.{2,}/.test(w)) weight += 4.0;
+
+      return weight;
+    });
+
+    const totalWeight = weights.reduce((sum, wt) => sum + wt, 0);
+    const timings = [];
+    let currentStart = 0;
+
+    for (let i = 0; i < words.length; i++) {
+      const wordDur = (weights[i] / totalWeight) * dur;
+      timings.push({
+        index: i,
+        start: currentStart,
+        end: currentStart + wordDur
+      });
+      currentStart += wordDur;
+    }
+
+    return timings;
+  }
+
+  startWordHighlighting(lineIndex, words, audio) {
+    this.stopWordHighlighting();
+
+    const fallbackDur = DIALOGUE_LINE_DURATIONS[lineIndex] || 3.0;
+    this.isHighlightingWords = true;
+
+    const updateLoop = () => {
+      if (!this.isHighlightingWords) return;
+
+      if (audio && !audio.paused && !audio.ended) {
+        const dur = (audio.duration && !isNaN(audio.duration) && audio.duration > 0) ? audio.duration : fallbackDur;
+        const curTime = audio.currentTime || 0;
+        const timings = this.computeWordTimings(words, dur);
+
+        let activeIdx = -1;
+        for (let i = 0; i < timings.length; i++) {
+          if (curTime >= timings[i].start && curTime < timings[i].end) {
+            activeIdx = i;
+            break;
+          }
+        }
+        if (activeIdx === -1 && curTime >= (timings[timings.length - 1]?.start || 0)) {
+          activeIdx = timings.length - 1;
+        }
+
+        this.setActiveWord(lineIndex, activeIdx);
+      }
+
+      if (this.isHighlightingWords) {
+        this.highlightRafId = requestAnimationFrame(updateLoop);
+      }
+    };
+
+    this.highlightRafId = requestAnimationFrame(updateLoop);
+  }
+
+  stopWordHighlighting() {
+    this.isHighlightingWords = false;
+    if (this.highlightRafId) {
+      cancelAnimationFrame(this.highlightRafId);
+      this.highlightRafId = null;
+    }
+    this.clearAllActiveWords();
+  }
+
+  setActiveWord(lineIndex, wordIdx) {
+    if (this.currentActiveLine === lineIndex && this.currentActiveWordIdx === wordIdx) {
+      return;
+    }
+
+    this.clearAllActiveWords();
+    this.currentActiveLine = lineIndex;
+    this.currentActiveWordIdx = wordIdx;
+
+    if (wordIdx >= 0 && this.container) {
+      const wordEl = this.container.querySelector(`#line-${lineIndex}-word-${wordIdx}`);
+      if (wordEl) {
+        wordEl.classList.add("active-spoken-word");
+      }
+    }
+  }
+
+  clearAllActiveWords() {
+    this.currentActiveLine = -1;
+    this.currentActiveWordIdx = -1;
+    if (!this.container) return;
+    this.container.querySelectorAll(".active-spoken-word").forEach(el => {
+      el.classList.remove("active-spoken-word");
+    });
+  }
+
   bindEvents() {
     // 1. Play individual lines
     this.container.querySelectorAll(".dialogue-speak-line-btn").forEach(btn => {
@@ -301,16 +415,16 @@ class DialogueReader {
       });
     });
 
-    // 2. Play individual highlighted vocabulary words
-    this.container.querySelectorAll(".dialogue-word-pill").forEach(pill => {
-      pill.addEventListener("click", e => {
+    // 2. Play words on click with nice tactile feedback
+    this.container.querySelectorAll(".dialogue-word-token").forEach(token => {
+      token.addEventListener("click", e => {
         e.stopPropagation();
-        const wordText = pill.dataset.word || pill.dataset.spoken;
+        const wordText = token.dataset.word || token.dataset.spoken;
         if (wordText) {
           sound.playPop();
-          pill.classList.add("scale-105", "ring-2", "ring-teal-400");
+          token.classList.add("scale-105", "ring-2", "ring-amber-400");
           setTimeout(() => {
-            pill.classList.remove("scale-105", "ring-2", "ring-teal-400");
+            token.classList.remove("scale-105", "ring-2", "ring-amber-400");
           }, 350);
           speech.speak(wordText, this.playbackRate);
         }
@@ -376,12 +490,14 @@ class DialogueReader {
 
     this.highlightLine(index);
     const line = PAGE_11_DIALOGUE.lines[index];
+    const words = line.tamil.split(" ").filter(Boolean);
 
     if (line.audio) {
       speech.playLocalAudio(
         line.audio,
         this.playbackRate,
         () => {
+          this.stopWordHighlighting();
           this.clearLineHighlight(index);
           if (onEnded) onEnded();
         },
@@ -389,14 +505,18 @@ class DialogueReader {
           // Fallback to Web Speech if local audio fails
           const textToSpeak = this.cleanSpeechText(line.tamil);
           speech.speakWithWebSpeech(textToSpeak, this.playbackRate, () => {
+            this.stopWordHighlighting();
             this.clearLineHighlight(index);
             if (onEnded) onEnded();
           });
         }
       );
+      // Start real-time word highlight synchronization with the audio
+      this.startWordHighlighting(index, words, speech.currentAudio);
     } else {
       const textToSpeak = this.cleanSpeechText(line.tamil);
       speech.speakWithWebSpeech(textToSpeak, this.playbackRate, () => {
+        this.stopWordHighlighting();
         this.clearLineHighlight(index);
         if (onEnded) onEnded();
       });
@@ -436,6 +556,7 @@ class DialogueReader {
       this.playTimeout = null;
     }
     this.updatePlayAllButtonState(false);
+    this.stopWordHighlighting();
     this.clearAllHighlights();
     speech.stop();
   }
