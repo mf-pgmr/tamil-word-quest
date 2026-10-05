@@ -262,13 +262,24 @@ class App {
         this.onSettingChanged();
       });
     }
+
+    const highlightsCheckbox = document.getElementById("toggle-highlights");
+    if (highlightsCheckbox) {
+      highlightsCheckbox.addEventListener("change", (e) => {
+        sound.playPop();
+        storage.setHighlights(e.target.checked);
+        this.onSettingChanged();
+      });
+    }
   }
 
   syncStudyAidsUI() {
     const meaningCheckbox = document.getElementById("toggle-meaning");
     const phonicsCheckbox = document.getElementById("toggle-phonics");
+    const highlightsCheckbox = document.getElementById("toggle-highlights");
     if (meaningCheckbox) meaningCheckbox.checked = storage.data.showMeaning !== false;
     if (phonicsCheckbox) phonicsCheckbox.checked = storage.data.showPhonics !== false;
+    if (highlightsCheckbox) highlightsCheckbox.checked = storage.getShowHighlights();
   }
 
   onSettingChanged() {

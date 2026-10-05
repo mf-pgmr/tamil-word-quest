@@ -1,6 +1,6 @@
 // Interactive Dialogue Reader for Page 11: Mani & Babu's Conversation
 import { PAGE_11_DIALOGUE } from "../data/words.js";
-import { speech } from "../services/speech.js";
+import { speech, sound } from "../services/speech.js";
 import { storage } from "../services/storage.js";
 
 class DialogueReader {
@@ -17,6 +17,7 @@ class DialogueReader {
 
     const showMeaning = storage.getShowMeaning ? storage.getShowMeaning() : true;
     const showPhonics = storage.getShowPhonics ? storage.getShowPhonics() : true;
+    const showHighlights = storage.getShowHighlights ? storage.getShowHighlights() : true;
 
     container.innerHTML = `
       <div class="max-w-3xl mx-auto space-y-4 pb-12">
@@ -42,9 +43,17 @@ class DialogueReader {
             </div>
 
             <!-- Player Toolbar -->
-            <div class="flex items-center gap-2 self-start sm:self-auto">
+            <div class="flex flex-wrap items-center gap-2 self-start sm:self-auto">
               <button id="dialogue-rate-btn" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition cursor-pointer">
                 Speed: ${this.playbackRate === 0.9 ? "Normal" : "Slow"}
+              </button>
+              <button id="dialogue-toggle-highlights-btn" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer border ${
+                showHighlights
+                  ? "bg-teal-50 dark:bg-teal-950/60 text-teal-700 dark:text-teal-300 border-teal-200 dark:border-teal-800 hover:bg-teal-100 dark:hover:bg-teal-900/80"
+                  : "bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700"
+              }" title="Toggle vocabulary word highlights">
+                <span id="highlights-btn-icon">${showHighlights ? "✨" : "👁️"}</span>
+                <span id="highlights-btn-text">Highlights: ${showHighlights ? "On" : "Off"}</span>
               </button>
               <button id="dialogue-play-all-btn" class="flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-700 hover:to-emerald-700 shadow-md shadow-teal-500/20 active:scale-95 transition cursor-pointer">
                 <span id="play-all-icon">▶</span>
@@ -54,19 +63,21 @@ class DialogueReader {
           </div>
 
           <!-- Vocabulary Pill Legend -->
-          <div class="mt-3 flex flex-wrap items-center gap-1.5 text-[11px] text-slate-500 dark:text-slate-400">
+          <div id="dialogue-legend" class="mt-3 flex flex-wrap items-center gap-1.5 text-[11px] text-slate-500 dark:text-slate-400">
             <span class="font-bold text-slate-600 dark:text-slate-300">Tip:</span>
-            <span>Tap any</span>
-            <span class="inline-block px-2 py-0.5 rounded-md bg-teal-50 text-teal-700 dark:bg-teal-950/60 dark:text-teal-300 border border-teal-200 dark:border-teal-800 font-bold font-tamil">
-              highlighted word
+            <span id="legend-text-main">
+              ${
+                showHighlights
+                  ? `Tap any <span class="inline-block px-2 py-0.5 rounded-md bg-teal-50 text-teal-700 dark:bg-teal-950/60 dark:text-teal-300 border border-teal-200 dark:border-teal-800 font-bold font-tamil">highlighted word</span> in the dialogue to hear its pronunciation!`
+                  : `Highlights are currently hidden. Tap <strong>Highlights: Off</strong> above or in Study Aids to reveal word cards!`
+              }
             </span>
-            <span>in the dialogue to hear its pronunciation!</span>
           </div>
         </div>
 
         <!-- Speech Turns Feed -->
         <div id="dialogue-lines-list" class="space-y-3">
-          ${PAGE_11_DIALOGUE.lines.map((line, idx) => this.renderLine(line, idx, showMeaning, showPhonics)).join("")}
+          ${PAGE_11_DIALOGUE.lines.map((line, idx) => this.renderLine(line, idx, showMeaning, showPhonics, showHighlights)).join("")}
         </div>
 
         <!-- Lesson Takeaway & Discussion Box -->
@@ -97,7 +108,46 @@ class DialogueReader {
     this.bindEvents();
   }
 
-  renderLine(line, index, showMeaning, showPhonics) {
+  findMatchingVocab(coreWord, vocabularyList) {
+    if (!vocabularyList || !vocabularyList.length || !coreWord) return null;
+    for (const vocab of vocabularyList) {
+      if (coreWord === vocab) return vocab;
+      if (coreWord.startsWith(vocab)) return vocab;
+      // Handle Tamil inflected stems (e.g. சீக்கிரம் -> சீக்கிர..., பழகு -> பழக..., இன்று -> இன்ற..., படம் -> பட...)
+      const stem = vocab.replace(/[ம்ுகு]$/, "");
+      if (stem && stem.length >= 2 && coreWord.startsWith(stem)) {
+        return vocab;
+      }
+      if (vocab === "இன்று" && coreWord.startsWith("இன்")) {
+        return vocab;
+      }
+    }
+    return null;
+  }
+
+  formatTamilText(tamilText, vocabularyList, showHighlights) {
+    if (!tamilText) return "";
+    const words = tamilText.split(" ");
+
+    return words.map(rawWord => {
+      if (!rawWord) return "";
+
+      // Separate leading and trailing punctuation (e.g. "பாபு," -> "பாபு" + ",", "வேண்டுமா?" -> "வேண்டுமா" + "?")
+      const punctMatch = rawWord.match(/^([,\.?!…":'“”—-]*)(.*?)([,\.?!…":'“”—-]*)$/);
+      const leadingPunct = punctMatch ? punctMatch[1] : "";
+      const coreWord = punctMatch ? punctMatch[2] : rawWord;
+      const trailingPunct = punctMatch ? punctMatch[3] : "";
+
+      const matchedVocab = this.findMatchingVocab(coreWord, vocabularyList);
+      if (matchedVocab) {
+        const pillClass = showHighlights ? "pill-highlighted" : "pill-plain";
+        return `${leadingPunct}<span class="dialogue-word-pill ${pillClass}" data-word="${matchedVocab}" data-spoken="${coreWord}" title="${showHighlights ? `Tap to listen: ${matchedVocab}` : coreWord}">${coreWord}</span>${trailingPunct}`;
+      }
+      return rawWord;
+    }).join(" ");
+  }
+
+  renderLine(line, index, showMeaning, showPhonics, showHighlights) {
     const isMani = line.speaker === "மணி";
     const avatarBg = isMani
       ? "bg-teal-600 text-white"
@@ -109,15 +159,7 @@ class DialogueReader {
       ? "bg-teal-100 text-teal-800 dark:bg-teal-950 dark:text-teal-300"
       : "bg-indigo-100 text-indigo-800 dark:bg-indigo-950 dark:text-indigo-300";
 
-    // Format Tamil text with clickable vocabulary word pills
-    let formattedTamil = line.tamil;
-    line.vocabulary.forEach(vocab => {
-      const reg = new RegExp(`(${vocab})`, "g");
-      formattedTamil = formattedTamil.replace(
-        reg,
-        `<span class="dialogue-word-pill inline-block px-1.5 py-0.5 mx-0.5 rounded-lg bg-teal-50 dark:bg-teal-950/70 text-teal-900 dark:text-teal-200 border border-teal-200 dark:border-teal-800 font-bold hover:bg-teal-100 dark:hover:bg-teal-900 cursor-pointer transition" data-word="$1" title="Tap to listen">$1</span>`
-      );
-    });
+    const formattedTamil = this.formatTamilText(line.tamil, line.vocabulary, showHighlights);
 
     return `
       <div id="dialogue-line-${index}" class="dialogue-line-card flex items-start gap-3 p-4 rounded-2xl border ${bubbleBg} shadow-sm transition-all duration-300">
@@ -126,7 +168,7 @@ class DialogueReader {
           ${isMani ? "ம" : "பா"}
         </div>
 
-        <div class="flex-1 min-w-0 space-y-1.5">
+        <div class="flex-1 min-w-0 space-y-2">
           <!-- Line Header: Speaker Name & Audio Button -->
           <div class="flex items-center justify-between gap-2">
             <div class="flex items-center gap-2">
@@ -143,15 +185,15 @@ class DialogueReader {
             </button>
           </div>
 
-          <!-- Spoken Tamil Text -->
-          <div class="text-base sm:text-lg font-bold text-slate-800 dark:text-slate-100 font-tamil leading-relaxed">
+          <!-- Spoken Tamil Text with Generous Inter-Word Spacing -->
+          <div class="dialogue-tamil-line text-base sm:text-lg font-bold text-slate-800 dark:text-slate-100 font-tamil">
             ${formattedTamil}
           </div>
 
-          <!-- Phonetics & Transliteration -->
+          <!-- Phonetics & Transliteration with Clear Spacing -->
           ${
             showPhonics && line.translit
-              ? `<div class="text-xs text-amber-700 dark:text-amber-400 font-medium tracking-wide">
+              ? `<div class="dialogue-translit-line text-xs text-amber-700 dark:text-amber-400 font-medium">
                   ${line.translit}
                 </div>`
               : ""
@@ -170,6 +212,47 @@ class DialogueReader {
     `;
   }
 
+  updateHighlightsUI(showHighlights) {
+    // 1. Update button styling & label
+    const highlightBtn = this.container ? this.container.querySelector("#dialogue-toggle-highlights-btn") : null;
+    const iconEl = this.container ? this.container.querySelector("#highlights-btn-icon") : null;
+    const textEl = this.container ? this.container.querySelector("#highlights-btn-text") : null;
+    if (highlightBtn) {
+      if (showHighlights) {
+        highlightBtn.className = "flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer border bg-teal-50 dark:bg-teal-950/60 text-teal-700 dark:text-teal-300 border-teal-200 dark:border-teal-800 hover:bg-teal-100 dark:hover:bg-teal-900/80";
+        if (iconEl) iconEl.textContent = "✨";
+        if (textEl) textEl.textContent = "Highlights: On";
+      } else {
+        highlightBtn.className = "flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer border bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700";
+        if (iconEl) iconEl.textContent = "👁️";
+        if (textEl) textEl.textContent = "Highlights: Off";
+      }
+    }
+
+    // 2. Toggle pill classes without destroying DOM or interrupting audio
+    if (this.container) {
+      this.container.querySelectorAll(".dialogue-word-pill").forEach(pill => {
+        if (showHighlights) {
+          pill.classList.remove("pill-plain");
+          pill.classList.add("pill-highlighted");
+          pill.title = `Tap to listen: ${pill.dataset.word || ""}`;
+        } else {
+          pill.classList.remove("pill-highlighted");
+          pill.classList.add("pill-plain");
+          pill.title = pill.dataset.spoken || "";
+        }
+      });
+    }
+
+    // 3. Update legend tip
+    const legendText = this.container ? this.container.querySelector("#legend-text-main") : null;
+    if (legendText) {
+      legendText.innerHTML = showHighlights
+        ? `Tap any <span class="inline-block px-2 py-0.5 rounded-md bg-teal-50 text-teal-700 dark:bg-teal-950/60 dark:text-teal-300 border border-teal-200 dark:border-teal-800 font-bold font-tamil">highlighted word</span> in the dialogue to hear its pronunciation!`
+        : `Highlights are currently hidden. Tap <strong>Highlights: Off</strong> above or in Study Aids to reveal word cards!`;
+    }
+  }
+
   bindEvents() {
     // 1. Play individual lines
     this.container.querySelectorAll(".dialogue-speak-line-btn").forEach(btn => {
@@ -184,11 +267,12 @@ class DialogueReader {
     this.container.querySelectorAll(".dialogue-word-pill").forEach(pill => {
       pill.addEventListener("click", e => {
         e.stopPropagation();
-        const wordText = pill.dataset.word;
+        const wordText = pill.dataset.word || pill.dataset.spoken;
         if (wordText) {
-          pill.classList.add("scale-110", "bg-amber-100", "dark:bg-amber-900");
+          sound.playPop();
+          pill.classList.add("scale-105", "ring-2", "ring-teal-400");
           setTimeout(() => {
-            pill.classList.remove("scale-110", "bg-amber-100", "dark:bg-amber-900");
+            pill.classList.remove("scale-105", "ring-2", "ring-teal-400");
           }, 350);
           speech.speak(wordText, this.playbackRate);
         }
@@ -213,6 +297,22 @@ class DialogueReader {
       rateBtn.addEventListener("click", () => {
         this.playbackRate = this.playbackRate === 0.9 ? 0.75 : 0.9;
         rateBtn.textContent = `Speed: ${this.playbackRate === 0.9 ? "Normal" : "Slow"}`;
+      });
+    }
+
+    // 5. Toggle Highlights button
+    const highlightBtn = this.container.querySelector("#dialogue-toggle-highlights-btn");
+    if (highlightBtn) {
+      highlightBtn.addEventListener("click", () => {
+        sound.playPop();
+        const newShow = storage.toggleHighlights();
+        this.updateHighlightsUI(newShow);
+
+        // Sync sidebar checkbox if present
+        const sidebarCheckbox = document.getElementById("toggle-highlights");
+        if (sidebarCheckbox) {
+          sidebarCheckbox.checked = newShow;
+        }
       });
     }
   }

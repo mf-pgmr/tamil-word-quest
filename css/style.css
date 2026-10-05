@@ -90,3 +90,68 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
 }
+
+/* Dialogue Module Typography & Word Spacing */
+.dialogue-tamil-line {
+  word-spacing: 0.35rem;
+  letter-spacing: 0.015em;
+  line-height: 1.85;
+}
+
+.dialogue-translit-line {
+  word-spacing: 0.2rem;
+  line-height: 1.5;
+}
+
+.dialogue-word-pill {
+  display: inline-block;
+  vertical-align: baseline;
+  margin: 0 !important;
+  font-weight: 700;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dialogue-word-pill.pill-highlighted {
+  padding: 0.1rem 0.45rem;
+  border-radius: 0.5rem;
+  background-color: #f0fdfa;
+  color: #0f766e;
+  border: 1px solid #99f6e4;
+  box-shadow: 0 1px 2px rgba(15, 118, 110, 0.08);
+}
+
+.dark .dialogue-word-pill.pill-highlighted {
+  background-color: rgba(19, 78, 74, 0.55);
+  color: #5eead4;
+  border-color: #115e59;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+.dialogue-word-pill.pill-highlighted:hover {
+  background-color: #ccfbf1;
+  border-color: #5eead4;
+  transform: translateY(-1px);
+}
+
+.dark .dialogue-word-pill.pill-highlighted:hover {
+  background-color: rgba(17, 94, 89, 0.75);
+  border-color: #2dd4bf;
+}
+
+/* Dialogue Highlights: Hidden state */
+.dialogue-word-pill.pill-plain {
+  background-color: transparent !important;
+  color: inherit !important;
+  border: 1px solid transparent !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  box-shadow: none !important;
+}
+
+.dialogue-word-pill.pill-plain:hover {
+  text-decoration: underline;
+  text-decoration-color: #14b8a6;
+  text-underline-offset: 3px;
+}

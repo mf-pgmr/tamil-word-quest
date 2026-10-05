@@ -12,6 +12,7 @@ const DEFAULT_DATA = {
   showMeaning: true, // Toggle English word and hint meaning
   showPhonics: true, // Toggle English phonic sound letters and transliteration
   showTranslit: true, // Legacy compatibility
+  showHighlights: true, // Toggle vocabulary highlights in dialogue
   currentLevel: 1,
   masteredWords: [], // Array of word IDs
   customWords: [],   // Array of parent-added custom word objects
@@ -55,6 +56,9 @@ class StorageService {
         }
         if (parsed.showPhonics === undefined) {
           parsed.showPhonics = parsed.showTranslit !== undefined ? parsed.showTranslit : true;
+        }
+        if (parsed.showHighlights === undefined) {
+          parsed.showHighlights = true;
         }
         return { ...DEFAULT_DATA, ...parsed };
       }
@@ -180,6 +184,22 @@ class StorageService {
     this.data.showTranslit = this.data.showPhonics;
     this.save();
     return this.data.showPhonics;
+  }
+
+  getShowHighlights() {
+    return this.data.showHighlights !== false;
+  }
+
+  setHighlights(val) {
+    this.data.showHighlights = !!val;
+    this.save();
+    return this.data.showHighlights;
+  }
+
+  toggleHighlights() {
+    this.data.showHighlights = !this.getShowHighlights();
+    this.save();
+    return this.data.showHighlights;
   }
 
   getCustomWords() {
