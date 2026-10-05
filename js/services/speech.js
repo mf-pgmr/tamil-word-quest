@@ -203,11 +203,24 @@ class SoundService {
     this.currentUtterance = null;
   }
 
-  playLocalAudio(audioUrl, onEnd = null, onError = null) {
+  playLocalAudio(audioUrl, rateOrOnEnd = null, onEndOrOnError = null, maybeOnError = null) {
     this.stop();
+    let rate = this.speechRate || 0.95;
+    let onEnd = null;
+    let onError = null;
+
+    if (typeof rateOrOnEnd === "function") {
+      onEnd = rateOrOnEnd;
+      onError = onEndOrOnError;
+    } else {
+      if (typeof rateOrOnEnd === "number") rate = rateOrOnEnd;
+      onEnd = onEndOrOnError;
+      onError = maybeOnError;
+    }
+
     const audio = new Audio(audioUrl);
     this.currentAudio = audio;
-    audio.playbackRate = this.speechRate || 0.95;
+    audio.playbackRate = rate;
 
     audio.onended = () => {
       if (this.currentAudio === audio) this.currentAudio = null;

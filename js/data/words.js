@@ -849,7 +849,7 @@ export const PAGE_11_DIALOGUE = {
       tamil: "பாபு, நாளைக்கு நீ பள்ளிக்குப் போக வேண்டுமா?",
       english: "Babu, do you have to go to school tomorrow?",
       translit: "Baabu, naalaikku nee pallikkup poaga vaendum-aa?",
-      audio: null,
+      audio: "audio/dialogue/dialogue_1.mp3",
       vocabulary: ["நாளை", "பள்ளி", "வேண்டும்"]
     },
     {
@@ -859,7 +859,7 @@ export const PAGE_11_DIALOGUE = {
       tamil: "போக வேண்டும் மணி. நீ போக வேண்டாமா?",
       english: "I have to go, Mani. Don't you have to go?",
       translit: "Poaga vaendum Mani. Nee poaga vaendaam-aa?",
-      audio: null,
+      audio: "audio/dialogue/dialogue_2.mp3",
       vocabulary: ["வேண்டும்"]
     },
     {
@@ -869,7 +869,7 @@ export const PAGE_11_DIALOGUE = {
       tamil: "நானும் போக வேண்டும். நாளைக்குச் சீக்கிரமாகப் போக வேண்டும். இப்பொழுதே வகுப்புக்குத் தேவையான பொருள்களை என் பையில் எடுத்துவைக்க வேண்டும்.",
       english: "I also have to go. Tomorrow I must go early. Right now, I have to pack the things needed for class into my bag.",
       translit: "Naanum poaga vaendum. Naalaikkuch cheekkiramaagap poaga vaendum. Ippozhudhae vaguppukkuth thaevaiyaana porulgalai en paiyil eduthuvaikka vaendum.",
-      audio: null,
+      audio: "audio/dialogue/dialogue_3.mp3",
       vocabulary: ["சீக்கிரம்", "இப்பொழுது", "வகுப்பு", "தேவை", "பொருள்", "பை", "வேண்டும்"]
     },
     {
@@ -879,7 +879,7 @@ export const PAGE_11_DIALOGUE = {
       tamil: "உனக்குத் தேவையான பொருள்களை நீயே பையில் எடுத்துவைப்பாயா? எனக்குத் தேவையான பொருள்களை என் அம்மாதான் என் பையில் எடுத்துவைப்பார்கள்.",
       english: "Do you pack the things you need into your bag yourself? For me, my mother packs the things I need into my bag.",
       translit: "Unakkuth thaevaiyaana porulgalai neeyae paiyil eduthuvaippaayaa? Enakkuth thaevaiyaana porulgalai en ammaa thaan en paiyil eduthuvaippaargal.",
-      audio: null,
+      audio: "audio/dialogue/dialogue_4.mp3",
       vocabulary: ["தேவை", "பொருள்", "பை", "அம்மா"]
     },
     {
@@ -889,7 +889,7 @@ export const PAGE_11_DIALOGUE = {
       tamil: "அம்மா ஏன் இந்த வேலை எல்லாம் செய்ய வேண்டும்? நீயும், நான் செய்வதுபோலச் செய்து பழகலாமே. சாப்பாடுதவிர மீதிப் பொருள்களை முதன்நாளே எடுத்துவைப்பேன்.",
       english: "Why should mother do all this work? You too can practice doing it like I do. Except for food, I pack the rest of the items on the previous day itself.",
       translit: "Ammaa aen indha vaelai ellaam seyya vaendum? Neeyum, naan seyvadhupoalach seydhu pazhagalaamae. Saappaduthavira meedhip porulgalai mudhannaalae eduthuvaippaen.",
-      audio: null,
+      audio: "audio/dialogue/dialogue_5.mp3",
       vocabulary: ["வேலை", "பழகு", "சாப்பாடு", "பொருள்", "வேண்டும்"]
     },
     {
@@ -899,7 +899,7 @@ export const PAGE_11_DIALOGUE = {
       tamil: "நன்றி மணி. நாளையிலிருந்து... இல்லை இல்லை இன்றைக்கே நான் இந்த வேலையைச் செய்ய ஆரம்பிக்கிறேன்.",
       english: "Thanks Mani. From tomorrow... no, no, starting today itself I will begin doing this work.",
       translit: "Nanri Mani. Naalaiyilirundhu... illai illai inraikkae naan indha vaelaiyaich cheyya aarambikkiraen.",
-      audio: null,
+      audio: "audio/dialogue/dialogue_6.mp3",
       vocabulary: ["நன்றி", "நாளை", "இல்லை", "இன்று", "வேலை", "ஆரம்பி"]
     },
     {
@@ -909,7 +909,7 @@ export const PAGE_11_DIALOGUE = {
       tamil: "என்ன என்ன பொருள்களைப் பையில் வைக்க வேண்டும் என்று நான் பட அட்டைகள் வைத்திருக்கிறேன். அதைப் பார்த்து எல்லாப் பொருள்களையும் பையில் வைத்தேனா என்று சரிபார்ப்பேன்.",
       english: "I have picture flashcards showing what things to put in the bag. Looking at them, I check if I put all the things into the bag.",
       translit: "Enna enna porulgalaip paiyil vaikka vaendum endru naan pada attaikal vaiththirukkiraen. Adhaip paarththu ellaap porulgalaiyum paiyil vaiththaenaa endru saripaarppaen.",
-      audio: null,
+      audio: "audio/dialogue/dialogue_7.mp3",
       vocabulary: ["பொருள்", "பை", "வேண்டும்", "படம்", "அட்டை", "சரிபார்"]
     },
     {
@@ -919,7 +919,7 @@ export const PAGE_11_DIALOGUE = {
       tamil: "நல்ல யோசனை. உன் பட அட்டைகளைப் பற்றிச்சொல் மணி.",
       english: "Good idea! Tell me about your picture flashcards, Mani.",
       translit: "Nalla yoasanai. Un pada attaikalaip patrich chol Mani.",
-      audio: null,
+      audio: "audio/dialogue/dialogue_8.mp3",
       vocabulary: ["யோசனை", "அட்டை"]
     }
   ]

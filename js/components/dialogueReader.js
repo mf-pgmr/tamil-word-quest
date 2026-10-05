@@ -376,12 +376,31 @@ class DialogueReader {
 
     this.highlightLine(index);
     const line = PAGE_11_DIALOGUE.lines[index];
-    const textToSpeak = this.cleanSpeechText(line.tamil);
 
-    speech.speakWithWebSpeech(textToSpeak, this.playbackRate, () => {
-      this.clearLineHighlight(index);
-      if (onEnded) onEnded();
-    });
+    if (line.audio) {
+      speech.playLocalAudio(
+        line.audio,
+        this.playbackRate,
+        () => {
+          this.clearLineHighlight(index);
+          if (onEnded) onEnded();
+        },
+        () => {
+          // Fallback to Web Speech if local audio fails
+          const textToSpeak = this.cleanSpeechText(line.tamil);
+          speech.speakWithWebSpeech(textToSpeak, this.playbackRate, () => {
+            this.clearLineHighlight(index);
+            if (onEnded) onEnded();
+          });
+        }
+      );
+    } else {
+      const textToSpeak = this.cleanSpeechText(line.tamil);
+      speech.speakWithWebSpeech(textToSpeak, this.playbackRate, () => {
+        this.clearLineHighlight(index);
+        if (onEnded) onEnded();
+      });
+    }
   }
 
   startPlayAll() {
