@@ -60,7 +60,7 @@ class DialogueReader {
                   ? "bg-teal-50 dark:bg-teal-950/60 text-teal-700 dark:text-teal-300 border-teal-200 dark:border-teal-800 hover:bg-teal-100 dark:hover:bg-teal-900/80"
                   : "bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700"
               }" title="Toggle vocabulary word highlights">
-                <span id="highlights-btn-icon">${showHighlights ? "✨" : "👁️"}</span>
+                <span id="highlights-btn-icon" class="w-2 h-2 rounded-full ${showHighlights ? "bg-teal-500" : "bg-slate-400"}"></span>
                 <span id="highlights-btn-text">Highlights: ${showHighlights ? "On" : "Off"}</span>
               </button>
               <button id="dialogue-toggle-translit-btn" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer border ${
@@ -68,7 +68,7 @@ class DialogueReader {
                   ? "bg-amber-50 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 border-amber-200 dark:border-amber-800 hover:bg-amber-100 dark:hover:bg-amber-900/80"
                   : "bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700"
               }" title="Toggle English transliteration / phonetics">
-                <span id="translit-btn-icon">${showPhonics ? "🔤" : "🚫"}</span>
+                <span id="translit-btn-icon" class="w-2 h-2 rounded-full ${showPhonics ? "bg-amber-500" : "bg-slate-400"}"></span>
                 <span id="translit-btn-text">Translit: ${showPhonics ? "On" : "Off"}</span>
               </button>
               <button id="dialogue-play-all-btn" class="flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-700 hover:to-emerald-700 shadow-md shadow-teal-500/20 active:scale-95 transition cursor-pointer">
@@ -234,11 +234,11 @@ class DialogueReader {
     if (highlightBtn) {
       if (showHighlights) {
         highlightBtn.className = "flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer border bg-teal-50 dark:bg-teal-950/60 text-teal-700 dark:text-teal-300 border-teal-200 dark:border-teal-800 hover:bg-teal-100 dark:hover:bg-teal-900/80";
-        if (iconEl) iconEl.textContent = "✨";
+        if (iconEl) iconEl.className = "w-2 h-2 rounded-full bg-teal-500 inline-block";
         if (textEl) textEl.textContent = "Highlights: On";
       } else {
         highlightBtn.className = "flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer border bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700";
-        if (iconEl) iconEl.textContent = "👁️";
+        if (iconEl) iconEl.className = "w-2 h-2 rounded-full bg-slate-400 inline-block";
         if (textEl) textEl.textContent = "Highlights: Off";
       }
     }
@@ -272,11 +272,11 @@ class DialogueReader {
     if (translitBtn) {
       if (showPhonics) {
         translitBtn.className = "flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer border bg-amber-50 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 border-amber-200 dark:border-amber-800 hover:bg-amber-100 dark:hover:bg-amber-900/80";
-        if (iconEl) iconEl.textContent = "🔤";
+        if (iconEl) iconEl.className = "w-2 h-2 rounded-full bg-amber-500 inline-block";
         if (textEl) textEl.textContent = "Translit: On";
       } else {
         translitBtn.className = "flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer border bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700";
-        if (iconEl) iconEl.textContent = "🚫";
+        if (iconEl) iconEl.className = "w-2 h-2 rounded-full bg-slate-400 inline-block";
         if (textEl) textEl.textContent = "Translit: Off";
       }
     }

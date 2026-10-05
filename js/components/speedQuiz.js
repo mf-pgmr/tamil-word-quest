@@ -175,7 +175,7 @@ export class SpeedQuizComponent {
       btnEl.classList.remove("bg-white", "dark:bg-slate-800", "border-slate-200", "dark:border-slate-700");
       btnEl.classList.add("bg-emerald-500", "text-white", "border-emerald-600", "scale-105");
 
-      this.showFloatingEffect(btnEl, "+2s ⚡", "text-amber-500 dark:text-amber-300");
+      this.showFloatingEffect(btnEl, "+2s", "text-amber-500 dark:text-amber-300");
 
       setTimeout(() => {
         if (this.gameState === "playing") {
@@ -265,7 +265,7 @@ export class SpeedQuizComponent {
         <!-- Top Badge Banner -->
         <div class="text-center space-y-1">
           <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-amber-100 text-amber-800 dark:bg-amber-950/60 dark:text-amber-300">
-            <span>⚡ Speed Challenge</span>
+            <span>Speed Challenge</span>
             <span>•</span>
             <span>60s Arcade</span>
           </div>
@@ -291,7 +291,7 @@ export class SpeedQuizComponent {
                   ? "border-amber-500 bg-amber-50/60 dark:bg-amber-950/30 text-amber-900 dark:text-amber-200 shadow-sm"
                   : "border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/60"
               }">
-                <span class="text-2xl mb-1">🔤</span>
+                <span class="text-xs font-black text-amber-600 dark:text-amber-400 bg-amber-100 dark:bg-amber-950/60 px-2 py-0.5 rounded-lg mb-1.5">Aa</span>
                 <span class="text-xs font-black">Sight Reading</span>
                 <span class="text-[10px] text-slate-400 dark:text-slate-500 text-center mt-0.5">Tamil Word → Meaning</span>
               </button>
@@ -301,7 +301,9 @@ export class SpeedQuizComponent {
                   ? "border-amber-500 bg-amber-50/60 dark:bg-amber-950/30 text-amber-900 dark:text-amber-200 shadow-sm"
                   : "border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/60"
               }">
-                <span class="text-2xl mb-1">🔊</span>
+                <span class="text-amber-600 dark:text-amber-400 mb-1">
+                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path></svg>
+                </span>
                 <span class="text-xs font-black">Sound Match</span>
                 <span class="text-[10px] text-slate-400 dark:text-slate-500 text-center mt-0.5">Audio → Tamil Word</span>
               </button>
@@ -319,25 +321,24 @@ export class SpeedQuizComponent {
             <div class="bg-amber-50/70 dark:bg-amber-950/30 p-3 rounded-2xl border border-amber-200/80 dark:border-amber-800/60 text-center">
               <div class="text-[10px] font-extrabold uppercase text-amber-700 dark:text-amber-400">Personal Best</div>
               <div class="text-base font-black text-amber-600 dark:text-amber-300 mt-0.5">${bestScore} words</div>
-              <div class="text-[10px] text-amber-600/80 dark:text-amber-400/80 mt-0.5">Record to beat 🏆</div>
+              <div class="text-[10px] text-amber-600/80 dark:text-amber-400/80 mt-0.5">Record to beat</div>
             </div>
           </div>
 
           <!-- Game Rules Mini Pills -->
           <div class="flex items-center justify-center gap-3 text-[11px] font-bold text-slate-500 dark:text-slate-400 pt-1">
-            <span class="flex items-center gap-1">⏱️ 60 Seconds</span>
+            <span>60 Seconds</span>
             <span>•</span>
-            <span class="flex items-center gap-1 text-emerald-600 dark:text-emerald-400">⚡ +2s on Correct</span>
+            <span class="text-emerald-600 dark:text-emerald-400">+2s on Correct</span>
             <span>•</span>
-            <span class="flex items-center gap-1 text-rose-500">⚠️ -1s on Wrong</span>
+            <span class="text-rose-500">-1s on Wrong</span>
           </div>
         </div>
 
         <!-- Start Button -->
         <div class="px-2 pt-2">
           <button id="btn-start-speed" class="w-full py-3.5 px-6 rounded-2xl font-black text-base text-white bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 hover:from-amber-600 hover:to-orange-600 active:scale-95 shadow-lg shadow-amber-500/25 transition-all cursor-pointer flex items-center justify-center gap-2">
-            <span>⚡</span>
-            <span>Start 60s Challenge!</span>
+            <span>Start 60s Challenge</span>
           </button>
         </div>
       </div>
@@ -380,7 +381,7 @@ export class SpeedQuizComponent {
         <div class="flex items-center justify-between px-2 mb-2">
           <!-- Timer Display -->
           <div id="speed-timer-box" class="flex items-center gap-2 px-3 py-1.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm transition-colors">
-            <span class="text-sm">⏱️</span>
+            <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
             <span id="speed-timer-text" class="text-sm font-black tracking-tight">${this.timeLeft}s</span>
           </div>
 
@@ -391,12 +392,12 @@ export class SpeedQuizComponent {
                 ? "bg-gradient-to-r from-amber-500 to-rose-500 text-white shadow-sm combo-fire-glow"
                 : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400"
             }">
-              ${this.streak >= 3 ? `🔥 ${this.streak}x Streak` : `Streak: ${this.streak}`}
+              ${this.streak >= 3 ? `${this.streak}x Streak` : `Streak: ${this.streak}`}
             </div>
 
             <!-- Quit Button -->
             <button id="btn-quit-speed" class="p-1.5 rounded-xl text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition cursor-pointer" title="Quit Round">
-              <span class="text-xs font-bold px-1.5 py-0.5">✕ Quit</span>
+              <span class="text-xs font-bold px-1.5 py-0.5">Quit</span>
             </button>
           </div>
         </div>
@@ -441,7 +442,7 @@ export class SpeedQuizComponent {
 
     const streakBadge = this.container.querySelector("#speed-streak-badge");
     if (streakBadge) {
-      streakBadge.textContent = this.streak >= 3 ? `🔥 ${this.streak}x Streak` : `Streak: ${this.streak}`;
+      streakBadge.textContent = this.streak >= 3 ? `${this.streak}x Streak` : `Streak: ${this.streak}`;
       if (this.streak >= 3) {
         streakBadge.className = "px-3 py-1 rounded-full text-xs font-black transition-all bg-gradient-to-r from-amber-500 to-rose-500 text-white shadow-sm combo-fire-glow";
       } else {
@@ -468,7 +469,7 @@ export class SpeedQuizComponent {
                 : ""
             }
             <button id="btn-speed-audio" class="mt-2 inline-flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition cursor-pointer">
-              <span>🔊</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path></svg>
               <span>Listen</span>
             </button>
           </div>
@@ -493,8 +494,8 @@ export class SpeedQuizComponent {
             </span>
             
             <button id="btn-speed-replay" class="w-20 h-20 sm:w-24 sm:h-24 mx-auto bg-gradient-to-tr from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 active:scale-95 text-white rounded-full flex flex-col items-center justify-center shadow-lg shadow-amber-500/20 transition-all cursor-pointer my-1">
-              <span class="text-2xl mb-0.5">🔊</span>
-              <span class="text-[10px] font-bold text-white/90">Play</span>
+              <span class="text-base font-black uppercase tracking-wider">Play</span>
+              <span class="text-[10px] font-bold text-white/90">Sound</span>
             </button>
 
             <p class="text-xs font-semibold text-slate-500 dark:text-slate-400 mt-2">
@@ -548,12 +549,12 @@ export class SpeedQuizComponent {
             ${
               this.isNewBest
                 ? `<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-amber-100 text-amber-800 dark:bg-amber-950/60 dark:text-amber-300 mb-2">
-                    🏆 New Personal Best!
+                    New Personal Best!
                   </div>`
                 : ""
             }
             <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">
-              Time's Up! ⚡
+              Time's Up!
             </h2>
             <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-0.5">
               Awesome speed sprint! Here is how you performed:
@@ -605,7 +606,7 @@ export class SpeedQuizComponent {
                           <span class="text-slate-400 dark:text-slate-500 text-[10px]">(${item.word.english})</span>
                         </div>
                         <button class="review-listen-btn p-1 rounded-lg text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 cursor-pointer" data-word-id="${item.word.id}" title="Listen">
-                          🔊
+                          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path></svg>
                         </button>
                       </div>
                     `).join("")}
@@ -618,10 +619,10 @@ export class SpeedQuizComponent {
           <!-- Action Buttons -->
           <div class="flex gap-2.5 pt-2">
             <button id="btn-speed-again" class="flex-1 py-3 px-4 rounded-xl font-bold text-xs sm:text-sm text-white bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 shadow-md shadow-amber-500/20 active:scale-95 transition-all cursor-pointer">
-              🔄 Play Again (60s)
+              Play Again (60s)
             </button>
             <button id="btn-speed-menu" class="flex-1 py-3 px-4 rounded-xl font-bold text-xs sm:text-sm bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 transition cursor-pointer">
-              ⚙️ Change Mode
+              Change Mode
             </button>
           </div>
         </div>

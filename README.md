@@ -1,4 +1,4 @@
-﻿# தமிழ் Word Quest (Tamil Word Quest)
+# தமிழ் Word Quest (Tamil Word Quest)
 
 An interactive, gamified web app designed for young learners (especially 10-year-olds in English medium) to learn to read Tamil words from scratch.
 
@@ -8,7 +8,7 @@ An interactive, gamified web app designed for young learners (especially 10-year
 
 ---
 
-## 🎯 Key Learning Features
+## Key Learning Features
 
 1. **Progressive Learning Staircase (4 Levels)**:
    - **Level 1**: Root words & Pulli consonants (கல், கண், பல், படம், மரம், கடல்...)
@@ -22,15 +22,16 @@ An interactive, gamified web app designed for young learners (especially 10-year
    - Whole-word spoken blend and slow-speed turtle audio.
 
 3. **Engaging Game Modes**:
-   - 📖 **Learn to Read**: Interactive flashcards with meaning, transliteration, and audio.
-   - ✍️ **Word Builder**: Drag and tap scrambled letter tiles to construct words.
-   - 🎧 **Listen & Match**: Ear training quiz testing spoken comprehension.
-   - 🔍 **Letter Detective**: Missing letter challenge.
-   - 🏆 **Trophies & Badges**: Streaks, XP points, and achievement badges.
+   - **Learn to Read**: Interactive flashcards with meaning, transliteration, and audio.
+   - **Word Builder**: Drag and tap scrambled letter tiles to construct words.
+   - **Listen & Match**: Ear training quiz testing spoken comprehension.
+   - **Letter Detective**: Missing letter challenge.
+   - **Speed Challenge**: 60-second rapid-fire arcade quiz sprint.
+   - **Trophies & Badges**: Streaks, XP points, and achievement badges.
 
 ---
 
-## 🚀 Running Locally
+## Running Locally
 
 No installation or build steps needed! Simply open `index.html` in your favorite web browser (Chrome, Edge, Safari, Firefox):
 
@@ -41,7 +42,7 @@ start index.html
 
 ---
 
-## 🌐 Deploying to GitHub Pages
+## Deploying to GitHub Pages
 
 1. Create a repository named `tamil-word-quest` under your GitHub account:
    - URL: `https://github.com/new`
