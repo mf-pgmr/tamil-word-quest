@@ -601,7 +601,11 @@ export class SpeedQuizComponent {
                           : "bg-rose-50/50 dark:bg-rose-950/20 border-rose-200/60 dark:border-rose-800/40 text-rose-950 dark:text-rose-200"
                       }">
                         <div class="flex items-center gap-2">
-                          <span class="font-black">${item.correct ? "✓" : "✕"}</span>
+                          <span class="inline-flex items-center justify-center">${
+                            item.correct
+                              ? '<svg class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>'
+                              : '<svg class="w-3.5 h-3.5 text-rose-600 dark:text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"></path></svg>'
+                          }</span>
                           <span class="font-black font-tamil text-sm">${item.word.tamil}</span>
                           <span class="text-slate-400 dark:text-slate-500 text-[10px]">(${item.word.english})</span>
                         </div>

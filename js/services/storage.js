@@ -25,7 +25,10 @@ const DEFAULT_DATA = {
     4: { stars: 0, quizHighScore: 0, speedHighScore: 0 },
     5: { stars: 0, quizHighScore: 0, speedHighScore: 0 },
     6: { stars: 0, quizHighScore: 0, speedHighScore: 0 },
-    7: { stars: 0, quizHighScore: 0, speedHighScore: 0 }
+    7: { stars: 0, quizHighScore: 0, speedHighScore: 0 },
+    8: { stars: 0, quizHighScore: 0, speedHighScore: 0 },
+    9: { stars: 0, quizHighScore: 0, speedHighScore: 0 },
+    10: { stars: 0, quizHighScore: 0, speedHighScore: 0 }
   }
 };
 
@@ -67,7 +70,8 @@ class StorageService {
         if (parsed.speedHighScore === undefined) {
           parsed.speedHighScore = 0;
         }
-        return { ...DEFAULT_DATA, ...parsed };
+        const levelProgress = { ...DEFAULT_DATA.levelProgress, ...(parsed.levelProgress || {}) };
+        return { ...DEFAULT_DATA, ...parsed, levelProgress };
       }
     } catch (e) {
       console.warn("Storage load error:", e);

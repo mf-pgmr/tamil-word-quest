@@ -180,13 +180,7 @@ export class ParentComponent {
                   id="word-level" 
                   class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white font-bold text-xs focus:outline-none focus:border-indigo-500"
                 >
-                  <option value="1">Level 1: Root & Pulli (புள்ளி)</option>
-                  <option value="2">Level 2: Long 'Aa' Sound (ா)</option>
-                  <option value="3">Level 3: Sounds of 'i' (ி, ீ)</option>
-                  <option value="4" selected>Level 4: Curves & Loops (ு, ூ, ை, ோ)</option>
-                  <option value="5">Level 5: Sound Pairs (ஒலி வேறுபாடுகள்)</option>
-                  <option value="6">Level 6: Everyday & Actions (சொற்களும் செயல்களும்)</option>
-                  <option value="7">Level 7: School & Dialogue (பள்ளியும் உரையாடலும்)</option>
+                  ${LEVELS.map(lvl => `<option value="${lvl.id}" ${lvl.id === 4 ? "selected" : ""}>${lvl.title}</option>`).join("")}
                 </select>
               </div>
             </div>
@@ -306,7 +300,7 @@ export class ParentComponent {
         <div id="code-snippet-box" class="hidden bg-slate-900 text-slate-200 p-4 rounded-2xl border border-slate-800 font-mono text-xs overflow-x-auto">
           <div class="flex items-center justify-between mb-2 text-slate-400">
             <span>Paste the snippet below into js/data/words.js:</span>
-            <button id="btn-close-code" class="text-slate-400 hover:text-white text-xs font-bold cursor-pointer">Close ✕</button>
+            <button id="btn-close-code" class="text-slate-400 hover:text-white text-xs font-bold cursor-pointer">Close</button>
           </div>
           <pre id="code-snippet-content" class="bg-slate-950 p-3 rounded-xl overflow-x-auto text-[11px]"></pre>
         </div>
@@ -460,7 +454,7 @@ export class ParentComponent {
         if (navigator.clipboard) {
           navigator.clipboard.writeText(formatted).then(() => {
             sound.playPop();
-            copyBtn.textContent = "✓ Copied to Clipboard!";
+            copyBtn.textContent = "Copied to Clipboard!";
             setTimeout(() => {
               copyBtn.textContent = "Copy for words.js";
             }, 2500);

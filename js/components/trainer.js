@@ -53,7 +53,7 @@ export class TrainerComponent {
             </span>
             ${isMastered ? `
               <span class="bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 px-2 py-0.5 rounded-full text-[11px] font-bold border border-emerald-300 dark:border-emerald-800 ml-1">
-                ✓ Mastered
+                Mastered
               </span>
             ` : ''}
           </div>
@@ -164,7 +164,7 @@ export class TrainerComponent {
               ? 'bg-emerald-600 text-white hover:bg-emerald-700' 
               : 'bg-emerald-500 text-white hover:bg-emerald-600 shadow-emerald-200 dark:shadow-none'}"
           >
-            <span class="truncate">${isMastered ? '✓ Mastered' : 'I Can Read This!'}</span>
+            <span class="truncate">${isMastered ? 'Mastered' : 'I Can Read This!'}</span>
           </button>
 
           <button id="btn-next" class="bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 active:scale-95 text-slate-700 dark:text-slate-200 font-bold px-3 sm:px-5 py-2 sm:py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm disabled:opacity-40 transition-all cursor-pointer text-xs sm:text-sm whitespace-nowrap" ${this.currentIndex === this.activeWords.length - 1 ? 'disabled' : ''}>

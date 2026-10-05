@@ -457,7 +457,10 @@ class App {
                     ? 'border-amber-300 dark:border-amber-500/40 bg-amber-50/50 dark:bg-slate-800' 
                     : 'border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/40 opacity-40'}">
                   <div class="w-8 h-8 rounded-xl bg-amber-500 text-white font-black flex items-center justify-center text-xs">
-                    ${unlocked ? '✓' : '•'}
+                    ${unlocked 
+                      ? '<svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>'
+                      : '<span class="w-2 h-2 rounded-full bg-white/70 inline-block"></span>'
+                    }
                   </div>
                   <div>
                     <h4 class="font-extrabold text-xs text-slate-800 dark:text-white">${badge.title}</h4>

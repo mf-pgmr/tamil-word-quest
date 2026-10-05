@@ -1,14 +1,12 @@
-// Interactive Dialogue Reader for Page 11: Mani & Babu's Conversation
-import { PAGE_11_DIALOGUE } from "../data/words.js";
+// Interactive Dialogue Reader Supporting Multiple Lessons (No emojis)
+import { DIALOGUES, PAGE_11_DIALOGUE, PAGE_13_DIALOGUE } from "../data/words.js";
 import { speech, sound } from "../services/speech.js";
 import { storage } from "../services/storage.js";
-
-// Calibrated line audio durations (seconds)
-const DIALOGUE_LINE_DURATIONS = [3.2, 3.0, 10.4, 10.2, 12.0, 7.2, 11.2, 4.1];
 
 class DialogueReader {
   constructor() {
     this.container = null;
+    this.selectedDialogueId = "lesson1_p11";
     this.isPlayingAll = false;
     this.currentPlayingIndex = -1;
     this.playbackRate = 0.9;
@@ -19,35 +17,60 @@ class DialogueReader {
     this.isHighlightingWords = false;
   }
 
+  getActiveDialogue() {
+    return DIALOGUES.find(d => d.id === this.selectedDialogueId) || DIALOGUES[0];
+  }
+
   render(container) {
     this.container = container;
     this.stopPlayback();
 
+    const dialogue = this.getActiveDialogue();
     const showMeaning = storage.getShowMeaning ? storage.getShowMeaning() : true;
     const showPhonics = storage.getShowPhonics ? storage.getShowPhonics() : true;
     const showHighlights = storage.getShowHighlights ? storage.getShowHighlights() : true;
 
     container.innerHTML = `
       <div class="max-w-3xl mx-auto space-y-4 pb-12">
+        <!-- Dialogue Switcher Tabs -->
+        <div class="flex items-center gap-2 overflow-x-auto pb-1 select-none">
+          ${DIALOGUES.map(d => {
+            const isSelected = d.id === this.selectedDialogueId;
+            return `
+              <button 
+                class="dialogue-tab-btn px-3.5 py-2 rounded-2xl text-xs font-bold transition cursor-pointer flex items-center gap-2 shrink-0 ${
+                  isSelected 
+                    ? "bg-teal-600 text-white shadow-md shadow-teal-500/20" 
+                    : "bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800"
+                }"
+                data-dialogue-id="${d.id}"
+              >
+                <span class="font-tamil">${d.title}</span>
+                <span class="text-[10px] ${isSelected ? "text-teal-100" : "text-slate-400 dark:text-slate-500"} font-semibold">(${d.pageLabel})</span>
+              </button>
+            `;
+          }).join("")}
+        </div>
+
         <!-- Dialogue Header Card -->
         <div class="bg-white dark:bg-slate-900 rounded-3xl p-5 md:p-6 shadow-sm border border-slate-200 dark:border-slate-800 transition-colors">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 dark:border-slate-800 pb-4">
             <div>
               <div class="flex items-center gap-2">
                 <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-teal-100 text-teal-800 dark:bg-teal-900/60 dark:text-teal-300">
-                  Page 11 Lesson
+                  ${dialogue.pageLabel}
                 </span>
                 <span class="text-xs text-slate-400 dark:text-slate-500 font-semibold">
-                  School Preparation Conversation
+                  ${dialogue.description || dialogue.englishTitle}
                 </span>
               </div>
               <h2 class="text-2xl font-black text-slate-800 dark:text-white font-tamil tracking-wide mt-1">
-                ${PAGE_11_DIALOGUE.title}
+                ${dialogue.title}
               </h2>
               <p class="text-xs text-slate-500 dark:text-slate-400 font-tamil mt-0.5">
-                ${PAGE_11_DIALOGUE.subtitle}
+                ${dialogue.subtitle}
               </p>
-              ${showMeaning ? `<p class="text-xs text-slate-400 dark:text-slate-500 italic mt-0.5">${PAGE_11_DIALOGUE.englishSubtitle}</p>` : ""}
+              ${showMeaning && dialogue.englishSubtitle ? `<p class="text-xs text-slate-400 dark:text-slate-500 italic mt-0.5">${dialogue.englishSubtitle}</p>` : ""}
             </div>
 
             <!-- Player Toolbar -->
@@ -72,7 +95,6 @@ class DialogueReader {
                 <span id="translit-btn-text">Translit: ${showPhonics ? "On" : "Off"}</span>
               </button>
               <button id="dialogue-play-all-btn" class="flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-700 hover:to-emerald-700 shadow-md shadow-teal-500/20 active:scale-95 transition cursor-pointer">
-                <span id="play-all-icon">▶</span>
                 <span id="play-all-text">Read Together</span>
               </button>
             </div>
@@ -93,35 +115,79 @@ class DialogueReader {
 
         <!-- Speech Turns Feed -->
         <div id="dialogue-lines-list" class="space-y-3">
-          ${PAGE_11_DIALOGUE.lines.map((line, idx) => this.renderLine(line, idx, showMeaning, showPhonics, showHighlights)).join("")}
+          ${dialogue.lines.map((line, idx) => this.renderLine(line, idx, showMeaning, showPhonics, showHighlights)).join("")}
         </div>
 
         <!-- Lesson Takeaway & Discussion Box -->
-        <div class="bg-gradient-to-br from-teal-50 to-emerald-50 dark:from-slate-900 dark:to-slate-800/80 rounded-2xl p-5 border border-teal-200 dark:border-teal-800/50">
-          <div class="flex items-start gap-3">
-            <div class="w-8 h-8 rounded-xl bg-teal-500 text-white flex items-center justify-center font-bold text-sm shrink-0">
-              ?
+        ${
+          dialogue.question ? `
+            <div class="bg-gradient-to-br from-teal-50 to-emerald-50 dark:from-slate-900 dark:to-slate-800/80 rounded-2xl p-5 border border-teal-200 dark:border-teal-800/50">
+              <div class="flex items-start gap-3">
+                <div class="w-8 h-8 rounded-xl bg-teal-500 text-white flex items-center justify-center font-bold text-sm shrink-0">
+                  ?
+                </div>
+                <div class="space-y-1">
+                  <h4 class="text-sm font-black text-teal-950 dark:text-teal-100 font-tamil">
+                    ${dialogue.question.tamilPrompt}
+                  </h4>
+                  <p class="text-xs text-teal-900 dark:text-teal-200 font-tamil">
+                    ${dialogue.question.tamilQuestion}
+                  </p>
+                  <p class="text-xs text-teal-800 dark:text-teal-300 font-tamil font-bold">
+                    ${dialogue.question.tamilAnswer}
+                  </p>
+                  ${
+                    dialogue.question.englishHint
+                      ? `<p class="text-[11px] text-slate-500 dark:text-slate-400 italic pt-1">${dialogue.question.englishHint}</p>`
+                      : ""
+                  }
+                </div>
+              </div>
             </div>
-            <div class="space-y-1">
-              <h4 class="text-sm font-black text-teal-950 dark:text-teal-100 font-tamil">
-                சிந்தித்து விடையளிக்க (Think & Answer):
-              </h4>
-              <p class="text-xs text-teal-900 dark:text-teal-200 font-tamil">
-                மணி தன் பள்ளிப் பையில் தேவையான பொருள்களைச் சரியாக வைக்க எதனைப் பயன்படுத்தினான்?
-              </p>
-              <p class="text-xs text-teal-800 dark:text-teal-300 font-tamil font-bold">
-                விடை: பட அட்டைகள் (Picture Flashcards)!
-              </p>
-              <p class="text-[11px] text-slate-500 dark:text-slate-400 italic pt-1">
-                What did Mani use to verify his bag was packed properly? Picture flashcards!
-              </p>
-            </div>
-          </div>
-        </div>
+          ` : ""
+        }
       </div>
     `;
 
     this.bindEvents();
+  }
+
+  getSpeakerMeta(speaker) {
+    if (speaker === "மணி") {
+      return {
+        initial: "ம",
+        avatarBg: "bg-teal-600 text-white",
+        bubbleBg: "bg-white dark:bg-slate-900 border-teal-200 dark:border-teal-800/60",
+        speakerBadge: "bg-teal-100 text-teal-800 dark:bg-teal-950 dark:text-teal-300"
+      };
+    } else if (speaker === "பாபு") {
+      return {
+        initial: "பா",
+        avatarBg: "bg-indigo-600 text-white",
+        bubbleBg: "bg-white dark:bg-slate-900 border-indigo-200 dark:border-indigo-800/60",
+        speakerBadge: "bg-indigo-100 text-indigo-800 dark:bg-indigo-950 dark:text-indigo-300"
+      };
+    } else if (speaker === "அம்மா") {
+      return {
+        initial: "அ",
+        avatarBg: "bg-rose-600 text-white",
+        bubbleBg: "bg-white dark:bg-slate-900 border-rose-200 dark:border-rose-800/60",
+        speakerBadge: "bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-300"
+      };
+    } else if (speaker === "கவின்") {
+      return {
+        initial: "க",
+        avatarBg: "bg-sky-600 text-white",
+        bubbleBg: "bg-white dark:bg-slate-900 border-sky-200 dark:border-sky-800/60",
+        speakerBadge: "bg-sky-100 text-sky-800 dark:bg-sky-950 dark:text-sky-300"
+      };
+    }
+    return {
+      initial: speaker ? speaker.charAt(0) : "உ",
+      avatarBg: "bg-slate-600 text-white",
+      bubbleBg: "bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800",
+      speakerBadge: "bg-slate-100 text-slate-800 dark:bg-slate-900 dark:text-slate-300"
+    };
   }
 
   findMatchingVocab(coreWord, vocabularyList) {
@@ -167,31 +233,21 @@ class DialogueReader {
   }
 
   renderLine(line, index, showMeaning, showPhonics, showHighlights) {
-    const isMani = line.speaker === "மணி";
-    const avatarBg = isMani
-      ? "bg-teal-600 text-white"
-      : "bg-indigo-600 text-white";
-    const bubbleBg = isMani
-      ? "bg-white dark:bg-slate-900 border-teal-200 dark:border-teal-800/60"
-      : "bg-white dark:bg-slate-900 border-indigo-200 dark:border-indigo-800/60";
-    const speakerBadge = isMani
-      ? "bg-teal-100 text-teal-800 dark:bg-teal-950 dark:text-teal-300"
-      : "bg-indigo-100 text-indigo-800 dark:bg-indigo-950 dark:text-indigo-300";
-
+    const meta = this.getSpeakerMeta(line.speaker);
     const formattedTamil = this.formatTamilText(line.tamil, line.vocabulary, showHighlights, index);
 
     return `
-      <div id="dialogue-line-${index}" class="dialogue-line-card flex items-start gap-3 p-4 rounded-2xl border ${bubbleBg} shadow-sm transition-all duration-300">
+      <div id="dialogue-line-${index}" class="dialogue-line-card flex items-start gap-3 p-4 rounded-2xl border ${meta.bubbleBg} shadow-sm transition-all duration-300">
         <!-- Character Avatar Initial -->
-        <div class="w-10 h-10 rounded-2xl ${avatarBg} flex items-center justify-center font-bold text-base shrink-0 shadow-sm font-tamil">
-          ${isMani ? "ம" : "பா"}
+        <div class="w-10 h-10 rounded-2xl ${meta.avatarBg} flex items-center justify-center font-bold text-base shrink-0 shadow-sm font-tamil">
+          ${meta.initial}
         </div>
 
         <div class="flex-1 min-w-0 space-y-2">
           <!-- Line Header: Speaker Name & Audio Button -->
           <div class="flex items-center justify-between gap-2">
             <div class="flex items-center gap-2">
-              <span class="px-2 py-0.5 rounded-md text-xs font-black font-tamil ${speakerBadge}">
+              <span class="px-2 py-0.5 rounded-md text-xs font-black font-tamil ${meta.speakerBadge}">
                 ${line.speaker} (${line.speakerRole})
               </span>
               <span class="text-[10px] text-slate-400 dark:text-slate-500 font-bold">
@@ -200,7 +256,7 @@ class DialogueReader {
             </div>
 
             <button class="dialogue-speak-line-btn p-1.5 rounded-lg text-slate-500 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition cursor-pointer" data-index="${index}" title="Listen to this line">
-              <span class="text-sm font-bold">Listen</span>
+              <span class="text-xs font-bold">Listen</span>
             </button>
           </div>
 
@@ -301,7 +357,6 @@ class DialogueReader {
       .trim();
   }
 
-  // Calculate weighted timing for each word based on Tamil phonetic length & punctuation
   computeWordTimings(words, totalDuration) {
     if (!words || !words.length) return [];
     const dur = totalDuration > 0 ? totalDuration : 3.0;
@@ -337,7 +392,8 @@ class DialogueReader {
   startWordHighlighting(lineIndex, words, audio) {
     this.stopWordHighlighting();
 
-    const fallbackDur = DIALOGUE_LINE_DURATIONS[lineIndex] || 3.0;
+    const dialogue = this.getActiveDialogue();
+    const fallbackDur = (dialogue.durations && dialogue.durations[lineIndex]) || 3.5;
     this.isHighlightingWords = true;
 
     const updateLoop = () => {
@@ -406,6 +462,18 @@ class DialogueReader {
   }
 
   bindEvents() {
+    // 0. Dialogue Tab switching
+    this.container.querySelectorAll(".dialogue-tab-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        sound.playPop();
+        const newId = btn.dataset.dialogueId;
+        if (newId && newId !== this.selectedDialogueId) {
+          this.selectedDialogueId = newId;
+          this.render(this.container);
+        }
+      });
+    });
+
     // 1. Play individual lines
     this.container.querySelectorAll(".dialogue-speak-line-btn").forEach(btn => {
       btn.addEventListener("click", e => {
@@ -486,10 +554,11 @@ class DialogueReader {
   }
 
   playLine(index, onEnded = null) {
-    if (index < 0 || index >= PAGE_11_DIALOGUE.lines.length) return;
+    const dialogue = this.getActiveDialogue();
+    if (index < 0 || index >= dialogue.lines.length) return;
 
     this.highlightLine(index);
-    const line = PAGE_11_DIALOGUE.lines[index];
+    const line = dialogue.lines[index];
     const words = line.tamil.split(" ").filter(Boolean);
 
     if (line.audio) {
@@ -532,7 +601,8 @@ class DialogueReader {
 
   playNextSequentialLine() {
     if (!this.isPlayingAll) return;
-    if (this.currentPlayingIndex >= PAGE_11_DIALOGUE.lines.length) {
+    const dialogue = this.getActiveDialogue();
+    if (this.currentPlayingIndex >= dialogue.lines.length) {
       this.stopPlayback();
       return;
     }
@@ -563,7 +633,7 @@ class DialogueReader {
 
   highlightLine(index) {
     this.clearAllHighlights();
-    const card = this.container.querySelector(`#dialogue-line-${index}`);
+    const card = this.container ? this.container.querySelector(`#dialogue-line-${index}`) : null;
     if (card) {
       card.classList.add("ring-2", "ring-teal-500", "bg-teal-50/40", "dark:bg-teal-950/20");
       card.scrollIntoView({ behavior: "smooth", block: "nearest" });
@@ -571,7 +641,7 @@ class DialogueReader {
   }
 
   clearLineHighlight(index) {
-    const card = this.container.querySelector(`#dialogue-line-${index}`);
+    const card = this.container ? this.container.querySelector(`#dialogue-line-${index}`) : null;
     if (card) {
       card.classList.remove("ring-2", "ring-teal-500", "bg-teal-50/40", "dark:bg-teal-950/20");
     }
@@ -587,15 +657,12 @@ class DialogueReader {
   updatePlayAllButtonState(isPlaying) {
     const playAllBtn = this.container ? this.container.querySelector("#dialogue-play-all-btn") : null;
     if (!playAllBtn) return;
-    const icon = playAllBtn.querySelector("#play-all-icon");
     const text = playAllBtn.querySelector("#play-all-text");
     if (isPlaying) {
-      if (icon) icon.textContent = "⏸";
       if (text) text.textContent = "Pause";
       playAllBtn.classList.add("from-rose-600", "to-amber-600");
       playAllBtn.classList.remove("from-teal-600", "to-emerald-600");
     } else {
-      if (icon) icon.textContent = "▶";
       if (text) text.textContent = "Read Together";
       playAllBtn.classList.remove("from-rose-600", "to-amber-600");
       playAllBtn.classList.add("from-teal-600", "to-emerald-600");

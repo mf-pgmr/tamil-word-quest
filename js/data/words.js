@@ -1,4 +1,4 @@
-// Curated Tamil vocabulary database with 138 words across 6 progressive tiers (No emojis)
+﻿// Curated Tamil vocabulary database with 138 words across 6 progressive tiers (No emojis)
 export const LEVELS = [
   {
     id: 1,
@@ -42,12 +42,33 @@ export const LEVELS = [
     badge: "Tamil Champion",
     color: "from-violet-500 to-purple-600"
   },
-  {
+    {
     id: 7,
-    title: "Level 7: School & Dialogue (பள்ளியும் உரையாடலும்)",
-    subtitle: "Conversation, school items, and helpful habits from textbook Page 11",
+    title: "Level 7: School & Study Items (பள்ளியும் படிப்புப் பொருள்களும்)",
+    subtitle: "Conversation, school bag items, and flashcards from textbook Pages 11 & 12",
     badge: "Dialogue Expert",
     color: "from-teal-500 to-cyan-600"
+  },
+  {
+    id: 8,
+    title: "Level 8: Opposites & Positions (எதிர்ச் சொற்களும் நிலைகளும்)",
+    subtitle: "Antonyms, heights, sizes, and relative positions from textbook Pages 14 & 15",
+    badge: "Concept Master",
+    color: "from-amber-600 to-rose-600"
+  },
+  {
+    id: 9,
+    title: "Level 9: Numbers & Everyday Words (எண்களும் அன்றாடச் சொற்களும்)",
+    subtitle: "Tens from 10 to 90, everyday household items, and nature from textbook Pages 9, 10 & 15",
+    badge: "Number Wizard",
+    color: "from-sky-500 to-indigo-600"
+  },
+  {
+    id: 10,
+    title: "Level 10: Action Verbs & Dialogue (வினைகளும் உரையாடலும்)",
+    subtitle: "Story actions, expressions, and conversation speech from textbook Pages 8, 12 & 13",
+    badge: "Tamil Storyteller",
+    color: "from-emerald-600 to-teal-700"
   }
 ];
 
@@ -833,10 +854,307 @@ export const VOCABULARY = [
     breakdowns: [{ letter: "பு", root: "ப் + உ", sound: "Pu" }, { letter: "த்", root: "Pure Consonant (மெய்)", sound: "Th" }, { letter: "த", root: "த் + அ", sound: "Tha" }, { letter: "க", root: "க் + அ", sound: "Ka" }, { letter: "ம்", root: "Pure Consonant (மெய்)", sound: "M" }],
     translit: "Puth-tha-gam", english: "Book", hint: "Printed pages bound together filled with knowledge and stories."
   },
+  // Level 7: Additional School & Study Items
+  {
+    id: "l7_20", level: 7, tamil: "à®à®Ÿà¯à®•à®³à¯", letters: ["à®", "à®Ÿà¯", "à®•", "à®³à¯"],
+    breakdowns: [{ letter: "à®", root: "Long Vowel (à®¨à¯†à®Ÿà®¿à®²à¯)", sound: "Ae" }, { letter: "à®Ÿà¯", root: "à®Ÿà¯ + à®‰", sound: "Du" }, { letter: "à®•", root: "à®•à¯ + à®…", sound: "Ka" }, { letter: "à®³à¯", root: "Pure Consonant (à®®à¯†à®¯à¯)", sound: "L" }],
+    translit: "Ae-du-gal", english: "Notebooks / Books", hint: "Sheets or notebooks used for writing and study."
+  },
+  {
+    id: "l7_21", level: 7, tamil: "à®µà®£à¯à®£à®™à¯à®•à®³à¯", letters: ["à®µ", "à®£à¯", "à®£", "à®™à¯", "à®•", "à®³à¯"],
+    breakdowns: [{ letter: "à®µ", root: "à®µà¯ + à®…", sound: "Va" }, { letter: "à®£à¯", root: "Pure Consonant (à®®à¯†à®¯à¯)", sound: "N" }, { letter: "à®£", root: "à®£à¯ + à®…", sound: "Na" }, { letter: "à®™à¯", root: "Pure Consonant (à®®à¯†à®¯à¯)", sound: "Ng" }, { letter: "à®•", root: "à®•à¯ + à®…", sound: "Ga" }, { letter: "à®³à¯", root: "Pure Consonant (à®®à¯†à®¯à¯)", sound: "L" }],
+    translit: "Van-nang-gal", english: "Colors / Paints", hint: "Bright shades like red, green, and blue for drawing."
+  },
+  {
+    id: "l7_22", level: 7, tamil: "à®Žà®´à¯à®¤à¯à®•à¯‹à®²à¯", letters: ["à®Ž", "à®´à¯", "à®¤à¯", "à®•à¯‹", "à®²à¯"],
+    breakdowns: [{ letter: "à®Ž", root: "Vowel (à®‰à®¯à®¿à®°à¯)", sound: "E" }, { letter: "à®´à¯", root: "à®´à¯ + à®‰", sound: "Zhu" }, { letter: "à®¤à¯", root: "à®¤à¯ + à®‰", sound: "Dhu" }, { letter: "à®•à¯‹", root: "à®•à¯ + à®“", sound: "Koa" }, { letter: "à®²à¯", root: "Pure Consonant (à®®à¯†à®¯à¯)", sound: "L" }],
+    translit: "E-zhu-dhu-koal", english: "Pen / Pencil", hint: "Writing instrument used to write on paper."
+  },
+  {
+    id: "l7_23", level: 7, tamil: "à®…à®´à®¿à®ªà¯à®ªà®¾à®©à¯", letters: ["à®…", "à®´à®¿", "à®ªà¯", "à®ªà®¾", "à®©à¯"],
+    breakdowns: [{ letter: "à®…", root: "Vowel (à®‰à®¯à®¿à®°à¯)", sound: "A" }, { letter: "à®´à®¿", root: "à®´à¯ + à®‡", sound: "Zhi" }, { letter: "à®ªà¯", root: "Pure Consonant (à®®à¯†à®¯à¯)", sound: "P" }, { letter: "à®ªà®¾", root: "à®ªà¯ + à®†", sound: "Paa" }, { letter: "à®©à¯", root: "Pure Consonant (à®®à¯†à®¯à¯)", sound: "N" }],
+    translit: "A-zhip-paan", english: "Eraser / Rubber", hint: "Tool used to erase pencil marks neatly."
+  },
+  {
+    id: "l7_24", level: 7, tamil: "à®•à¯‹à®ªà¯à®ªà¯", letters: ["à®•à¯‹", "à®ªà¯", "à®ªà¯"],
+    breakdowns: [{ letter: "à®•à¯‹", root: "à®•à¯ + à®“", sound: "Koa" }, { letter: "à®ªà¯", root: "Pure Consonant (à®®à¯†à®¯à¯)", sound: "P" }, { letter: "à®ªà¯", root: "à®ªà¯ + à®‰", sound: "Pu" }],
+    translit: "Koap-pu", english: "Folder / File", hint: "Keeps drawings, notes, and study papers organized."
+  },
+  {
+    id: "l7_25", level: 7, tamil: "à®¤à®£à¯à®£à¯€à®°à¯", letters: ["à®¤", "à®£à¯", "à®£à¯€", "à®°à¯"],
+    breakdowns: [{ letter: "à®¤", root: "à®¤à¯ + à®…", sound: "Tha" }, { letter: "à®£à¯", root: "Pure Consonant (à®®à¯†à®¯à¯)", sound: "N" }, { letter: "à®£à¯€", root: "à®£à¯ + à®ˆ", sound: "Nee" }, { letter: "à®°à¯", root: "Pure Consonant (à®®à¯†à®¯à¯)", sound: "R" }],
+    translit: "Than-neer", english: "Water", hint: "Refreshing clear drink kept in a school water bottle."
+  },
+
+  // ==================== LEVEL 8: OPPOSITES & POSITIONS (à®Žà®¤à®¿à®°à¯à®šà¯ à®šà¯Šà®±à¯à®•à®³à¯à®®à¯ à®¨à®¿à®²à¯ˆà®•à®³à¯à®®à¯) ====================
+  {
+    id: "l8_1", level: 8, tamil: "à®‰à®¯à®°à®®à¯", letters: ["à®‰", "à®¯", "à®°", "à®®à¯"],
+    breakdowns: [{ letter: "à®‰", root: "Vowel (à®‰à®¯à®¿à®°à¯)", sound: "U" }, { letter: "à®¯", root: "à®¯à¯ + à®…", sound: "Ya" }, { letter: "à®°", root: "à®°à¯ + à®…", sound: "Ram" }, { letter: "à®®à¯", root: "Pure Consonant (à®®à¯†à®¯à¯)", sound: "M" }],
+    translit: "U-ya-ram", english: "Tall / Height", hint: "Standing high above the ground like a tall giraffe."
+  },
+  {
+    id: "l8_2", level: 8, tamil: "à®•à¯à®Ÿà¯à®Ÿà¯ˆ", letters: ["à®•à¯", "à®Ÿà¯", "à®Ÿà¯ˆ"],
+    breakdowns: [{ letter: "à®•à¯", root: "à®•à¯ + à®‰", sound: "Ku" }, { letter: "à®Ÿà¯", root: "Pure Consonant (à®®à¯†à®¯à¯)", sound: "T" }, { letter: "à®Ÿà¯ˆ", root: "à®Ÿà¯ + à®", sound: "Dai" }],
+    translit: "Kut-tai", english: "Short / Low height", hint: "Close to the ground, the opposite of tall."
+  },
+  {
+    id: "l8_3", level: 8, tamil: "à®…à®¤à®¿à®•à®®à¯", letters: ["à®…", "à®¤à®¿", "à®•", "à®®à¯"],
+    breakdowns: [{ letter: "à®…", root: "Vowel (à®‰à®¯à®¿à®°à¯)", sound: "A" }, { letter: "à®¤à®¿", root: "à®¤à¯ + à®‡", sound: "Dhi" }, { letter: "à®•", root: "à®•à¯ + à®…", sound: "Gam" }, { letter: "à®®à¯", root: "Pure Consonant (à®®à¯†à®¯à¯)", sound: "M" }],
+    translit: "A-dhi-gam", english: "More / Plenty", hint: "A large number or great amount of items."
+  },
+  {
+    id: "l8_4", level: 8, tamil: "à®•à¯à®±à¯ˆà®µà¯", letters: ["à®•à¯", "à®±à¯ˆ", "à®µà¯"],
+    breakdowns: [{ letter: "à®•à¯", root: "à®•à¯ + à®‰", sound: "Ku" }, { letter: "à®±à¯ˆ", root: "à®±à¯ + à®", sound: "Rai" }, { letter: "à®µà¯", root: "à®µà¯ + à®‰", sound: "Vu" }],
+    translit: "Ku-rai-vu", english: "Less / Few", hint: "A smaller quantity, the opposite of more."
+  },
+  {
+    id: "l8_5", level: 8, tamil: "à®®à¯à®©à¯à®©à®¾à®²à¯", letters: ["à®®à¯", "à®©à¯", "à®©à®¾", "à®²à¯"],
+    breakdowns: [{ letter: "à®®à¯", root: "à®®à¯ + à®‰", sound: "Mu" }, { letter: "à®©à¯", root: "Pure Consonant (à®®à¯†à®¯à¯)", sound: "N" }, { letter: "à®©à®¾", root: "à®©à¯ + à®†", sound: "Naa" }, { letter: "à®²à¯", root: "Pure Consonant (à®®à¯†à®¯à¯)", sound: "L" }],
+    translit: "Mun-naal", english: "In Front / Ahead", hint: "Positioned directly in front of someone or something."
+  },
+  {
+    id: "l8_6", level: 8, tamil: "à®ªà®¿à®©à¯à®©à®¾à®²à¯", letters: ["à®ªà®¿", "à®©à¯", "à®©à®¾", "à®²à¯"],
+    breakdowns: [{ letter: "à®ªà®¿", root: "à®ªà¯ + à®‡", sound: "Pi" }, { letter: "à®©à¯", root: "Pure Consonant (à®®à¯†à®¯à¯)", sound: "N" }, { letter: "à®©à®¾", root: "à®©à¯ + à®†", sound: "Naa" }, { letter: "à®²à¯", root: "Pure Consonant (à®®à¯†à®¯à¯)", sound: "L" }],
+    translit: "Pin-naal", english: "Behind / Back", hint: "Positioned at the rear or back, opposite of front."
+  },
+  {
+    id: "l8_7", level: 8, tamil: "à®®à¯‡à®²à¯‡", letters: ["à®®à¯‡", "à®²à¯‡"],
+    breakdowns: [{ letter: "à®®à¯‡", root: "à®®à¯ + à®", sound: "Mae" }, { letter: "à®²à¯‡", root: "à®²à¯ + à®", sound: "Lae" }],
+    translit: "Mae-lae", english: "Above / Up", hint: "High up in the air or on top of a surface."
+  },
+  {
+    id: "l8_8", level: 8, tamil: "à®•à¯€à®´à¯‡", letters: ["à®•à¯€", "à®´à¯‡"],
+    breakdowns: [{ letter: "à®•à¯€", root: "à®•à¯ + à®ˆ", sound: "Kee" }, { letter: "à®´à¯‡", root: "à®´à¯ + à®", sound: "Zhae" }],
+    translit: "Kee-zhae", english: "Below / Down", hint: "Down on the ground or floor, opposite of up."
+  },
+  {
+    id: "l8_9", level: 8, tamil: "à®‰à®³à¯à®³à¯‡", letters: ["à®‰", "à®³à¯", "à®³à¯‡"],
+    breakdowns: [{ letter: "à®‰", root: "Vowel (à®‰à®¯à®¿à®°à¯)", sound: "U" }, { letter: "à®³à¯", root: "Pure Consonant (à®®à¯†à®¯à¯)", sound: "L" }, { letter: "à®³à¯‡", root: "à®³à¯ + à®", sound: "Lae" }],
+    translit: "Ul-lae", english: "Inside / Within", hint: "Placed inside a room, box, or bag."
+  },
+  {
+    id: "l8_10", level: 8, tamil: "à®µà¯†à®³à®¿à®¯à¯‡", letters: ["à®µà¯†", "à®³à®¿", "à®¯à¯‡"],
+    breakdowns: [{ letter: "à®µà¯†", root: "à®µà¯ + à®Ž", sound: "Ve" }, { letter: "à®³à®¿", root: "à®³à¯ + à®‡", sound: "Li" }, { letter: "à®¯à¯‡", root: "à®¯à¯ + à®", sound: "Yae" }],
+    translit: "Ve-li-yae", english: "Outside / Out", hint: "Out in the open air, opposite of inside."
+  },
+  {
+    id: "l8_11", level: 8, tamil: "à®ªà¯†à®°à®¿à®¯", letters: ["à®ªà¯†", "à®°à®¿", "à®¯"],
+    breakdowns: [{ letter: "à®ªà¯†", root: "à®ªà¯ + à®Ž", sound: "Pe" }, { letter: "à®°à®¿", root: "à®°à¯ + à®‡", sound: "Ri" }, { letter: "à®¯", root: "à®¯à¯ + à®…", sound: "Ya" }],
+    translit: "Pe-ri-ya", english: "Big / Large", hint: "Grand and huge in size like an elephant."
+  },
+  {
+    id: "l8_12", level: 8, tamil: "à®šà®¿à®±à®¿à®¯", letters: ["à®šà®¿", "à®±à®¿", "à®¯"],
+    breakdowns: [{ letter: "à®šà®¿", root: "à®šà¯ + à®‡", sound: "Si" }, { letter: "à®±à®¿", root: "à®±à¯ + à®‡", sound: "Ri" }, { letter: "à®¯", root: "à®¯à¯ + à®…", sound: "Ya" }],
+    translit: "Si-ri-ya", english: "Small / Tiny", hint: "Little and tiny in size like an ant."
+  },
+  {
+    id: "l8_13", level: 8, tamil: "à®ªà®´à¯ˆà®¯", letters: ["à®ª", "à®´à¯ˆ", "à®¯"],
+    breakdowns: [{ letter: "à®ª", root: "à®ªà¯ + à®…", sound: "Pa" }, { letter: "à®´à¯ˆ", root: "à®´à¯ + à®", sound: "Zhai" }, { letter: "à®¯", root: "à®¯à¯ + à®…", sound: "Ya" }],
+    translit: "Pa-zhai-ya", english: "Old / Used", hint: "Existing for a long time, opposite of new."
+  },
+  {
+    id: "l8_14", level: 8, tamil: "à®ªà¯à®¤à®¿à®¯", letters: ["à®ªà¯", "à®¤à®¿", "à®¯"],
+    breakdowns: [{ letter: "à®ªà¯", root: "à®ªà¯ + à®‰", sound: "Pu" }, { letter: "à®¤à®¿", root: "à®¤à¯ + à®‡", sound: "Dhi" }, { letter: "à®¯", root: "à®¯à¯ + à®…", sound: "Ya" }],
+    translit: "Pu-dhi-ya", english: "New / Fresh", hint: "Brand new, freshly made or recently bought."
+  },
+  {
+    id: "l8_15", level: 8, tamil: "à®¨à¯€à®³à®®à¯", letters: ["à®¨à¯€", "à®³", "à®®à¯"],
+    breakdowns: [{ letter: "à®¨à¯€", root: "à®¨à¯ + à®ˆ", sound: "Nee" }, { letter: "à®³", root: "à®³à¯ + à®…", sound: "Lam" }, { letter: "à®®à¯", root: "Pure Consonant (à®®à¯†à®¯à¯)", sound: "M" }],
+    translit: "Nee-lam", english: "Long / Length", hint: "Extending a great distance from end to end."
+  },
+
+  // ==================== LEVEL 9: NUMBERS & EVERYDAY WORDS (à®Žà®£à¯à®•à®³à¯à®®à¯ à®…à®©à¯à®±à®¾à®Ÿà®šà¯ à®šà¯Šà®±à¯à®•à®³à¯à®®à¯) ====================
+  {
+    id: "l9_1", level: 9, tamil: "à®ªà®¤à¯à®¤à¯", letters: ["à®ª", "à®¤à¯", "à®¤à¯"],
+    breakdowns: [{ letter: "à®ª", root: "à®ªà¯ + à®…", sound: "Pa" }, { letter: "à®¤à¯", root: "Pure Consonant (à®®à¯†à®¯à¯)", sound: "Th" }, { letter: "à®¤à¯", root: "à®¤à¯ + à®‰", sound: "Thu" }],
+    translit: "Path-thu", english: "Ten (10)", hint: "The number 10, equal to all the fingers on both hands."
+  },
+  {
+    id: "l9_2", level: 9, tamil: "à®‡à®°à¯à®ªà®¤à¯", letters: ["à®‡", "à®°à¯", "à®ª", "à®¤à¯"],
+    breakdowns: [{ letter: "à®‡", root: "Vowel (à®‰à®¯à®¿à®°à¯)", sound: "I" }, { letter: "à®°à¯", root: "à®°à¯ + à®‰", sound: "Ru" }, { letter: "à®ª", root: "à®ªà¯ + à®…", sound: "Ba" }, { letter: "à®¤à¯", root: "à®¤à¯ + à®‰", sound: "Dhu" }],
+    translit: "I-ru-ba-dhu", english: "Twenty (20)", hint: "The number 20, two groups of ten."
+  },
+  {
+    id: "l9_3", level: 9, tamil: "à®®à¯à®ªà¯à®ªà®¤à¯", letters: ["à®®à¯", "à®ªà¯", "à®ª", "à®¤à¯"],
+    breakdowns: [{ letter: "à®®à¯", root: "à®®à¯ + à®‰", sound: "Mu" }, { letter: "à®ªà¯", root: "Pure Consonant (à®®à¯†à®¯à¯)", sound: "P" }, { letter: "à®ª", root: "à®ªà¯ + à®…", sound: "Pa" }, { letter: "à®¤à¯", root: "à®¤à¯ + à®‰", sound: "Dhu" }],
+    translit: "Mup-pa-dhu", english: "Thirty (30)", hint: "The number 30, three groups of ten."
+  },
+  {
+    id: "l9_4", level: 9, tamil: "à®¨à®¾à®±à¯à®ªà®¤à¯", letters: ["à®¨à®¾", "à®±à¯", "à®ª", "à®¤à¯"],
+    breakdowns: [{ letter: "à®¨à®¾", root: "à®¨à¯ + à®†", sound: "Naa" }, { letter: "à®±à¯", root: "Pure Consonant (à®®à¯†à®¯à¯)", sound: "R" }, { letter: "à®ª", root: "à®ªà¯ + à®…", sound: "Pa" }, { letter: "à®¤à¯", root: "à®¤à¯ + à®‰", sound: "Dhu" }],
+    translit: "Naar-pa-dhu", english: "Forty (40)", hint: "The number 40, four groups of ten."
+  },
+  {
+    id: "l9_5", level: 9, tamil: "à®à®®à¯à®ªà®¤à¯", letters: ["à®", "à®®à¯", "à®ª", "à®¤à¯"],
+    breakdowns: [{ letter: "à®", root: "Vowel (à®‰à®¯à®¿à®°à¯)", sound: "Ai" }, { letter: "à®®à¯", root: "Pure Consonant (à®®à¯†à®¯à¯)", sound: "M" }, { letter: "à®ª", root: "à®ªà¯ + à®…", sound: "Ba" }, { letter: "à®¤à¯", root: "à®¤à¯ + à®‰", sound: "Dhu" }],
+    translit: "Aim-ba-dhu", english: "Fifty (50)", hint: "The number 50, half of one hundred."
+  },
+  {
+    id: "l9_6", level: 9, tamil: "à®…à®±à¯à®ªà®¤à¯", letters: ["à®…", "à®±à¯", "à®ª", "à®¤à¯"],
+    breakdowns: [{ letter: "à®…", root: "Vowel (à®‰à®¯à®¿à®°à¯)", sound: "A" }, { letter: "à®±à¯", root: "à®±à¯ + à®‰", sound: "Ru" }, { letter: "à®ª", root: "à®ªà¯ + à®…", sound: "Ba" }, { letter: "à®¤à¯", root: "à®¤à¯ + à®‰", sound: "Dhu" }],
+    translit: "A-ru-ba-dhu", english: "Sixty (60)", hint: "The number 60, six groups of ten."
+  },
+  {
+    id: "l9_7", level: 9, tamil: "à®Žà®´à¯à®ªà®¤à¯", letters: ["à®Ž", "à®´à¯", "à®ª", "à®¤à¯"],
+    breakdowns: [{ letter: "à®Ž", root: "Vowel (à®‰à®¯à®¿à®°à¯)", sound: "E" }, { letter: "à®´à¯", root: "à®´à¯ + à®‰", sound: "Zhu" }, { letter: "à®ª", root: "à®ªà¯ + à®…", sound: "Ba" }, { letter: "à®¤à¯", root: "à®¤à¯ + à®‰", sound: "Dhu" }],
+    translit: "E-zhu-ba-dhu", english: "Seventy (70)", hint: "The number 70, seven groups of ten."
+  },
+  {
+    id: "l9_8", level: 9, tamil: "à®Žà®£à¯à®ªà®¤à¯", letters: ["à®Ž", "à®£à¯", "à®ª", "à®¤à¯"],
+    breakdowns: [{ letter: "à®Ž", root: "Vowel (à®‰à®¯à®¿à®°à¯)", sound: "E" }, { letter: "à®£à¯", root: "Pure Consonant (à®®à¯†à®¯à¯)", sound: "N" }, { letter: "à®ª", root: "à®ªà¯ + à®…", sound: "Ba" }, { letter: "à®¤à¯", root: "à®¤à¯ + à®‰", sound: "Dhu" }],
+    translit: "En-ba-dhu", english: "Eighty (80)", hint: "The number 80, eight groups of ten."
+  },
+  {
+    id: "l9_9", level: 9, tamil: "à®¤à¯Šà®£à¯à®£à¯‚à®±à¯", letters: ["à®¤à¯Š", "à®£à¯", "à®£à¯‚", "à®±à¯"],
+    breakdowns: [{ letter: "à®¤à¯Š", root: "à®¤à¯ + à®’", sound: "Tho" }, { letter: "à®£à¯", root: "Pure Consonant (à®®à¯†à®¯à¯)", sound: "N" }, { letter: "à®£à¯‚", root: "à®£à¯ + à®Š", sound: "Noo" }, { letter: "à®±à¯", root: "à®±à¯ + à®‰", sound: "Ru" }],
+    translit: "Thon-noo-ru", english: "Ninety (90)", hint: "The number 90, nine groups of ten."
+  },
+  {
+    id: "l9_10", level: 9, tamil: "à®®à®¾à®²à¯ˆ", letters: ["à®®à®¾", "à®²à¯ˆ"],
+    breakdowns: [{ letter: "à®®à®¾", root: "à®®à¯ + à®†", sound: "Maa" }, { letter: "à®²à¯ˆ", root: "à®²à¯ + à®", sound: "Lai" }],
+    translit: "Maa-lai", english: "Evening / Garland", hint: "The pleasant evening time before sunset, or flower garland."
+  },
+  {
+    id: "l9_11", level: 9, tamil: "à®•à®¤à¯ˆ", letters: ["à®•", "à®¤à¯ˆ"],
+    breakdowns: [{ letter: "à®•", root: "à®•à¯ + à®…", sound: "Ka" }, { letter: "à®¤à¯ˆ", root: "à®¤à¯ + à®", sound: "Dhai" }],
+    translit: "Ka-dhai", english: "Story / Tale", hint: "An exciting narrative or bedtime tale."
+  },
+  {
+    id: "l9_12", level: 9, tamil: "à®•à®£à¯à®£à®¾à®Ÿà®¿", letters: ["à®•", "à®£à¯", "à®£à®¾", "à®Ÿà®¿"],
+    breakdowns: [{ letter: "à®•", root: "à®•à¯ + à®…", sound: "Kan" }, { letter: "à®£à¯", root: "Pure Consonant (à®®à¯†à®¯à¯)", sound: "N" }, { letter: "à®£à®¾", root: "à®£à¯ + à®†", sound: "Naa" }, { letter: "à®Ÿà®¿", root: "à®Ÿà¯ + à®‡", sound: "Di" }],
+    translit: "Kan-naa-di", english: "Mirror / Eyeglasses", hint: "Reflective glass or spectacles to see clearly."
+  },
+  {
+    id: "l9_13", level: 9, tamil: "à®¤à®™à¯à®•à¯ˆ", letters: ["à®¤", "à®™à¯", "à®•à¯ˆ"],
+    breakdowns: [{ letter: "à®¤", root: "à®¤à¯ + à®…", sound: "Tha" }, { letter: "à®™à¯", root: "Pure Consonant (à®®à¯†à®¯à¯)", sound: "Ng" }, { letter: "à®•à¯ˆ", root: "à®•à¯ + à®", sound: "Gai" }],
+    translit: "Thang-gai", english: "Younger Sister", hint: "A younger sister in the family."
+  },
+  {
+    id: "l9_14", level: 9, tamil: "à®šà®¤à¯à®°à®®à¯", letters: ["à®š", "à®¤à¯", "à®°", "à®®à¯"],
+    breakdowns: [{ letter: "à®š", root: "à®šà¯ + à®…", sound: "Sa" }, { letter: "à®¤à¯", root: "à®¤à¯ + à®‰", sound: "Dhu" }, { letter: "à®°", root: "à®°à¯ + à®…", sound: "Ram" }, { letter: "à®®à¯", root: "Pure Consonant (à®®à¯†à®¯à¯)", sound: "M" }],
+    translit: "Sa-dhu-ram", english: "Square (Shape)", hint: "Geometric shape with four equal straight sides."
+  },
+  {
+    id: "l9_15", level: 9, tamil: "à®•à®Ÿà¯ˆ", letters: ["à®•", "à®Ÿà¯ˆ"],
+    breakdowns: [{ letter: "à®•", root: "à®•à¯ + à®…", sound: "Ka" }, { letter: "à®Ÿà¯ˆ", root: "à®Ÿà¯ + à®", sound: "Dai" }],
+    translit: "Ka-dai", english: "Shop / Store", hint: "A store where you buy groceries and goods."
+  },
+  {
+    id: "l9_16", level: 9, tamil: "à®Šà®žà¯à®šà®²à¯", letters: ["à®Š", "à®žà¯", "à®š", "à®²à¯"],
+    breakdowns: [{ letter: "à®Š", root: "Long Vowel (à®¨à¯†à®Ÿà®¿à®²à¯)", sound: "Oo" }, { letter: "à®žà¯", root: "Pure Consonant (à®®à¯†à®¯à¯)", sound: "Nj" }, { letter: "à®š", root: "à®šà¯ + à®…", sound: "Sal" }, { letter: "à®²à¯", root: "Pure Consonant (à®®à¯†à®¯à¯)", sound: "L" }],
+    translit: "Oon-jal", english: "Swing", hint: "Hanging seat in the park that swings back and forth."
+  },
+  {
+    id: "l9_17", level: 9, tamil: "à®¤à®•à¯à®•à®¾à®³à®¿", letters: ["à®¤", "à®•à¯", "à®•à®¾", "à®³à®¿"],
+    breakdowns: [{ letter: "à®¤", root: "à®¤à¯ + à®…", sound: "Tha" }, { letter: "à®•à¯", root: "Pure Consonant (à®®à¯†à®¯à¯)", sound: "K" }, { letter: "à®•à®¾", root: "à®•à¯ + à®†", sound: "Kaa" }, { letter: "à®³à®¿", root: "à®³à¯ + à®‡", sound: "Li" }],
+    translit: "Thak-kaa-li", english: "Tomato", hint: "Juicy red vegetable commonly used in curry and salad."
+  },
+
+  // ==================== LEVEL 10: ACTION VERBS & DIALOGUE (à®µà®¿à®©à¯ˆà®•à®³à¯à®®à¯ à®‰à®°à¯ˆà®¯à®¾à®Ÿà®²à¯à®®à¯) ====================
+  {
+    id: "l10_1", level: 10, tamil: "à®µà®¿à®´à¯à®¨à¯à®¤à®¤à¯", letters: ["à®µà®¿", "à®´à¯", "à®¨à¯", "à®¤", "à®¤à¯"],
+    breakdowns: [{ letter: "à®µà®¿", root: "à®µà¯ + à®‡", sound: "Vi" }, { letter: "à®´à¯", root: "à®´à¯ + à®‰", sound: "Zhun" }, { letter: "à®¨à¯", root: "Pure Consonant (à®®à¯†à®¯à¯)", sound: "N" }, { letter: "à®¤", root: "à®¤à¯ + à®…", sound: "Dha" }, { letter: "à®¤à¯", root: "à®¤à¯ + à®‰", sound: "Dhu" }],
+    translit: "Vi-zhun-dha-dhu", english: "Fell Down", hint: "Dropped down to the ground from higher up."
+  },
+  {
+    id: "l10_2", level: 10, tamil: "à®ªà®±à®¨à¯à®¤à®¤à¯", letters: ["à®ª", "à®±", "à®¨à¯", "à®¤", "à®¤à¯"],
+    breakdowns: [{ letter: "à®ª", root: "à®ªà¯ + à®…", sound: "Pa" }, { letter: "à®±", root: "à®±à¯ + à®…", sound: "Ran" }, { letter: "à®¨à¯", root: "Pure Consonant (à®®à¯†à®¯à¯)", sound: "N" }, { letter: "à®¤", root: "à®¤à¯ + à®…", sound: "Dha" }, { letter: "à®¤à¯", root: "à®¤à¯ + à®‰", sound: "Dhu" }],
+    translit: "Pa-ran-dha-dhu", english: "Flew", hint: "Glided through the sky using wings like a bird."
+  },
+  {
+    id: "l10_3", level: 10, tamil: "à®¤à®¿à®±à®¨à¯à®¤à®¤à¯", letters: ["à®¤à®¿", "à®±", "à®¨à¯", "à®¤", "à®¤à¯"],
+    breakdowns: [{ letter: "à®¤à®¿", root: "à®¤à¯ + à®‡", sound: "Thi" }, { letter: "à®±", root: "à®±à¯ + à®…", sound: "Ran" }, { letter: "à®¨à¯", root: "Pure Consonant (à®®à¯†à®¯à¯)", sound: "N" }, { letter: "à®¤", root: "à®¤à¯ + à®…", sound: "Dha" }, { letter: "à®¤à¯", root: "à®¤à¯ + à®‰", sound: "Dhu" }],
+    translit: "Thi-ran-dha-dhu", english: "Opened", hint: "Unlatched a door or box to reveal the inside."
+  },
+  {
+    id: "l10_4", level: 10, tamil: "à®‰à®°à¯à®£à¯à®Ÿà®¤à¯", letters: ["à®‰", "à®°à¯", "à®£à¯", "à®Ÿ", "à®¤à¯"],
+    breakdowns: [{ letter: "à®‰", root: "Vowel (à®‰à®¯à®¿à®°à¯)", sound: "U" }, { letter: "à®°à¯", root: "à®°à¯ + à®‰", sound: "Run" }, { letter: "à®£à¯", root: "Pure Consonant (à®®à¯†à®¯à¯)", sound: "N" }, { letter: "à®Ÿ", root: "à®Ÿà¯ + à®…", sound: "Da" }, { letter: "à®¤à¯", root: "à®¤à¯ + à®‰", sound: "Dhu" }],
+    translit: "U-run-da-dhu", english: "Rolled", hint: "Turned over and over along the floor like a ball."
+  },
+  {
+    id: "l10_5", level: 10, tamil: "à®•à¯à®°à¯ˆà®¤à¯à®¤à®¤à¯", letters: ["à®•à¯", "à®°à¯ˆ", "à®¤à¯", "à®¤", "à®¤à¯"],
+    breakdowns: [{ letter: "à®•à¯", root: "à®•à¯ + à®‰", sound: "Ku" }, { letter: "à®°à¯ˆ", root: "à®±à¯ + à®", sound: "Rait" }, { letter: "à®¤à¯", root: "Pure Consonant (à®®à¯†à®¯à¯)", sound: "Th" }, { letter: "à®¤", root: "à®¤à¯ + à®…", sound: "Tha" }, { letter: "à®¤à¯", root: "à®¤à¯ + à®‰", sound: "Dhu" }],
+    translit: "Ku-raith-tha-dhu", english: "Barked", hint: "Made a loud barking sound like a watchful dog."
+  },
+  {
+    id: "l10_6", level: 10, tamil: "à®‡à®©à®¿à®¤à¯à®¤à®¤à¯", letters: ["à®‡", "à®©à®¿", "à®¤à¯", "à®¤", "à®¤à¯"],
+    breakdowns: [{ letter: "à®‡", root: "Vowel (à®‰à®¯à®¿à®°à¯)", sound: "I" }, { letter: "à®©à®¿", root: "à®©à¯ + à®‡", sound: "Nit" }, { letter: "à®¤à¯", root: "Pure Consonant (à®®à¯†à®¯à¯)", sound: "Th" }, { letter: "à®¤", root: "à®¤à¯ + à®…", sound: "Tha" }, { letter: "à®¤à¯", root: "à®¤à¯ + à®‰", sound: "Dhu" }],
+    translit: "I-nith-tha-dhu", english: "Tasted Sweet", hint: "Delivered a delicious sweet flavor like honey or sugar."
+  },
+  {
+    id: "l10_7", level: 10, tamil: "à®®à¯‡à®¯à¯à®¨à¯à®¤à®¤à¯", letters: ["à®®à¯‡", "à®¯à¯", "à®¨à¯", "à®¤", "à®¤à¯"],
+    breakdowns: [{ letter: "à®®à¯‡", root: "à®®à¯ + à®", sound: "Mae" }, { letter: "à®¯à¯", root: "Pure Consonant (à®®à¯†à®¯à¯)", sound: "Y" }, { letter: "à®¨à¯", root: "Pure Consonant (à®®à¯†à®¯à¯)", sound: "N" }, { letter: "à®¤", root: "à®¤à¯ + à®…", sound: "Dha" }, { letter: "à®¤à¯", root: "à®¤à¯ + à®‰", sound: "Dhu" }],
+    translit: "Maey-ndha-dhu", english: "Grazed", hint: "Ate fresh grass quietly in the green pasture."
+  },
+  {
+    id: "l10_8", level: 10, tamil: "à®•à®°à¯ˆà®¨à¯à®¤à®¤à¯", letters: ["à®•", "à®°à¯ˆ", "à®¨à¯", "à®¤", "à®¤à¯"],
+    breakdowns: [{ letter: "à®•", root: "à®•à¯ + à®…", sound: "Ka" }, { letter: "à®°à¯ˆ", root: "à®±à¯ + à®", sound: "Rain" }, { letter: "à®¨à¯", root: "Pure Consonant (à®®à¯†à®¯à¯)", sound: "N" }, { letter: "à®¤", root: "à®¤à¯ + à®…", sound: "Dha" }, { letter: "à®¤à¯", root: "à®¤à¯ + à®‰", sound: "Dhu" }],
+    translit: "Ka-rain-dha-dhu", english: "Dissolved / Cawed", hint: "Melted in liquid, or crow called out kaa-kaa."
+  },
+  {
+    id: "l10_9", level: 10, tamil: "à®µà®¨à¯à®¤à®¤à¯", letters: ["à®µ", "à®¨à¯", "à®¤", "à®¤à¯"],
+    breakdowns: [{ letter: "à®µ", root: "à®µà¯ + à®…", sound: "Va" }, { letter: "à®¨à¯", root: "Pure Consonant (à®®à¯†à®¯à¯)", sound: "N" }, { letter: "à®¤", root: "à®¤à¯ + à®…", sound: "Dha" }, { letter: "à®¤à¯", root: "à®¤à¯ + à®‰", sound: "Dhu" }],
+    translit: "Van-dha-dhu", english: "Came / Arrived", hint: "Arrived at a destination from elsewhere."
+  },
+  {
+    id: "l10_10", level: 10, tamil: "à®°à¯à®šà®¿à®¤à¯à®¤à®¤à¯", letters: ["à®°à¯", "à®šà®¿", "à®¤à¯", "à®¤", "à®¤à¯"],
+    breakdowns: [{ letter: "à®°à¯", root: "à®°à¯ + à®‰", sound: "Ru" }, { letter: "à®šà®¿", root: "à®šà¯ + à®‡", sound: "Sit" }, { letter: "à®¤à¯", root: "Pure Consonant (à®®à¯†à®¯à¯)", sound: "Th" }, { letter: "à®¤", root: "à®¤à¯ + à®…", sound: "Tha" }, { letter: "à®¤à¯", root: "à®¤à¯ + à®‰", sound: "Dhu" }],
+    translit: "Ru-sith-tha-dhu", english: "Tasted Delicious", hint: "Tasted richly flavorful and satisfying to eat."
+  },
+  {
+    id: "l10_11", level: 10, tamil: "à®‰à®¤à®µà®¿", letters: ["à®‰", "à®¤", "à®µà®¿"],
+    breakdowns: [{ letter: "à®‰", root: "Vowel (à®‰à®¯à®¿à®°à¯)", sound: "U" }, { letter: "à®¤", root: "à®¤à¯ + à®…", sound: "Dha" }, { letter: "à®µà®¿", root: "à®µà¯ + à®‡", sound: "Vi" }],
+    translit: "U-dha-vi", english: "Help / Assistance", hint: "Lending a supporting hand to someone in need."
+  },
+  {
+    id: "l10_12", level: 10, tamil: "à®†à®šà¯ˆ", letters: ["à®†", "à®šà¯ˆ"],
+    breakdowns: [{ letter: "à®†", root: "Long Vowel (à®¨à¯†à®Ÿà®¿à®²à¯)", sound: "Aa" }, { letter: "à®šà¯ˆ", root: "à®šà¯ + à®", sound: "Sai" }],
+    translit: "Aa-sai", english: "Wish / Desire", hint: "A heartfelt wish or desire to achieve something."
+  },
+  {
+    id: "l10_13", level: 10, tamil: "à®¤à®¿à®©à®®à¯à®®à¯", letters: ["à®¤à®¿", "à®©", "à®®à¯", "à®®à¯"],
+    breakdowns: [{ letter: "à®¤à®¿", root: "à®¤à¯ + à®‡", sound: "Dhi" }, { letter: "à®©", root: "à®©à¯ + à®…", sound: "Na" }, { letter: "à®®à¯", root: "à®®à¯ + à®‰", sound: "Mum" }, { letter: "à®®à¯", root: "Pure Consonant (à®®à¯†à®¯à¯)", sound: "M" }],
+    translit: "Dhi-na-mum", english: "Daily / Everyday", hint: "Happening each and every day without missing."
+  },
+  {
+    id: "l10_14", level: 10, tamil: "à®Šà®°à¯", letters: ["à®Š", "à®°à¯"],
+    breakdowns: [{ letter: "à®Š", root: "Long Vowel (à®¨à¯†à®Ÿà®¿à®²à¯)", sound: "Oo" }, { letter: "à®°à¯", root: "Pure Consonant (à®®à¯†à®¯à¯)", sound: "R" }],
+    translit: "Oor", english: "Town / Hometown", hint: "A village, hometown, or settlement where people reside."
+  },
+  {
+    id: "l10_15", level: 10, tamil: "à®•à¯Šà®žà¯à®šà®®à¯", letters: ["à®•à¯Š", "à®žà¯", "à®š", "à®®à¯"],
+    breakdowns: [{ letter: "à®•à¯Š", root: "à®•à¯ + à®’", sound: "Ko" }, { letter: "à®žà¯", root: "Pure Consonant (à®®à¯†à®¯à¯)", sound: "Nj" }, { letter: "à®š", root: "à®šà¯ + à®…", sound: "Sam" }, { letter: "à®®à¯", root: "Pure Consonant (à®®à¯†à®¯à¯)", sound: "M" }],
+    translit: "Kon-jam", english: "A Little / A Bit", hint: "A small amount or modest portion."
+  },
+  {
+    id: "l10_16", level: 10, tamil: "à®¨à¯‡à®°à®®à¯", letters: ["à®¨à¯‡", "à®°", "à®®à¯"],
+    breakdowns: [{ letter: "à®¨à¯‡", root: "à®¨à¯ + à®", sound: "Nae" }, { letter: "à®°", root: "à®°à¯ + à®…", sound: "Ram" }, { letter: "à®®à¯", root: "Pure Consonant (à®®à¯†à®¯à¯)", sound: "M" }],
+    translit: "Nae-ram", english: "Time / Hour", hint: "The continuous duration of minutes and hours."
+  },
+  {
+    id: "l10_17", level: 10, tamil: "à®®à®Ÿà¯à®Ÿà¯à®®à¯", letters: ["à®®", "à®Ÿà¯", "à®Ÿà¯", "à®®à¯"],
+    breakdowns: [{ letter: "à®®", root: "à®®à¯ + à®…", sound: "Ma" }, { letter: "à®Ÿà¯", root: "Pure Consonant (à®®à¯†à®¯à¯)", sound: "T" }, { letter: "à®Ÿà¯", root: "à®Ÿà¯ + à®‰", sound: "Dum" }, { letter: "à®®à¯", root: "Pure Consonant (à®®à¯†à®¯à¯)", sound: "M" }],
+    translit: "Mat-tum", english: "Only / Solely", hint: "Exclusively this and nothing else."
+  },
+  {
+    id: "l10_18", level: 10, tamil: "à®šà®°à®³à®®à®¾à®•", letters: ["à®š", "à®°", "à®³", "à®®à®¾", "à®•"],
+    breakdowns: [{ letter: "à®š", root: "à®šà¯ + à®…", sound: "Sa" }, { letter: "à®°", root: "à®°à¯ + à®…", sound: "Ra" }, { letter: "à®³", root: "à®³à¯ + à®…", sound: "La" }, { letter: "à®®à®¾", root: "à®®à¯ + à®†", sound: "Maa" }, { letter: "à®•", root: "à®•à¯ + à®…", sound: "Ga" }],
+    translit: "Sa-ra-la-maa-ga", english: "Fluently / Smoothly", hint: "Speaking with effortless flow and confidence."
+  }
 ];
 
 // Page 11 Dialogue Script (Mani & Babu Conversation)
 export const PAGE_11_DIALOGUE = {
+  id: "lesson1_p11",
+  pageLabel: "Page 11 Lesson",
+  description: "School Preparation Conversation",
+  durations: [3.2, 3.0, 10.4, 10.2, 12.0, 7.2, 11.2, 4.1],
+  question: {
+    tamilPrompt: "à®šà®¿à®¨à¯à®¤à®¿à®¤à¯à®¤à¯ à®µà®¿à®Ÿà¯ˆà®¯à®³à®¿à®•à¯à®• (Think & Answer):",
+    tamilQuestion: "à®®à®£à®¿ à®¤à®©à¯ à®ªà®³à¯à®³à®¿à®ªà¯ à®ªà¯ˆà®¯à®¿à®²à¯ à®¤à¯‡à®µà¯ˆà®¯à®¾à®© à®ªà¯Šà®°à¯à®³à¯à®•à®³à¯ˆà®šà¯ à®šà®°à®¿à®¯à®¾à®• à®µà¯ˆà®•à¯à®• à®Žà®¤à®©à¯ˆà®ªà¯ à®ªà®¯à®©à¯à®ªà®Ÿà¯à®¤à¯à®¤à®¿à®©à®¾à®©à¯?",
+    tamilAnswer: "à®µà®¿à®Ÿà¯ˆ: à®ªà®Ÿ à®…à®Ÿà¯à®Ÿà¯ˆà®•à®³à¯ (Picture Flashcards)!",
+    englishHint: "What did Mani use to verify his bag was packed properly? Picture flashcards!"
+  },
   title: "உரையாடல்",
   subtitle: "ஆசிரியர் சொல்வதைக் கேட்டு, நண்பனுடன் உரையாடுக:",
   englishTitle: "Dialogue: Getting Ready for School",
@@ -924,6 +1242,121 @@ export const PAGE_11_DIALOGUE = {
     }
   ]
 };
+
+// Page 13 Dialogue Script (Lesson 3: Amma & Kavin Conversation)
+export const PAGE_13_DIALOGUE = {
+  id: "lesson3_p13",
+  title: "à®ªà®¾à®Ÿà®®à¯ 3: à®…à®®à¯à®®à®¾à®µà¯à®®à¯ à®•à®µà®¿à®©à¯à®®à¯",
+  subtitle: "à®µà¯€à®Ÿà¯à®Ÿà®¿à®²à¯ à®…à®®à¯à®®à®¾à®µà®¿à®Ÿà®®à¯ à®ªà¯‡à®šà¯à®®à¯ à®‰à®°à¯ˆà®¯à®¾à®Ÿà®²à¯:",
+  englishTitle: "Lesson 3: Amma and Kavin",
+  englishSubtitle: "Conversation with mother at home:",
+  pageLabel: "Page 13 Lesson",
+  description: "Fluency & Daily Tamil Practice",
+  durations: [4.8, 3.2, 9.2, 3.5, 11.5, 23.0, 14.0, 5.0, 2.0],
+  question: {
+    tamilPrompt: "à®šà®¿à®¨à¯à®¤à®¿à®¤à¯à®¤à¯ à®µà®¿à®Ÿà¯ˆà®¯à®³à®¿à®•à¯à®• (Think & Answer):",
+    tamilQuestion: "à®¤à®®à®¿à®´à®¿à®²à¯ à®šà®°à®³à®®à®¾à®•à®ªà¯ à®ªà¯‡à®š à®•à®µà®¿à®©à¯à®®à¯ à®…à®®à¯à®®à®¾à®µà¯à®®à¯ à®Žà®©à¯à®© à®šà¯†à®¯à¯à®¯à®¤à¯ à®¤à¯€à®°à¯à®®à®¾à®©à®¿à®¤à¯à®¤à®¾à®°à¯à®•à®³à¯?",
+    tamilAnswer: "à®µà®¿à®Ÿà¯ˆ: à®¤à®¿à®©à®®à¯à®®à¯ à®’à®°à¯ à®®à®£à®¿ à®¨à¯‡à®°à®®à¯ à®¤à®®à®¿à®´à®¿à®²à¯ à®®à®Ÿà¯à®Ÿà¯à®®à¯ à®ªà¯‡à®š à®®à¯à®Ÿà®¿à®µà¯†à®Ÿà¯à®¤à¯à®¤à®¾à®°à¯à®•à®³à¯!",
+    englishHint: "What did Kavin and Amma decide to do to speak Tamil fluently? Speak only in Tamil for one hour every day!"
+  },
+  lines: [
+    {
+      id: 1,
+      speaker: "à®•à®µà®¿à®©à¯",
+      speakerRole: "Kavin",
+      tamil: "à®…à®®à¯à®®à®¾, à®Žà®©à¯à®© à®šà¯†à®¯à¯à®•à®¿à®±à¯€à®°à¯à®•à®³à¯? à®Žà®©à®•à¯à®•à¯à®•à¯ à®•à¯Šà®žà¯à®šà®®à¯ à®‰à®¤à®µà®¿à®šà¯†à®¯à¯à®¯ à®®à¯à®Ÿà®¿à®¯à¯à®®à®¾?",
+      english: "Mom, what are you doing? Can you help me a little?",
+      translit: "Ammaa, enna seigireergal? Enakkuk konjam udhaviseyya mudiyumaa?",
+      audio: "audio/dialogue/dialogue3_1.mp3",
+      vocabulary: ["à®…à®®à¯à®®à®¾", "à®•à¯Šà®žà¯à®šà®®à¯", "à®‰à®¤à®µà®¿"]
+    },
+    {
+      id: 2,
+      speaker: "à®…à®®à¯à®®à®¾",
+      speakerRole: "Amma",
+      tamil: "à®šà¯†à®¯à¯à®•à®¿à®±à¯‡à®©à¯ à®•à®µà®¿à®©à¯. à®Žà®©à¯à®© à®šà¯†à®¯à¯à®¯ à®µà¯‡à®£à¯à®Ÿà¯à®®à¯?",
+      english: "Sure Kavin. What should I do?",
+      translit: "Seigiraen Kavin. Enna seyya vaendum?",
+      audio: "audio/dialogue/dialogue3_2.mp3",
+      vocabulary: ["à®µà¯‡à®£à¯à®Ÿà¯à®®à¯"]
+    },
+    {
+      id: 3,
+      speaker: "à®•à®µà®¿à®©à¯",
+      speakerRole: "Kavin",
+      tamil: "à®Žà®©à¯ à®¨à®£à¯à®ªà®°à¯à®•à®³à¯à®Ÿà®©à¯ à®¨à®©à¯à®±à®¾à®•à®¤à¯ à®¤à®®à®¿à®´à®¿à®²à¯ à®ªà¯‡à®š à®µà¯‡à®£à¯à®Ÿà¯à®®à¯ à®Žà®©à¯à®±à¯ à®Žà®©à®•à¯à®•à¯ à®†à®šà¯ˆà®¯à®¾à®• à®‡à®°à¯à®•à¯à®•à®¿à®±à®¤à¯ à®…à®®à¯à®®à®¾. à®…à®¤à®±à¯à®•à¯ à®¨à®¾à®©à¯ à®Žà®©à¯à®© à®šà¯†à®¯à¯à®¯ à®µà¯‡à®£à¯à®Ÿà¯à®®à¯?",
+      english: "I wish to speak well in Tamil with my friends, Mom. What should I do for that?",
+      translit: "En nanbargaludan nanraagath thamizhil paesa vaendum endru enakkuaasaiyaaga irukkiradhu ammaa. Adharku naan enna seyya vaendum?",
+      audio: "audio/dialogue/dialogue3_3.mp3",
+      vocabulary: ["à®µà¯‡à®£à¯à®Ÿà¯à®®à¯", "à®†à®šà¯ˆ", "à®…à®®à¯à®®à®¾"]
+    },
+    {
+      id: 4,
+      speaker: "à®…à®®à¯à®®à®¾",
+      speakerRole: "Amma",
+      tamil: "à®‰à®©à®•à¯à®•à¯à®ªà¯ à®ªà®¿à®Ÿà®¿à®¤à¯à®¤ à®ªà®¾à®Ÿà®®à¯ à®¤à®¾à®©à¯‡ à®¤à®®à®¿à®´à¯à®ªà¯à®ªà®¾à®Ÿà®®à¯?",
+      english: "Your favorite subject is Tamil, isn't it?",
+      translit: "Unakkup pidiththa paadam thaanae thamizhppaadam?",
+      audio: "audio/dialogue/dialogue3_4.mp3",
+      vocabulary: ["à®ªà®¾à®Ÿà®®à¯"]
+    },
+    {
+      id: 5,
+      speaker: "à®•à®µà®¿à®©à¯",
+      speakerRole: "Kavin",
+      tamil: "à®†à®®à®¾à®®à¯, à®…à®®à¯à®®à®¾. à®Žà®©à®•à¯à®•à¯à®¤à¯ à®¤à®®à®¿à®´à¯à®ªà¯à®ªà®¾à®Ÿà®®à¯à®®à¯ à®ªà®¿à®Ÿà®¿à®•à¯à®•à¯à®®à¯. à®¤à®®à®¿à®´à¯à®ªà¯à®ªà®³à¯à®³à®¿à®¯à¯à®®à¯ à®ªà®¿à®Ÿà®¿à®•à¯à®•à¯à®®à¯. à®¤à®®à®¿à®´à¯ à®µà®•à¯à®ªà¯à®ªà®¿à®²à¯ à®¨à®¾à®©à¯ à®¨à®©à¯à®±à®¾à®•à®ªà¯ à®ªà®Ÿà®¿à®•à¯à®•à®¿à®±à¯‡à®©à¯. à®†à®©à®¾à®²à¯ à®¤à®®à®¿à®´à¯ à®ªà¯‡à®šà¯à®µà®¤à¯à®¤à®¾à®©à¯...",
+      english: "Yes, Mom. I like Tamil subject and I like Tamil school. I read well in Tamil class. But speaking Tamil is what...",
+      translit: "Aamaam, ammaa. Enakkuth thamizhppaadamum pidikkum. Thamizhppalliyum pidikkum. Thamizh vaguppil naan nanraagap padikkiraen. Aanaal thamizh paesuvadhuthaan...",
+      audio: "audio/dialogue/dialogue3_5.mp3",
+      vocabulary: ["à®…à®®à¯à®®à®¾", "à®ªà®¾à®Ÿà®®à¯", "à®ªà®³à¯à®³à®¿", "à®µà®•à¯à®ªà¯à®ªà¯"]
+    },
+    {
+      id: 6,
+      speaker: "à®…à®®à¯à®®à®¾",
+      speakerRole: "Amma",
+      tamil: "à®Žà®©à¯à®© à®•à®µà®¿à®©à¯ à®ªà¯‡à®šà¯à®µà®¤à¯à®¤à®¾à®©à¯... à®Žà®©à¯à®©? à®šà®°à®³à®®à®¾à®•à®ªà¯ à®ªà¯‡à®šà®µà¯‡à®£à¯à®Ÿà¯à®®à¯ à®…à®µà¯à®µà®³à®µà¯à®¤à®¾à®©à¯‡! à®¨à®¾à®©à¯à®®à¯ à®¨à¯€à®¯à¯à®®à¯ à®…à®ªà¯à®ªà®¾à®µà¯à®®à¯ à®¤à®¿à®©à®®à¯à®®à¯ à®’à®°à¯ à®®à®£à®¿ à®¨à¯‡à®°à®®à¯ à®¤à®®à®¿à®´à®¿à®²à¯ à®®à®Ÿà¯à®Ÿà¯à®®à¯ à®ªà¯‡à®šà¯à®µà¯‹à®®à¯. à®‰à®©à¯ à®¤à®®à®¿à®´à¯à®ªà¯ à®ªà¯à®¤à¯à®¤à®•à®¤à¯à®¤à®¿à®²à¯ à®‰à®³à¯à®³ à®ªà®¾à®Ÿà®™à¯à®•à®³à¯ˆà®ªà¯ à®ªà®±à¯à®±à®¿à®ªà¯ à®ªà¯‡à®šà®²à®¾à®®à¯, à®¨à®®à¯ à®µà¯€à®Ÿà¯à®Ÿà¯ˆà®ªà¯ à®ªà®±à¯à®±à®¿à®ªà¯ à®ªà¯‡à®šà®²à®¾à®®à¯, à®¨à®®à¯ à®Šà®°à¯ˆà®ªà¯ à®ªà®±à¯à®±à®¿à®ªà¯ à®ªà¯‡à®šà®²à®¾à®®à¯, à®‰à®©à¯ à®¨à®£à¯à®ªà®°à¯à®•à®³à¯ˆà®ªà¯ à®ªà®±à¯à®±à®¿à®ªà¯ à®ªà¯‡à®šà®²à®¾à®®à¯.",
+      english: "What Kavin, speaking is... what? You just want to speak fluently, that's all! You, Dad, and I will speak only in Tamil for one hour every day. We can talk about lessons in your Tamil book, our house, our hometown, and your friends.",
+      translit: "Enna Kavin paesuvadhuthaan... enna? Saralamaagap paesavaendum avvalavuthaanae! Naanum neeyum appaavum dhinamum oru mani naeram thamizhil mattum paesuvoam. Un thamizhp puththagaththil ulla paadangalaip patrip paesalaam, nam veettaip patrip paesalaam, nam ooraip patrip paesalaam, un nanbargalaip patrip paesalaam.",
+      audio: "audio/dialogue/dialogue3_6.mp3",
+      vocabulary: ["à®šà®°à®³à®®à®¾à®•", "à®µà¯‡à®£à¯à®Ÿà¯à®®à¯", "à®…à®ªà¯à®ªà®¾", "à®¤à®¿à®©à®®à¯à®®à¯", "à®¨à¯‡à®°à®®à¯", "à®®à®Ÿà¯à®Ÿà¯à®®à¯", "à®ªà¯à®¤à¯à®¤à®•à®®à¯", "à®ªà®¾à®Ÿà®®à¯", "à®Šà®°à¯"]
+    },
+    {
+      id: 7,
+      speaker: "à®•à®µà®¿à®©à¯",
+      speakerRole: "Kavin",
+      tamil: "à®ªà¯‡à®šà®²à®¾à®®à¯ à®…à®®à¯à®®à®¾. à®¨à®®à¯ à®µà¯€à®Ÿà¯à®Ÿà¯ˆà®ªà¯ à®ªà®±à¯à®±à®¿à®¯à¯à®®à¯, à®¨à®®à¯ à®Šà®°à¯ˆà®ªà¯ à®ªà®±à¯à®±à®¿à®¯à¯à®®à¯, à®Žà®©à¯ à®¨à®£à¯à®ªà®°à¯à®•à®³à¯ˆà®ªà¯ à®ªà®±à¯à®±à®¿à®¯à¯à®®à¯ à®ªà¯‡à®š à®¨à®¾à®©à¯ à®¤à®®à®¿à®´à¯ à®µà®•à¯à®ªà¯à®ªà®¿à®²à¯ à®•à®±à¯à®±à¯à®•à¯à®•à¯Šà®£à¯à®Ÿà¯‡à®©à¯ à®…à®®à¯à®®à®¾. à®¨à®¾à®³à¯ˆà®•à¯à®•à¯ à®¨à®¾à®®à¯ à®¤à®®à®¿à®´à®¿à®²à¯ à®ªà¯‡à®š à®†à®°à®®à¯à®ªà®¿à®•à¯à®•à®²à®¾à®®à®¾?",
+      english: "We can talk, Mom! I learned in Tamil class how to speak about our house, our hometown, and my friends, Mom. Shall we start speaking in Tamil tomorrow?",
+      translit: "Paesalaam ammaa. Nam veettaip patriyum, nam ooraip patriyum, en nanbargalaip patriyum paesa naan thamizh vaguppil katrukkondaen ammaa. Naalaikku naam thamizhil paesa aarambikkalaamaa?",
+      audio: "audio/dialogue/dialogue3_7.mp3",
+      vocabulary: ["à®…à®®à¯à®®à®¾", "à®Šà®°à¯", "à®µà®•à¯à®ªà¯à®ªà¯", "à®¨à®¾à®³à¯ˆ", "à®†à®°à®®à¯à®ªà®¿"]
+    },
+    {
+      id: 8,
+      speaker: "à®…à®®à¯à®®à®¾",
+      speakerRole: "Amma",
+      tamil: "à®¨à®¾à®³à¯ˆà®•à¯à®•à®¾? à®‡à®©à¯à®±à¯ˆà®•à¯à®•à¯‡... à®‡à®ªà¯à®ªà¯Šà®´à¯à®¤à¯‡ à®†à®°à®®à¯à®ªà®¿à®•à¯à®•à®²à®¾à®®à¯‡.",
+      english: "Tomorrow? Let's start today itself... right now!",
+      translit: "Naalaikkaa? Inraikkae... ippozhudhae aarambikkalaamae.",
+      audio: "audio/dialogue/dialogue3_8.mp3",
+      vocabulary: ["à®¨à®¾à®³à¯ˆ", "à®‡à®©à¯à®±à¯", "à®‡à®ªà¯à®ªà¯Šà®´à¯à®¤à¯", "à®†à®°à®®à¯à®ªà®¿"]
+    },
+    {
+      id: 9,
+      speaker: "à®•à®µà®¿à®©à¯",
+      speakerRole: "Kavin",
+      tamil: "à®†à®°à®®à¯à®ªà®¿à®•à¯à®•à®²à®¾à®®à¯‡...",
+      english: "Let's begin...",
+      translit: "Aarambikkalaamae...",
+      audio: "audio/dialogue/dialogue3_9.mp3",
+      vocabulary: ["à®†à®°à®®à¯à®ªà®¿"]
+    }
+  ]
+};
+
+export const DIALOGUES = [
+  PAGE_11_DIALOGUE,
+  PAGE_13_DIALOGUE
+];
 
 // Helper to correctly segment Tamil words into grapheme clusters (letter tiles)
 export function splitTamilLetters(text) {

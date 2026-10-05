@@ -10,11 +10,17 @@ An interactive, gamified web app designed for young learners (especially 10-year
 
 ## Key Learning Features
 
-1. **Progressive Learning Staircase (4 Levels)**:
+1. **Progressive Learning Staircase (10 Tiers, 210 Words)**:
    - **Level 1**: Root words & Pulli consonants (கல், கண், பல், படம், மரம், கடல்...)
    - **Level 2**: Long 'Aa' sound / துணைக்கால் ா (பால், கால், வால், பாய், நாய், வானம்...)
    - **Level 3**: Short & Long 'i' sounds / ி, ீ (கிளி, நரி, மீன், மணி, விரல், நிலா...)
    - **Level 4**: Curves & Compound letters / ு, ூ, ை, ோ (குடை, பூனை, யானை, வீடு, தோசை...)
+   - **Level 5**: Sound Pairs & Distinction / ஒலி வேறுபாடுகள் (மழை, வலை, குளம், கூடை...)
+   - **Level 6**: Everyday & Actions / சொற்களும் செயல்களும் (நட, ஓடு, பாடு, ஆடு...)
+   - **Level 7**: School & Study Items / பள்ளியும் படிப்புப் பொருள்களும் (ஏடுகள், வண்ணங்கள், எழுதுகோல், அழிப்பான்...)
+   - **Level 8**: Opposites & Positions / எதிர்ச் சொற்களும் நிலைகளும் (உயரம், குட்டை, அதிகம், குறைவு, மேலே, கீழே...)
+   - **Level 9**: Numbers & Everyday Words / எண்களும் அன்றாடச் சொற்களும் (பத்து, இருபது, முப்பது, தொண்ணூறு, கதை, கண்ணாடி...)
+   - **Level 10**: Action Verbs & Dialogue / வினைகளும் உரையாடலும் (விழுந்தது, பறந்தது, திறந்தது, உருண்டது, சரளமாக...)
 
 2. **Phonics Chunking & Letter Breakdown**:
    - Tap any individual letter tile to hear its isolated sound.
